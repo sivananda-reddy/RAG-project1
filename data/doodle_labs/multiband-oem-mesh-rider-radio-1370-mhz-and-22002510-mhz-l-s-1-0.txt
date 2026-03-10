@@ -1,0 +1,59 @@
+Source: https://techlibrary.doodlelabs.com/multiband-oem-mesh-rider-radio-1370-mhz-and-22002510-mhz-l-s-1-0
+
+Products
+Product Index
+Mesh Rider Radios
+Industrial Wi-Fi Transceivers
+Legacy Products
+Multiband OEM Mesh Rider Radio – 255 MHz,2200 ~ 2510 MHz (Preliminary)
+Webpage to PDF
+RM-1300-42O3
+OEM V2 Update:
+The OEM V2 Mesh Rider radio delivers significant improvements in performance and flexibility. With enhanced multiband capabilities, the OEM V2 supports a broader frequency range, ensuring reliable communication across various environments. This upgrade also introduces greater ruggedness, making it better suited for harsh conditions and critical applications.
+Accordion Example
+Datasheet
+Multiband OEM Mesh Rider Radio – 255 MHz,2200 ~ 2510 MHz
+Getting Started w/ the OEM
+General Hardware Integration Guides:
+Hardware Integration Guidelines
+Mesh Rider Radio Hardware Interfaces
+Model-Specific Hardware Integration Guides:
+Multi-Band OEM User Guide
+OEM Configuration
+Mesh Rider GPS Guide
+General Software Setup Guides:
+Getting Started
+Flashing new firmware
+Hardware Information (V2)
+Radio Integration Information
+2D Diagrams
+3D Diagrams
+Heat Map
+Pin Diagrams
+HID Board Information
+2D Diagrams
+3D Diagrams
+Pin Diagrams
+Schematic
+Cables
+Evaluation Board Information
+2D Diagrams
+3D Diagrams
+Schematic
+Layout
+Pin Diagrams
+Cables
+Software Information
+Firmware Downloads
+Latest Firmware
+Coming Soon
+New Feature Firmware Quick-Release
+Coming Soon
+Antennas + Accessories
+Accessories
+Heat Sink
+Antenna Information
+Coming Soon
+Regulatory Information
+Coming Soon!
+Table of Contents

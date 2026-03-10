@@ -1,0 +1,32 @@
+Source: https://techlibrary.doodlelabs.com/crashes-reboots-etc
+
+Troubleshooting
+Link Status Log Walkthrough Guide (Video)
+Link Quality issues
+Radio Access issues
+UART and USB Issues
+Backup Reset and Upgrade
+Crashes, Reboots etc
+Crashes, Reboots etc
+Webpage to PDF
+The Mesh Rider Radios are designed to take a beating. That said, no system is perfect and if you find that the radios are misbehaving, consider the points below.
+Unexpected wireless downtime
+The best way to diagnose issues with wireless downtime is by using the Link Status Log utility. This utility is available from the October 2022 release onwards and is accessed in the services -> Link Status Log menu. More details are in the "Remote Management Guide for Mesh Rider Radio".
+Reboots and crashes
+The Mesh Rider Radio is not expected to reboot. If it does, first check that your power supply is sufficient, and that the radio is not overheating. If you are able to save the state of the system before a crash or a reboot, please do so. You will need to SSH into the radio. After that, you can print the kernel messages and system logs with
+root@smartradio:/# dmesg
+root@smartradio:/# cat /var/log/messages
+You can also temporarily save the system log to the on-board flash storage with the following commands
+root@smartradio:/# uci set system.@system[0].log_file='/opt/messages'
+root@smartradio:/# uci commit system
+root@smartradio:/# reboot
+This will reboot the radio, and future system logs will be logged to the file /opt/messages. When you are finished, you should change this back to the original setting with
+root@smartradio:/# uci set system.@system[0].log_file='/var/log/messages'
+root@smartradio:/# uci commit system
+root@smartradio:/# reboot
+The Mesh Rider Radio also includes a utility to do a comprehensive save of the system state
+root@smartradio:/# sysutils savelog
+The results will be stored in /tmp/savelogs.tar.gz. You can copy this file to your host your host machine by running
+user@host-pc:~$ scp root@<IP ADDRESS>:/tmp/savelogs.tar.gz ./
+Send this file along with your technical support request.
+Table of Contents

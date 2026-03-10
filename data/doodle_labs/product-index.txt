@@ -1,0 +1,69 @@
+Source: https://techlibrary.doodlelabs.com/product-index
+
+Product Index
+Webpage to PDF
+Explore Doodle Labs’ diverse range of products, each tailored for specific use-cases and available in various frequency bands. Select a model to access comprehensive design-in documentation, including datasheets, hardware and software guides, schematics, regulatory information, and more.
+Mesh Rider® Radios
+Mesh Rider Radio models come in various form factors, each optimized for specific use-cases, enabling you to fully leverage the capabilities of our Mesh Rider OS in any system you develop.
+Mesh Rider Models
+Unlicensed Frequency Bands
+Nano-OEM
+Mini-OEM
+OEM (V2)
+Wearable (V2)
+2400 MHz - 2482 MHz
+RM-2450-11N3
+RM-2450-11N4
+RM-2450-12M3
+RM-2450-12M4
+900-MHz + 2.4-GHz
+RM-1700-21N3
+RM-1700-21N4
+RM-1700-22M3
+RM-1700-22M4
+RM-1700-22O3
+RM-1700-22W3
+5150 MHz - 5895 MHz
+RM-5600-12O3
+RM-5600-12W3
+Government Bands
+255 MHz + 2245 MHz + 2350 MHz + 2450 MHz
+RM--1300-42M3
+RM--1300-42O3
+RM--1300-42W3
+455 MHz + 2245 MHz + 2350 MHz + 2450 MHz
+RM--1400-42M3
+RM--1400-42O3
+RM--1400-42W3
+1625 MHz - 2510 MHz
+RM-2025-61N3
+RM-2025-61N4
+RM-2025-62M3
+RM-2025-62M4
+RM-2025-62O3
+RM-2025-62W3
+1350 MHz -1390 MHz + 2200 MHz - 2510 MHz
+RM-2100-41N3
+RM-2100-41N4
+RM-2100-42M3
+RM-2100-42M4
+RM-2100-42O3
+RM-2100-42W3
+4940 MHz - 5895 MHz
+RM-5400-22O3
+RM-5400-22W3
+4400 MHz - 5925 MHz
+RM-5200-92O3
+RM-5200-92W3
+Special
+5650 MHz - 5755 MHz
+RM-5700-2LSX-SA-ST
+RM-5700-12W3
+Dual Radio
+Doodle Labs’ Mesh Rider Dual Radio is a new drone networking product that combines two Doodle Labs Mesh Rider Radios and powerful networking software into a single, ultra-resilient datalink solution.
+Dual Radios operate in two distinct frequency bands simultaneously and can be deployed in many new and different network topologies.
+Dual Radio
+OEM-OEM
+1625 - 2450 MHz + 4400 - 5925 MHz
+DR-2025-5200-69O3
+Table of Contents

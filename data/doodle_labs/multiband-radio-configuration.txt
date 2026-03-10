@@ -1,0 +1,50 @@
+Source: https://techlibrary.doodlelabs.com/multiband-radio-configuration
+
+Software Guides
+Getting Started
+General Configuration
+Model Specific Configuration
+Multiband Radios
+Wearable/OEM Radios
+SENSE - Interference Avoidance Configuration
+Large Network Optimization
+Remote Management Guide
+Remote Management: CLI
+Remote Management: JSON RPC
+JSON RPC Reference
+GPS Guide
+Serial Interface Guide
+GPIO usage and LED Blinking
+Production Firmware Customization
+Mass Firmware Update
+Advanced Networking Guide
+Multiband Radio Configuration
+Webpage to PDF
+Most newer Doodle Labs radios are multiband radios. In the software, each band is treated as a submodel, and switching bands is done by switching to a different submodel. Even the RM-2450 variants of the Mesh Rider radio support two submodels, the RM-2450-xxxx submodel, and the RM-2455-xxxx submodel (xxxx depends on the form factor). It is possible to switch to a different band through both the GUI and the CLI.
+Band Switching using the GUI
+Navigate to Link Optimization → Wireless. Use the drop-down menus under Frequency Configuration to select the desired Frequency Band, Channel, and Bandwidth, then click Apply to confirm the changes.
+Fig. 1 Wireless band selection for Helix models
+It is also possible to perform a fast band switch through the
+Sense
+menu.
+Band Switching using the CLI
+You can
+SSH
+into the radio to get to it's command prompt. In order to execute a band switch through the CLI, you first need to know the submodel name. You can get a list of submodel names using the following command.
+$ cat /usr/share/.doodlelabs/fes/$(fes_model.sh get parent)
+sub_model0="RM-1675-2L-X"
+sub_model1="RM-1815-2L-X"
+sub_model2="RM-2065-2L-X"
+sub_model3="RM-2245-2L-X"
+sub_model4="RM-2350-2L-X"
+sub_model5="RM-2455-2L-X"
+sub_model6="RM-2450-2L-X"
+You can then run the script
+/usr/share/simpleconfig/band_switching.sh <submodel>
+. For example, to switch to the 1815-MHz band, use the command
+/usr/share/simpleconfig/band_switching.sh RM-1815-2L-X
+Note that after switching bands, the radio will be in the default channel. If you have the messaging system set up, a better way to switch bands is detailed in the
+Sense
+guide
+. This will allow you to distribute band switching commands across the network.
+Table of Contents

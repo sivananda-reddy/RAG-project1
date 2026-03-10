@@ -1,0 +1,146 @@
+Source: https://techlibrary.doodlelabs.com/simple-config-cli-guide
+
+Software Guides
+Getting Started
+General Configuration
+Model Specific Configuration
+Multiband Radios
+Wearable/OEM Radios
+SENSE - Interference Avoidance Configuration
+Large Network Optimization
+Remote Management Guide
+Remote Management: CLI
+Remote Management: JSON RPC
+JSON RPC Reference
+GPS Guide
+Serial Interface Guide
+GPIO usage and LED Blinking
+Production Firmware Customization
+Mass Firmware Update
+Advanced Networking Guide
+Simple Config CLI Guide
+Webpage to PDF
+Introduction
+SimpleConfig
+is a setup wizard used on Doodle Labs SmartRadios to quickly apply predefined configuration profiles (like
+uav
+,
+gcs
+,
+general
+, etc.) that control various system services including Wi-Fi, networking, and firewall. It works by modifying UCI (Unified Configuration Interface) settings and reloading relevant services. While the GUI offers an easy way to apply profiles, advanced users or scripts may prefer using the CLI. This guide explains how to view, edit, and apply SimpleConfig profiles directly from the command line using SSH.
+List of Supported Profiles
+SimpleConfig supports multiple pre-defined profiles tailored to different use cases. Each profile applies a unique set of system, network, and wireless settings. You can inspect and activate any profile from the CLI.
+Profile Name
+Description
+general
+Default profile for general use
+uav
+For radios mounted on Uncrewed Aerial Vehicles
+gcs
+For Ground Control Stations (standard)
+gcs_internet
+GCS profile with internet gateway support
+connected_teams
+Used in tactical/team communication networks
+factory_infra
+For factory APs, bridges, or backhaul links
+factory_robot
+Optimized for factory mobile robot radios
+factory_mesh
+Mesh deployment across factory devices
+To view the current settings for any profile, use:
+uci show simpleconfig.@<profile-name>[0]
+Example viewing the General Profile Configuration
+To inspect the general profile, run:
+uci show simpleconfig.@general[0]
+Example output:
+simpleconfig.cfg03f223=general
+simpleconfig.cfg03f223.add_eth1='1'
+simpleconfig.cfg03f223.add_eth1_disabled='0'
+simpleconfig.cfg03f223.aggr_tpc='1'
+simpleconfig.cfg03f223.dhcp='client_enabled'
+simpleconfig.cfg03f223.distance='4000'
+simpleconfig.cfg03f223.general_wifimode='mesh'
+simpleconfig.cfg03f223.low_latency='0'
+simpleconfig.cfg03f223.mesh_id='simpleconfig'
+simpleconfig.cfg03f223.no_fes_password='DoodleSmartRadio'
+simpleconfig.cfg03f223.no_fes_ssid='DoodleLabsWiFi'
+simpleconfig.cfg03f223.no_fes_wifimode='ap_no_fes'
+simpleconfig.cfg03f223.nodes_in_network='1_to_2'
+simpleconfig.cfg03f223.password='DoodleSmartRadio'
+simpleconfig.cfg03f223.profilemode='general_profile'
+simpleconfig.cfg03f223.qdetection_enabled='1'
+simpleconfig.cfg03f223.rate_threshold='400'
+simpleconfig.cfg03f223.size_threshold='400'
+simpleconfig.cfg03f223.ssid='wireless-hotspot'
+simpleconfig.cfg03f223.tpc='1'
+simpleconfig.cfg03f223.bandwidth='5'
+simpleconfig.cfg03f223.channel='95'
+simpleconfig.cfg03f223.freq_band='RM-4600-2KM-XW'
+simpleconfig.cfg03f223.no_fes_channel='0'
+Note: Some settings like freq_band may not be visible by default unless previously set, but they can be configured directly.
+How to Check Supported
+freq_band
+Values
+Before modifying the frequency band, you can verify which
+freq_band
+options are supported by your specific radio hardware.
+Run the following command:
+cat /usr/share/.doodlelabs/fes/$(fes_model.sh get parent)
+Example output:
+root@smartradio-:~# cat /usr/share/.doodlelabs/fes/$(fes_model.sh get parent)
+sub_model0="RM-4600-2KM-XW"
+sub_model1="RM-4870-2KM-XW"
+sub_model2="RM-4965-2KM-XW"
+sub_model3="RM-5060-2KM-XW"
+sub_model4="RM-5300-2KM-XW"
+sub_model5="RM-5500-2KM-XW"
+sub_model6="RM-5650-2KM-XW"
+Example: Modifying Parameters via CLI
+Step 1: Set Operating Frequency Band, Channel, and Bandwidth
+uci set simpleconfig.@general[0].freq_band='RM-2455v4-2KM-XW'
+uci set simpleconfig.@general[0].channel='21'
+uci set simpleconfig.@general[0].bandwidth='10'
+Step 2: Save the Changes
+uci commit simpleconfig
+Step 3: Apply the Profile Using
+simpleconfig.sh
+After saving the changes, apply the profile to activate the new settings:
+/usr/share/simpleconfig/simpleconfig.sh start general
+Replace
+general
+with another profile name like
+uav
+,
+gcs
+, or
+factory_robot
+as needed.
+Overview Example: Full CLI to Modify RF Parameters and Apply the General Profile
+ssh root@192.168.153.1
+# Set RF parameters
+uci set simpleconfig.@general[0].freq_band='RM-2455v4-2KM-XW'
+uci set simpleconfig.@general[0].channel='21'
+uci set simpleconfig.@general[0].bandwidth='10'
+# Save
+uci commit simpleconfig
+# Apply
+/usr/share/simpleconfig/simpleconfig.sh start general
+Notes
+1.Always make sure to commit your UCI changes using
+uci commit simpleconfig
+before running the profile script.
+2.The system does
+not
+automatically apply general profile settings unless explicitly defined or called via script.
+3.Double-check whether changes belong to the
+general
+or
+specific profile
+section to avoid misconfiguration.
+4.Because applying a Simple Configuration profile restarts the network, we recommend running the script as a background process with
+&
+. e.g
+/usr/share/simpleconfig start general &
+Table of Contents

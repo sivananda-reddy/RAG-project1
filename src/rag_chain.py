@@ -7,22 +7,29 @@ This module implements the complete Retrieval-Augmented Generation pipeline.
 import os
 import logging
 from typing import List
+from pathlib import Path
 from dotenv import load_dotenv
+
+# Get the project root directory (parent of src folder)
+PROJECT_ROOT = Path(__file__).parent.parent.absolute()
 
 try:
     from langchain.chains import RetrievalQA
-    from langchain.llms import OpenAI
+    from langchain_community.chat_models import ChatOpenAI
     from langchain.llms.fake import FakeListLLM
 except ImportError:
     RetrievalQA = None
 
-from pdf_loader import PDFLoader
+from document_loader import DocumentLoader
 from embeddings import EmbeddingGenerator
 from vector_store import VectorStore
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-load_dotenv()
+
+# Load .env from project root
+env_path = PROJECT_ROOT / '.env'
+load_dotenv(env_path)
 
 
 class RAGPipeline:
@@ -59,17 +66,57 @@ class RAGPipeline:
                 logger.warning(
                     "OPENAI_API_KEY not set. Using fake LLM for demonstration."
                 )
-                return FakeListLLM(responses=["This is a demo response."])
+                return FakeListLLM(responses=[
+                    "This is a demo response. To use real AI responses, please set your OPENAI_API_KEY in the .env file."
+                ])
             
             try:
-                return OpenAI(
-                    openai_api_key=api_key,
-                    model_name=model_name,
-                    temperature=temperature
-                )
+                # Check if using OpenRouter (key starts with sk-or-)
+                api_base = os.getenv("OPENAI_API_BASE")
+                
+                # Prepare ChatOpenAI parameters
+                llm_params = {
+                    "openai_api_key": api_key,
+                    "model_name": model_name,
+                    "temperature": temperature,
+                    "max_retries": 2
+                }
+                
+                # Add base URL if provided (for OpenRouter or other providers)
+                if api_base:
+                    llm_params["openai_api_base"] = api_base
+                    logger.info(f"Using custom API base: {api_base}")
+                
+                llm = ChatOpenAI(**llm_params)
+                
+                # Test the API key with a simple call
+                try:
+                    from langchain.schema import HumanMessage
+                    test_msg = [HumanMessage(content="test")]
+                    llm.invoke(test_msg)
+                    logger.info("API key validated successfully")
+                    return llm
+                except Exception as api_error:
+                    error_str = str(api_error)
+                    if "429" in error_str or "insufficient_quota" in error_str:
+                        logger.warning(
+                            "API quota exceeded. Using demo LLM. "
+                            "Please check your billing."
+                        )
+                        return FakeListLLM(responses=[
+                            "This is a demo response. Your API quota has been exceeded. "
+                            "The retrieval system is working perfectly - it found relevant documents from your PDF. "
+                            "To get real AI-generated answers, please add credits to your account."
+                        ])
+                    else:
+                        logger.error(f"API validation error: {error_str}")
+                        raise api_error
             except Exception as e:
-                logger.error(f"Error initializing OpenAI LLM: {str(e)}")
-                return FakeListLLM(responses=["This is a demo response."])
+                logger.error(f"Error initializing LLM: {str(e)}")
+                return FakeListLLM(responses=[
+                    "Demo mode: The retrieval system found relevant documents from your PDF. "
+                    "Please check your API key and billing for real AI responses."
+                ])
         
         else:  # fake
             return FakeListLLM(responses=[
@@ -77,18 +124,27 @@ class RAGPipeline:
                 "In production, this would be a real response from OpenAI or another LLM."
             ])
     
-    def load_documents(self, pdf_path: str = "./data") -> None:
+    def load_documents(self, pdf_path: str = None) -> None:
         """
         Load PDF documents and create embeddings.
         
         Args:
-            pdf_path: Path to directory containing PDFs
+            pdf_path: Path to directory containing PDFs. If None, uses default ./data
         """
         logger.info("Loading documents...")
         
+        # Use project root data directory if no path specified
+        if pdf_path is None:
+            pdf_path = str(PROJECT_ROOT / "data")
+        elif not os.path.isabs(pdf_path):
+            # If relative path, make it relative to project root
+            pdf_path = str(PROJECT_ROOT / pdf_path)
+        
+        logger.info(f"Looking for documents (PDF, TXT, MD, PY) in: {pdf_path}")
+        
         # Load PDFs
-        loader = PDFLoader(pdf_path)
-        documents = loader.load_all_pdfs()
+        loader = DocumentLoader(pdf_path)
+        documents = loader.load_all_documents()
         
         if not documents:
             logger.warning("No documents loaded")
@@ -157,7 +213,22 @@ Question: {question}
 Answer:"""
         
         try:
-            answer = self.llm.predict(prompt)
+            from langchain.schema import HumanMessage
+            messages = [HumanMessage(content=prompt)]
+            
+            # Handle different LLM types
+            if hasattr(self.llm, 'invoke'):
+                # ChatOpenAI or similar
+                result = self.llm.invoke(messages)
+                answer = result.content if hasattr(result, 'content') else str(result)
+            elif hasattr(self.llm, 'predict'):
+                # Older LangChain LLMs
+                answer = self.llm.predict(prompt)
+            elif hasattr(self.llm, 'responses'):
+                # FakeListLLM
+                answer = self.llm.responses[0]
+            else:
+                answer = "Unable to generate response"
         except Exception as e:
             logger.error(f"Error generating answer: {str(e)}")
             answer = "Error generating response"

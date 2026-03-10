@@ -1,0 +1,101 @@
+Source: https://techlibrary.doodlelabs.com/mesh-rider-real-time-graphing-tool
+
+Mesh Toolbox
+Mesh Rider Firmware & Release Notes
+Throughput Estimation Tool
+Range Estimation Tool
+Mesh Rider Log File Viewer
+Mesh Rider Mobile App
+Firmware Update Tool
+Mesh Rider Real-Time Graphing Tool
+Mesh Rider Real-Time Graphing Tool
+Webpage to PDF
+The Mesh Rider Real-Time Graphing Tool is a cross-platform application that allow users to monitor the link state of the connected radio. This tool is a real time graphing equivalent of the link status logs. The tool supports Windows(x86_64,ARM), macOS (ARM) and Ubuntu (x86_64).
+Download and Installation
+Visit this
+page
+to get the latest version of the graphing utility for your operating system. Please note you will have to create a user account to access this software:
+Windows
+: Download the
+.exe
+file and run it directly
+Linux
+: Download either the standalone executable or the
+.deb
+package
+macOS
+: Download the
+.dmg
+file, open it, and drag the application to your Applications folder
+Connecting to the Radio
+IP Address
+: Enter the target radio you wish to connect to.
+Username
+: Enter the SSH username for the device. Mostly likely to be root if using the default radio settings.
+Password
+: Enter the SSH password. Most likely to be passwordless if using the default radio settings; which in this case you would leave the field empty.
+Scan:
+This feature will attempt to scan the 10.223.x.x subnet for Mesh Rider radios. Please note this requires your network settings to be on the 10.223.x.x subnet.
+Once the devices are discovered they are selectable in the drop-down menu.
+New Window:
+this allows you to create a new window for another radio instance.
+For distance testing it is recommended to run one instance of the tool for the GCS radio and another instance for the mobile radio.
+Default Plots for Distance Testing
+The application starts with default plots with most useful metric in range testing with Mesh Rider radios.
+The default plots show the
+RSSI -
+the received signal strength. Check that it is within the expected range.
+Inactive Time
+- this is the time since a packet was last received from that station. This is only displayed on the legend with the RSSI. When the inactive time for any station exceeds 10 seconds, the graphing tool will mark that station's inactive time as red. This is a sign that the current readings for that station are stale and cannot be trusted.
+Noise
+- this can indicate interference
+Activity
+- this is a percentage that measures the air-time congestion. 100% implies that particular channel is saturated with transmissions. Typically values over 80% is not ideal.
+TX Retries
+- this is the number of packets retried during this time interval. Very high retries can increase the activity of the channel and is sometimes the cause of heightened noise levels. (self-interference)
+TX Failed
+- this is the number of packets failed during the time interval.
+Estimated TX throughput
+- this is a calculated measurement that includes the raw amount of transmission bytes sent between a certain time interval. This value includes TX retries and as such can give values larger than throughput values from the system network monitor.
+MCS Rates
+- This is the MCS rate used to transmit to this station. The lower the MCS rate, the lower the throughput. As MCS rates drop and throughput stays constant, it likely increases the
+activity
+of the channel.
+LNA Status  -
+this reports if the low noise amplifier (LNA) of the receiver is on or off. This amplifies radio signals at the receiver and should typically be on when attempting long distance links. If Aggressive TPC is turned off, the LNA should always be on.
+On is typically indicated by 1 or 3.
+Off is typically indicated by 0 or 2.
+Pop out window functionality
+The plots can be popped out by clicking this button
+by the plot title like below.
+This feature can be useful when the main window has too many plots.
+Radio Information Section
+The Radio Information section shows the hostname of the radio you are connected to, the frequency and bandwidth of the current channel.
+If looking at the hostname of the radio is not helpful, there is also an option to set an alias for a particular radio.
+Please keep a look at the inactive time of the connected stations as it may take a while for the logs to disconnect mesh nodes which are no longer connected.
+Plot Configuration
+You can configure a graph to plot other link state variables using the "Edit Variables" button. Additionally you can also add more graphs using the "Add more plots" button. Please note the graph does not show up till you have configured it.
+Here is currently the selection of items that can plotted.
+Logging
+To enable logging, click the Logging tab.
+To start logging click the
+Start Logging
+button. The log will automatically append the hostname of the radio to the logfile. Currently the logging tool creates two log files, one is labelled raw which is a reflection of the data it is receiving from the radio and the other is labelled enhanced which incorporate the raw data with support for event markings. Both should be compatible with the Mesh Rider Log File viewer.
+Event Marking
+Quick Events lets you click a button to log a certain event in the log files.
+There is even an option to add your own quick events using the edit button.
+Additional there is a pop out button
+for quick event section so it can overlayed the graphing
+Custom Event
+This is meant for less common event messages to be entered into the log.
+Recent Events
+This shows the event log
+Common Issues and Solutions
+1. Connection Failures
+• Verify the IP address is correct
+• Ensure the device is online and accessible
+• Check that SSH is enabled on the device
+• Verify firewall settings aren't blocking connections
+2. File Permission Issues
+• Check the file path for the log folder
+Table of Contents

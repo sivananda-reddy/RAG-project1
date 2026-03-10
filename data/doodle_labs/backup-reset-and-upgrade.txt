@@ -1,0 +1,113 @@
+Source: https://techlibrary.doodlelabs.com/backup-reset-and-upgrade
+
+Troubleshooting
+Link Status Log Walkthrough Guide (Video)
+Link Quality issues
+Radio Access issues
+UART and USB Issues
+Backup Reset and Upgrade
+Crashes, Reboots etc
+Backup Reset and Upgrade
+Webpage to PDF
+Configuration Backup
+You can create a backup of your configuration in the web GUI by first clicking Advanced Settings in the bottom left-hand corner of the page, and then navigating to system -> backup/flash firmware and clicking Generate Archive.
+Firmware Upgrades
+The Mesh Rider OS can be upgraded Over the Air (OTA) or from the Ethernet ports, using either the Web GUI or the Linux console.
+Linux Console Method
+1. Copy firmware from PC to the module:
+scp -O firmware-sysupgrade.bin root@<IP ADDRESS>:/tmp/
+2. Login to Mesh Rider Radio with ssh root@<IP ADDRESS>
+3. Use the sysupgrade command to update the firmware.
+root@smartradio:~# sysupgrade -n /tmp/firmware-sysupgrade.bin
+4. Wait until the update is complete. DO NOT CYCLE THE POWER SUPPLY UNTIL THE FIRMWARE HAS BEEN UPDATED!
+Web GUI Method
+1. Enter the following into the address bar of your browser
+https://<IP ADDRESS>/cgi-bin/luci/admin/system/flashops
+2. At the bottom of the page, de-select the "keep settings" button
+3. In the "image" field, click browse and select your firmware image
+4. Click Flash Image
+5. After the system has verified the image, click Proceed
+Factory Resetting
+Configuration backup, restoration and factory resetting can be performed by navigating to the page:
+Device Manager → Firmware
+If you have modified your network configuration such that you can no longer access it, you can also factory reset the radio without network access. Factory reset differs from radio to radio.
+In general, the factory reset pin should be pressed or pulled to ground for between 5 and 30 seconds (no more than 30 seconds and no less than 5 seconds). Factory reset only works after the device has fully booted up. Power up the device and wait for assurance, wait for 3 minutes for the radio to fully boot. The location of the factory reset switch is described below.
+Note that if the device cannot be restored to its factory reset state using this method, then it is possible that the device needs to be repaired by Doodle Labs. Contact
+technical_support@doodlelabs.com
+.
+Current Generation Multiband Wearable and OEM
+The Multiband Wearable and OEM radios include Turbo and Power buttons. The Multiband OEM's buttons are accessible via the HID breakout board. Hold down the Turbo and Power buttons together for more than 5 seconds to factory reset.
+mini/nano-OEM (-2L)
+Provide power to the radio and give it 2 minutes to ensure it is fully booted. After 2 minutes has elapsed, press and hold the reset button on the evaluation board for 10 seconds and then release. (If there is no evaluation board, the reset Pin should be pulled to ground for 10 seconds and released. Please refer to the pin diagrams before attempting this. Be careful where you plug things as you could short the radio)
+1st Generation Wearable Radio (Legacy) (-2K)
+Unplug the Wearable Radio. Hold down the power button and then power the radio. Hold the power button down for between 10 and 20 seconds and then let it go. Wait for the radio to factory reset.
+Embedded Radio (Legacy) (-2J-*M)
+Look for a pin hole on the front side of the unit. Insert a pin through the hole and press the tactile switch following the recommended timing.
+External Radio (Legacy) (-2J-*E)
+The External radio includes a reset pin inside the box which should be pressed following the recommended timing.
+Embedded Radio  (Legacy) (-2H)
+The -2H radio includes a reset wire on the main connector which should be pulled to ground following the recommended timing.
+Configuration Copy with configclone.sh
+Doodle Labs offers a configuration cloning tool that enables rapid distribution of a radio configuration to multiple devices using a command-line interface. This tool is designed to simplify the process of replicating configurations while avoiding potential conflicts, such as unique IP addresses and security keys. These settings are identified as "conflicts" during the backup process and can be selectively ignored during restoration to ensure compatibility.
+Important Considerations
+Unique Settings:
+The tool prompts you about settings that might cause conflicts (like IP addressing and security keys) during the backup creation.
+Firmware Compatibility:
+It is advised to restore backups only on radios running the same firmware version to avoid issues due to changes in settings or naming conventions between versions.
+Using the Configuration Clone Tool
+To use the tool, follow these steps:
+Step 1: Connect to the Radio
+Start by connecting via SSH to the radio:
+ssh root@radio-ip-address
+Step 2: Accessing Tool Options
+To view available actions, use the
+--help
+command:
+root@radio-ip-address:~# configclone.sh --help
+This will display the following usage options:
+-b
+: create a backup
+-r
+: restore a backup
+-c
+: cleanup
+-k
+: restore backup without overwriting conflicting parameters
+-o
+: restore backup and overwrite conflicting parameters
+output file created on create_backup:
+/tmp/backup.tar.gz
+input file used
+on restore_backup:
+/tmp/backup.tar.gz
+Step 3: Create a Backup
+Run the following command to create a backup file:
+root@radio-ip-address:~# configclone.sh -b
+This command will prompt you to flag the default conflict settings, in addition to giving you the opportunity to manually flag any others you do not wish to copy upon import.
+Upon completion of flagging the conflicts, a backup file will be generated and saved at
+/tmp/backup.tar.gz
+on the radio.
+Step 4: Transfer the Backup to Your Computer
+After creating the backup, use SCP to transfer the file from the source radio to your local computer:
+scp root@radio-ip-address:/tmp/backup.tar.gz /local/directory
+Ensure you replace
+/local/directory
+with the actual path where the backup file is stored on your computer.
+Step 5: Transfer the Backup from Your Computer to the Destination Radio
+To copy the backup from your computer to another radio, use the following SCP command:
+scp /local/directory/backup.tar.gz root@radio-ip-address:/tmp/backup.tar.gz
+Ensure you replace
+/local/directory
+with the actual path where the backup file is stored on your computer.
+Step 6: Connect to the Destination Radio
+After transferring the file to the destination radio, SSH into it:
+ssh root@radio-ip-address
+Step 7: Restore the Backup on the Destination Radio
+Finally, run the restore command on the destination radio:
+root@radio-ip-address:~# configclone.sh -r
+You have the option to use
+-k
+to skip overwriting conflicting parameters or
+-o
+to overwrite them during the restoration process.
+Table of Contents

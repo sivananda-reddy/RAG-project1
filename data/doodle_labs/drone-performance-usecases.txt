@@ -1,0 +1,298 @@
+Source: https://techlibrary.doodlelabs.com/drone-performance-usecases
+
+Application Notes
+UXV Use-Cases
+Mesh Rider Radio Integration
+Low Latency C&C and Video Streaming
+Platform Integration Guide(VOXL and Skynode)
+Guidelines for RF Performance(UAV/UGV)
+Drone Performances & Use Cases
+Wearable Use-Cases
+Wearable Mesh Rider Radio Testing Results
+Starlink SATCOM Integration Guide
+GCS Profile and EUD Wizard Guide
+GCS Profile and EUD Wizard Livestreaming to YouTube Guide
+Drone Performance & Use Cases
+Webpage to PDF
+Optimizing GCS Design with Doodle Labs Mesh Rider Radios
+Introduction
+The
+Doodle Labs Mesh Rider Radio
+family offers unparalleled flexibility and performance for diverse communication scenarios, making it an ideal choice for Ground Control Station (GCS) designs. With form factors ranging from wearable to embedded and external models, Mesh Rider Radios enable robust, low-latency communication across a wide range of use cases.
+This case study explores three key applications of the Mesh Rider Radio:
+Point-to-Point Communication
+,
+Single Node Relay
+, and
+Multi-Node Relay
+. These setups demonstrate the versatility of Mesh Rider Radios in various environments and mission-critical operations.
+Point-to-Point Communication
+The
+Point-to-Point Communication
+configuration is ideal for establishing a direct link between two endpoints, such as a Ground Control Station (GCS) and an Unmanned Aerial Vehicle (UAV) or Unmanned Ground Vehicle (UGV). This setup delivers low-latency communication (typically around 10ms) and ensures stable telemetry even at the radio’s sensitivity threshold. It is best suited for line-of-sight (LOS) operations, where the high sensitivity and power efficiency of the Mesh Rider Radios enable reliable, real-time control and video transmission over extended distances.
+Single Node Relay
+A
+Single Node Relay
+configuration introduces an intermediary relay node to extend the communication range or navigate around obstacles that block LOS. This approach is especially useful in environments with significant physical obstructions, such as urban areas or rugged terrain. The relay node ensures connectivity in non-LOS scenarios and maintains low-latency communication, making it suitable for dynamic and challenging operating conditions. The scalability of this setup allows for the easy addition of relays to further enhance coverage.
+Multi-Node Relay
+The
+Multi-Node Relay
+configuration leverages the advanced mesh networking capabilities of Mesh Rider Radios to establish robust communication across multiple nodes. This setup is particularly valuable for swarm operations involving multiple UAVs or UGVs, where each node can act as a relay for others. The mesh network provides redundancy and adaptability, automatically rerouting communication paths to maintain connectivity. This configuration is ideal for large-area coverage and mission-critical applications, such as disaster recovery or military operations.
+Drone Performance Guide
+Introduction :
+We developed our Performance Optimization Guides to showcase how specific customers achieve peak performance in various ranges and use-cases. This configuration data was provided by a customer based on real field testing. Environmental challenges may require alternative configurations for similar results.
+Drone at 5 - 12 Km:
+With a flight duration of 60 minutes while carrying the maximum payload and a range of 4 km, this drone is ideal for surveillance and industrial inspections. It is equipped with dual GPS sensors for added reliability. Essential features like geofencing, terrain following, quick return to launch, and failsafe modes for communication loss, low battery, and high winds are integrated into the drone to ensure safe operations.
+Link Details
+●
+Type of System used in test
+: Multi-Rotor
+●
+Range
+: 12 km
+●
+Type of data and throughput at max range
+: 10 Mbps
+●
+Topology
+: Single Node Relay
+●
+Number of Nodes
+: 3
+Doodle Labs Product Details
+●
+Mesh Rider Radio Models
+: RM-2450-2J-XM, RM-2450-2K-XW
+●
+Frequency Band
+: 2400-2482 MHz
+●
+Channel Width
+: 10 MHz
+●
+Level of encryption
+: AES -128
+Mesh Rider Settings (if different from default)
+●
+DiffServ
+: Enabled
+●
+Socat raw UDP
+: 2000 CS6
+●
+QGC/Mavlink UDP
+: 14500 CS6
+●
+Mavlink UDP:
+14551 CS6
+●
+Transmit Power Control
+: Disabled
+●
+DHCP
+: Server
+●
+OGM Interval
+: 100
+●
+Bridge Loop Avoidance
+: 0
+●
+Ath9k_watchdog
+: 5
+Antenna Details
+●
+Antenna Gain - GCS
+: 5 dBi
+●
+Antenna Type - GCS
+: Omni
+●
+Antenna Gain - UAV
+: 5 dBi
+●
+Antenna Type - UAV
+: Omni
+●
+Tx Power
+: Max
+Environment
+●
+Location (urban, remote, etc)
+: Open Field
+Drone at 10 Km:
+This drone was developed for the DoD and is meant to be launched organically by a single solider. It fits into a rucksack and supports integrations with sensors, payloads and other technologies. The UAS is used for an array of missions, including signals intelligence, targeting and identification, direct effects and the delivery of supplies.
+Link Details
+●
+Type of System used in test
+: Multi-Rotor
+●
+Range
+: 10 km confirmed
+●
+Type of data and throughput at 10 km
+: 2-6 Mbps
+●
+Number of Nodes
+: 2-4
+Doodle Labs Product Details
+●
+Mesh Rider Radio Models
+: RM-2025-2xxxx
+●
+Frequency Band
+: Helix M1-M6
+●
+Channel Width
+: Variable, 5-20 Mhz depending upon operating profile selected
+●
+Level of encryption
+: AES -128/256
+Mesh Rider Settings (if different from default)
+●
+DiffServ
+: Enabled
+●
+Transmit Power Control
+: Enabled
+●
+Mesh Map
+: Disabled
+●
+Multicast Optimizations
+: Enabled
+●
+Types of Traffic
+: Multicast
+Antenna Details
+●
+Antenna Gain - GCS
+: MP Helix Stock Antennas 2-3 dBi
+●
+Antenna Type - GCS
+: Omni
+●
+Antenna Polarization - GCS
+: Multi
+●
+Antenna Height
+: In operator’s hands; UAV up tto 400 ft
+●
+Antenna Gain - UAV
+: MP Helix Stock Antennas 2-3 dBi
+●
+Antenna Type - UAV
+: Omni
+●
+Antenna Polarization - UAV
+: Multi
+●
+Tx Power
+: Auto or Max
+Integration/Customer System Specifics
+●
+Operational State Footprint:
+65” x 64” x 15”
+●
+Weight
+: 19 lbs
+●
+Flight controller
+: Pixhawk
+●
+GCS Software
+: QGroundControl
+●
+SBC/Encoder
+: Modal AI VOXL
+●
+Onboard camera / sensor
+: Vauxhall FPV Camera 4K
+Environment
+●
+Location (urban, remote, etc)
+: Gov and USA(FCC)
+●
+Potential obstructions to signal path
+: Mountains used for testing relays. Flying around buildings. Deliberate jamming from hostiles.
+Drone at 15 - 25 Km :
+This model is a “loitering munition” tactical attack drone launched by hand and powered by electric propulsion. The model is enabled with multiple targeting modes, operates with a range of 15-25 KM and includes a parachute for recovery and reusability.
+Link Details
+●
+Type of System used in test
+: Fixed-wing drone
+●
+Range
+: 25 km
+Doodle Labs Product Details
+●
+Mesh Rider Radio Models
+: RM-2450-2J-XM
+●
+Frequency Band
+: 2400-2482 MHz - WiFi Band - Non0Licensed
+●
+Channel Width
+: 10 MHz
+Mesh Rider Settings (if different from default)
+●
+DiffServ
+: Enabled
+●
+Transmit Power Control
+: Disabled
+●
+Mesh Map
+: Disabled
+●
+DHCP
+: Client
+●
+Ath9k_watchdog
+: 5
+Antenna Details
+●
+Antenna Gain - GCS
+: 18 dBi
+●
+Antenna Type - GCS
+: Patch
+●
+Antenna Height
+: 2 Meters
+●
+Antenna Gain - UAV
+: 2.15 dBi
+●
+Antenna Type - UAV
+: Omni
+●
+Antenna Polarization - UAV
+: Vertical
+●
+Tx Power
+: 34 dBm
+Integration/Customer System Specifics
+●
+Weight
+: 5.5 kg
+●
+Cruising speed
+: 2 km per hour, 20m per second
+●
+Endurance
+: 1 hour
+●
+Payload
+: Multiple munition options up to 1 kg, plus GPS, image, video and sensor data
+●
+Flight controller
+: Pixhawk
+●
+GCS Software
+: QGroundControl
+Environment
+●
+Location (urban, remote, etc)
+: India, Open Field, countryside. Beyond Visual Line of Sight (BVLOS).
+Table of Contents

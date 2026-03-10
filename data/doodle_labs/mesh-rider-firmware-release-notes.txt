@@ -1,0 +1,26 @@
+Source: https://techlibrary.doodlelabs.com/mesh-rider-firmware-release-notes
+
+Mesh Toolbox
+Mesh Rider Firmware & Release Notes
+Throughput Estimation Tool
+Range Estimation Tool
+Mesh Rider Log File Viewer
+Mesh Rider Mobile App
+Firmware Update Tool
+Mesh Rider Real-Time Graphing Tool
+Mesh Rider Firmware & Release Notes
+Webpage to PDF
+The latest generation Mesh Rider radios share a common firmware across all hardware variants. Legacy radios, however, are limited to the May 2023 firmware release as their final supported version.
+Latest Firmware
+June 2025 Release
+Recommended for new deployments.
+Includes the newest features and fixes—intended for current hardware models only and not suitable for legacy models (2J and 2K models). Install only if your hardware and software stack are fully compatible.
+Prior Releases
+Previous Firmware Releases
+For controlled upgrades or compatibility needs.
+Recent past releases that let developers choose a known, tested version for their specific application.
+Long-Term-Stable Firmware
+May 2023 Long-Term-Stable Release
+Designed for legacy systems (2J and 2K models).
+Maintained for stability. Intended for older hardware models—newer models should use the Latest or Previous Firmware releases.
+Table of Contents

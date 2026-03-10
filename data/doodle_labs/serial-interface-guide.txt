@@ -1,0 +1,109 @@
+Source: https://techlibrary.doodlelabs.com/serial-interface-guide
+
+Software Guides
+Getting Started
+General Configuration
+Model Specific Configuration
+Multiband Radios
+Wearable/OEM Radios
+SENSE - Interference Avoidance Configuration
+Large Network Optimization
+Remote Management Guide
+Remote Management: CLI
+Remote Management: JSON RPC
+JSON RPC Reference
+GPS Guide
+Serial Interface Guide
+GPIO usage and LED Blinking
+Production Firmware Customization
+Mass Firmware Update
+Advanced Networking Guide
+Serial Interface Guide
+Webpage to PDF
+The Mesh Rider Radio runs a customized version of Openwrt with enhancements related to the Doodle Labs Mesh Rider® technology. These enhancements are useful for applications requiring low-latency command-and-control transmission and high-throughput video - e.g. UAV and robotics.
+The purpose of this guide is to aide a programmer in configuring the Mesh Rider Radio Serial interface. Communications over the Mesh Rider Radio's wireless interface are IP based, so it is necessary to relay packets from the network to the serial interface. This guide includes examples of how to send data from the serial interface of one radio to that of another radio, or to simply send packets directly over the network to the serial interface.
+Hardware Setup
+Doodle Labs currently offers four main hardware variants in its Mesh Rider Radio lineup. UART is available on all hardware variants. However, these hardware variants have different pinouts and you should refer to the documentation package of your specific hardware for pinout information. The hardware versions can be differentiated by the model number. In all cases, the UART is implemented as one TX line, one RX line, and GND.
+Please note that - 1. The legacy models (-2H-*U) have a USB host port on the auxiliary connector and have no UART port. For the UART port, you require -2H-*S model.
+Connection Guide
+1. The UART connector is a 3-pin connector consisting of TX, RX, and GND. The TX and RX wires should be coupled closely with the GND wire for good signal integrity.
+2. Typically, when two devices are connected over UART, the TX wire of the first device should be connected to the RX wire of the other device and vice versa.
+3. While most models use 3.3-V TTL signaling, the External Mesh Rider Radio (-2J-*E) uses RS232 signaling. Please consult the documentation package of your hardware before hooking up the UART.
+Serial Interface Configuration
+Start with one of the hardware setups in the section above. A generic setup is shown in Figure 1.
+Fig. 1 Generic UART hardware connection
+Configuring the UART port using the GUI
+Serial Configuration can be accessed by navigating to the sidebar and selecting Utilities → Serial Config. This page allows users to configure UART as a Serial-to-Network bridge. You can enable the serial service, choose between Unicast server/client roles, and select UDP or TCP as the transport protocol. UDP is still recommended for mobile applications due to its faster response. Additionally, you can specify the port number, enable address reuse, set the baud rate, and select the device path (e.g.,
+/dev/uart0
+). All changes should be saved by clicking the Save Configuration button at the bottom right.
+Fig. 2 UART Configuration GUI
+GCS Network Port Binding (Important)
+Some GCS software (notably Mission Planner) do not allow the user to bind the socket to a particular network port when in client mode. Instead, the network port is assigned by the kernel. Therefore, every time Mission Planner restarts it's UDP client, it will restart from a new network port. Unfortunately, this confuses socat (on the Mesh Rider Radio), and it can lead to high MAVLink packet loss.
+The suggested solution is to setup socat in client mode and input the IP address of the GCS. In that case Mission Planner will be in UDP server mode and listening on port 14550. Alternatively, you can use the GCS Finder utility described later in this document.
+Manual Configuration and Debugging the UART port
+We recommend using the GUI for serial port configuration, but if you want an advanced configuration, then you may also use the CLI. This guide is not designed to be comprehensive, and if you plan on using the UART port manually, then you will need to have Linux expertise. We will discuss some of the tools which are built into the Mesh Rider Radio for you to use, and this section will also be useful as a debugging guide.
+You can SSH into the radio by running
+user@host-pc:~$ ssh root@<IP Address>
+It may be necessary to update your PC's list of known hosts first.
+user@host-pc:~$ ssh-keygen -R <IP Address>
+The UART interface is attached to /dev/uart0.
+Disable Socat
+Before attempting to use the UART port manually, ensure that socat is disabled. SSH into the radio and run
+root@smartradio:~# uci set socat.http.enable='0'
+root@smartradio:~# uci commit
+root@smartradio:~# /etc/init.d/socat restart
+This can also be done in the web GUI.
+STTY Configuration
+The default UART settings can be changed using the stty program which is installed on the Mesh Rider Radio. An example usage is,
+root@smartradio:~# stty -F /dev/ttyUSB0 115200 cs8 -cstopb -parenb
+which sets the speed to 115,200 baud, 8 data bits, 1 stop bit and no parity.
+(Please note that the Helix Mesh Rider Radio's UART port supports max 115,200 baud).
+picocom
+From the May 2021 firmware release onwards, picocom is installed by default on the Mesh Rider Radio. picocom is a terminal access program which can be used for general debugging of the UART port. You can invoke picocom with
+root@smartradio:~# picocom -b 115200 /dev/uart0
+You can exit picocom by holding down CTRL, and the hitting a and then x. For a full list of commands, just type picocom.
+cat and echo
+A single message can easily be sent on the UART port using echo
+root@smartradio:~# echo -ne "Hello World\n" > /dev/ttyUSB0
+or received on the UART port using cat
+root@smartradio:~# cat < /dev/ttyUSB0
+These programs use the settings applied by stty as defaults.
+agetty
+The program agetty can be used to open a serial console over the USB UART port. First access the Mesh Rider Radio over SSH, and then run
+root@smartradio:~# agetty -8 115200 ttyUSB0 -n -l /bin/ash
+socat and ser2net
+socat and ser2net are installed on the Mesh Rider Radio, however, due to a socat bug, we strongly recommend that you use the web GUI for their configuration.
+GCS Finder
+If you are using a MAVLink-based Ground Control Station (GCS) such as QGroundControl or Mission Planner, you can use our built-in GCS-Finder utility. The connection diagram is assumed to be like that in Fig. 4.
+Fig. 3 UAV GCS System
+To configure the GCS Finder service in the GUI, navigate to Utilities → GCS Finder from the sidebar. Here, you can enable the GCS Finder service, set the Broadcast IP, Source IP, Port, Timeout, Baud Rate, and UART device. Once enabled, the GCS Finder automatically disables
+socat
+to avoid port conflicts. Be sure to click Save Configuration at the bottom-right corner to apply the changes.
+Fig. 4 GCS finder configuration
+UART Troubleshooting
+The troubleshooting includes information about how to manually configure the UART port over the CLI. Troubleshooting the serial interface generally requires the user to be able to SSH into the radio.
+The general steps to debug the UART port are
+1. Make sure you can get data from a PC to the UART port. You can SSH into the Mesh Rider Radio and run the application picocom.Make sure you disable socat before running picocom.
+a. In order to eliminate the user’s host machine as the source of the problem, you can connect the UART port in loop-back mode but directly wiring the UART TX to the RX. Any message you type in picocom should be echoed back to you.
+b. Assuming loop-back works, then the problem could be a mismatch in the signalling levels, or UART settings (baudrate, parity etc).
+2. Assuming that serial data can be sent and received over the UART interface you can debug the networking side. Close picocom and re-enable and re-start the serial interface bridge using the GUI. Then in the Mesh Rider Radio CLI, you can
+a. Check that socat and ser2net are running (they will both be running)
+root@smartradio:/# ps | grep -E "socat|ser2net" | grep -v "socat|ser2net"
+3133 root      1012 S    /usr/sbin/ser2net -c /var/run/ser2net.conf
+3370 root      1072 S    /usr/bin/socat tcp:127.0.0.1:65534 UDP4-LISTEN:2000
+b. This command will display the data being transmitted through the UART0 serial port.
+root@smartradio:/# cat /dev/uart0
+\xFE\xFD\x00\x00\x02\x01\x00\x10\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\
+c. Make sure that the firewall is open if you are using server mode
+root@smartradio:/# iptables -L | grep 2000
+ACCEPT     udp  --  anywhere             anywhere             udp dpt:2000 /* !fw3: Allow-Socat */
+ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:2000 /* !fw3: Allow-Socat */
+d. Check the status of the socket. In TCP mode, the socket should be either in a LISTEN state or an ESTABLISHED state. In UDP mode, the state will be either empty or ESTABLISHED
+root@smartradio:/# netstat -tuapn | grep 2000
+tcp        0      0 0.0.0.0:2000            0.0.0.0:*               LISTEN      20711/socat
+e. This command is a packet analyzer tool that captures network packets in real-time.
+root@smartradio:/# tcpdump -l br-wan port 2000
+f. If the connection state is not ESTABLISHED, then it means that the application trying to connect to the Mesh Rider Radio is unable to connect. This is normally a problem with the configuration. For example, the IP address, network port or firewall could be configured wrongly.
+For more USB related Troubleshooting follow the link
+UART and USB Troubleshooting
+Table of Contents

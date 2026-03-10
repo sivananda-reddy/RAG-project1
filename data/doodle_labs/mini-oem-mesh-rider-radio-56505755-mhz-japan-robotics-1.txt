@@ -1,0 +1,55 @@
+Source: https://techlibrary.doodlelabs.com/mini-oem-mesh-rider-radio-56505755-mhz-japan-robotics-1
+
+Products
+Product Index
+Mesh Rider Radios
+Industrial Wi-Fi Transceivers
+Legacy Products
+mini-OEM Mesh Rider Radio - 5650~5755 MHz (Japan Robotics)
+Webpage to PDF
+RM-5700-2LSX-SA-ST
+Japan Robotics
+The Doodle Labs mini -OEM and Wearable V2 Mesh Rider Radios feature a specialty Japan Robotics band . It is important to note, for the mini -OEM there is custom Firmware and different connector styles than the 2023 Update. These changes render the RM-5700-2L incompatible with the 2023 Update and only RM-5700-2L firmware should not be used for this model.
+Change List
+1. Primary connector replaced by 2 connectors, with 1 connector for hardware interfaces and 1 connector for additional power supply
+2. Hardware interface connector (
+SM15B) + additional power supply connector (SM6B)
+3. Custom Firmware: RM-5700 Release
+Accordion Example
+Datasheet
+mini-OEM Mesh Rider Radio - 5650~5755 MHz (Japan Robotics)
+Hardware Information
+Hardware Integration Guidelines:
+Hardware Integration Guidelines
+Mesh Rider Hardware Interfaces:
+Mesh Rider Radio Hardware Interfaces
+Model-Specific Hardware Integration Guide:
+Japan Robotics
+Radio Integration Information
+Japan Robotics:
+Pin Diagrams
+2D Drawings
+3D Drawings
+Heat Map
+Cable Drawings
+Evaluation Kit Information
+Japan Robotics:
+EVK Pin Diagram and Wiring Guide
+EVK Schematic
+EVK Layout
+EVK 2D Drawing
+EVK 3D Drawing
+Accessories
+Heat Sink
+Antenna Information
+Evaluation Kit Antenna Datasheet (2024)
+Evaluation Kit Antenna Datasheet (Legacy)
+Software Information
+Firmware Downloads
+Latest Firmware
+June 2025 Release
+Long-Term Firmware Downloads
+RM-5700 Release
+Regulatory Information
+MIC (Japan, Article 2-1-72 Unmanned Mobile Image Transmission System)
+Table of Contents

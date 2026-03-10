@@ -1,0 +1,104 @@
+Source: https://techlibrary.doodlelabs.com/wearable-field-testing-results
+
+Application Notes
+UXV Use-Cases
+Mesh Rider Radio Integration
+Low Latency C&C and Video Streaming
+Platform Integration Guide(VOXL and Skynode)
+Guidelines for RF Performance(UAV/UGV)
+Drone Performances & Use Cases
+Wearable Use-Cases
+Wearable Mesh Rider Radio Testing Results
+Starlink SATCOM Integration Guide
+GCS Profile and EUD Wizard Guide
+GCS Profile and EUD Wizard Livestreaming to YouTube Guide
+Wearable Field Testing Results
+Webpage to PDF
+Introduction
+One of the first questions we get is the achievable range with the Wearable Mesh Rider Radios. It is not possible to give a simple answer as it depends on a number of different variables. In this document we have compiled some real-world field data to provide some indications of what the customers can expect in their use case.
+The Wearable Mesh Rider Radio is designed to be man-portable and is normally carried in a backpack at around 1+ meter (3-4 feet) height. This low height affects the Fresnel Zone and LOS clearance due to uneven terrain, foliage and other environmental conditions. These variables affect the achievable range.
+As you will observe in the following field scenarios, raising the height of one of the nodes on a mast (like mounted on a vehicle) has significant advantage in performance. It is possible to achieve around 3 to 4 Km range while sustaining 5 Mbps throughput for HD video transmission. For people to people communication in a MANET, it is possible to achieve 1.5 to 2 Km range with 5 Mbps throughput. The range can be even longer for lower throughput requirements.
+It is also notable that the Mesh Rider Radios are available in many different frequencies. So for use cases that require deep penetration through the woods, we recommend the use of the 900 MHz radios. However, note that the 900 MHz band has the widest Fresnel zone, limiting the range that can be achieved with radios at low height.
+On the other end, even though the 5.8 GHz has bigger path loss, it has the smallest Fresnel zone and hence it can achieve longer range in clear LOS conditions. However, signals at this high frequency can not penetrate deep foliage. For a balance between the range and the penetration, use of the 2.4 GHz Mesh Rider Radios is recommended.
+Tough Stump Rodeo Demo (3.2km LOS @ 5 Mbps)
+Fig. 1 Tough Stump Test Location
+●
+Range measured – 3.2 Km @ 5 Mbps
+●
+Radio Model – Wearable RM-915-2K-XW on one end, External RM-915-2J-XE atop a van (about 15 feet)
+●
+Frequency = 922 MHz
+●
+Channel Bandwidth = 10 MHz
+●
+Antenna height = 1.2 m
+●
+Antennas = ANT-915-2-GN (2 dBi gooseneck)
+Doodle Labs in collaboration with PAR participated in the [Tough Stump Rodeo] "https://doodlelabs.com/case-studies/case-study-par-government/" demo in June 2022. With a Samsung S22 Smartphone connected to the Wearable Mesh Rider Radio over Wi-Fi, a 3.2 Km link was established to carry 5-Mbps throughput, and 3MB images were transferred from the EUD to a local PC using ATAK. The average latency was 10ms.
+AWS FTX Field Trial (1.4 Km NLOS @ 8-12 Mbps)
+Fig. 2 – AWS FTX Test Location
+●
+Range measured – 1.4 Km NLOS @ 8-12 Mbps with a repeater hop
+●
+Radio Model – Wearable RM-915-2K-XW on one end, External RM-915-2J-XE atop a mast (about 15 feet)
+●
+Frequency = 922 MHz
+●
+Channel Bandwidth = 10 MHz
+●
+Antenna height = 1.2 m
+●
+Antennas = ANT-915-3-O (2 dBi gooseneck)
+Doodle Labs participated in the [AWS FTX field] "https://doodlelabs.com/case-studies/case-study-aws/" trial in June 2022 to demonstrate a completely off-grid mobile ad-hoc network (MANET). The FTX test site is heavily wooded and late springtime meant that the trees had dense leaves. A picture of the site is shown above in Fig. 2, and a sketch of the network below in Fig. 3.
+Fig. 3 – AWS FTX Network Topology
+An External 915-MHz Mesh Rider Radio was mounted on a 15 foot pole and the Wearable Mesh Rider Radio for roaming connected worker. An 8-12 Mbps TCP/IP link was established between Logging Hill and Home Base. There was no line of sight between Logging Hill and Home Base, and the signal hopped through New Cabin.
+Doodle Labs Field Tests
+Numerous performance tests were conducted on a long-straight road with both radios at shoulder height. A picture of the test location is shown in Fig. 4. The measurements were limited to the 900 meter range due to the road blockage.
+However, do note the increase in throughput at higher frequencies due to smaller Fresnel zone obstruction. This would mean longer range if it was possible to go further out.
+Fig. 4 – Field test location
+Field Test Results for 900 MHz (Set 1)
+●
+Range measured – 900 meters @ 6 Mbps
+●
+Radio Model – RM-915-2K-XW on both ends
+●
+Frequency = 922 MHz
+●
+Channel Bandwidth = 10 MHz
+●
+Antenna height = 1.2 m
+●
+Antennas = ANT-915-3-O (2 dBi gooseneck)
+Fig. 5 – RM-915-2K-XW Performance
+Field Test Results for 900 MHz (Set 2)
+●
+Range measured – 1600 meters @ 1.6 Mbps
+●
+Radio Model – RM-915-2K-XW on both ends
+●
+Frequency = 915 MHz
+●
+Channel Bandwidth = 10 MHz
+●
+Antenna height = 1.5 m
+●
+Antennas = ANT-915-3-O (2 dBi gooseneck)
+Fig. 6 – RM-915-2K-XW Performance
+Field Results for 2.4 GHz
+● Range measured – 800 meters @ 9 Mbps
+● Radio Model – RM-2450-2K-XW on both ends
+● Frequency = 2442 MHz
+● Channel Bandwidth = 15 MHz
+● Antenna height = 1.2 m
+● Antennas = ANT-2450-3-O (2 dBi gooseneck antenna)
+Fig. 7 – RM-2450-2K-XW Performance
+Field Test Results for 5.7 GHz
+● Range measured – 800 meters @ 9 Mbps
+● Radio Model – RM-5500-2K-XW on both ends
+● Frequency = 5745 MHz
+● Channel Bandwidth = 10 MHz
+● Antenna height = 1.2 m
+● Antennas = ANT-5000-2-GN (2 dBi gooseneck)
+Fig. 8 – RM-5500-2K-XW Performance at 5745 MHz
+Copyright Doodle Labs 2023
+Table of Contents

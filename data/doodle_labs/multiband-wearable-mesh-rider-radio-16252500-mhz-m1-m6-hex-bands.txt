@@ -1,0 +1,53 @@
+Source: https://techlibrary.doodlelabs.com/multiband-wearable-mesh-rider-radio-16252500-mhz-m1-m6-hex-bands
+
+Products
+Product Index
+Mesh Rider Radios
+Industrial Wi-Fi Transceivers
+Legacy Products
+Multiband Wearable Mesh Rider Radio – 1625~2500 MHz (M1-M6 Hex bands)
+Webpage to PDF
+RM-2025-62W3
+Wearable V2 Update:
+The Multiband Wearable V2 Mesh Rider radio represents a significant upgrade over its predecessor, incorporating a host of new features and improvements to enhance performance and versatility. This next-generation device boasts expanded multiband capabilities, supporting a wider range of frequencies to ensure robust communication in diverse environments. Designed with ruggedness in mind, the Wearable V2 is ideal for demanding applications in challenging conditions, making it an essential tool for modern communication needs.
+Accordion Example
+Datasheet
+Multiband Wearable Mesh Rider Radio – 1625~2500 MHz (M1-M6 Hex bands)
+Getting Started w/ the Wearable
+General Hardware Integration Guides:
+Hardware Integration Guidelines
+Mesh Rider Radio Hardware Interfaces
+Model-Specific Hardware Integration Guides:
+Multi-Band Wearable User Guide
+Wearable Configuration
+Mesh Rider GPS Guide
+General Software Setup Guides:
+Getting Started
+Flashing new firmware
+Hardware Information (V2)
+Radio Integration Information
+2D Drawings
+3D Drawings
+Heat Map
+Pinout
+Software Information
+Mesh Rider Firmware Downloads
+Latest Firmware
+June 2025 Release
+Older Firmware
+Older firmware (not recommended)
+Long-Term-Stable Firmware
+May 2023 Long-Term-Stable Release
+Antennas + Accessories
+Accessories
+Wearable Mounting Bracket Kit
+Battery Datasheet
+Battery Drawings
+Wearable Cables
+Antenna Information
+Evaluation Kit Antenna Datasheet (2024)
+Evaluation Kit Antenna Datasheet (Legacy)
+GPS Antenna
+Regulatory Information
+CE (Europe)
+Table of Contents

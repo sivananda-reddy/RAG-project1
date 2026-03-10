@@ -1,0 +1,92 @@
+Source: https://techlibrary.doodlelabs.com/gpio-usage-and-led-blinking
+
+Software Guides
+Getting Started
+General Configuration
+Model Specific Configuration
+Multiband Radios
+Wearable/OEM Radios
+SENSE - Interference Avoidance Configuration
+Large Network Optimization
+Remote Management Guide
+Remote Management: CLI
+Remote Management: JSON RPC
+JSON RPC Reference
+GPS Guide
+Serial Interface Guide
+GPIO usage and LED Blinking
+Production Firmware Customization
+Mass Firmware Update
+Advanced Networking Guide
+GPIO Usage and LED Blinking
+Webpage to PDF
+GPIO Usage (mini/nano-OEM)
+Mini and Nano -OEM Mesh Rider radios based on the 2023 updated hardware have three GPIOs which can be accessed.
+Important notes
+1. The mini and nano -OEM GPIOs are 0-V to 2.8-V TTL.
+2. The GPIOs will only be accessible after bootup is complete.
+3. GPIO0 is logic-level high by default.
+Below is an example of how GPIO2 can be used.
+1. Prepare GPIO2. Replace "2" with the GPIO number (0, 1, or 2)
+echo "2" > /sys/class/gpio/export
+2. Set GPIO2 as an output
+echo "out" > /sys/class/gpio/gpio2/direction
+3. Set the output to high
+echo "1" > /sys/class/gpio/gpio2/value
+4. Set GPIO2 to low
+echo "0" > /sys/class/gpio/gpio2/value
+To make GPIO2 an input, use
+1. Set GPIO2 as an input
+echo "in" > /sys.class/gpio/gpio2/direction
+2. Read current GPIO2 status cat /sys/class/gpio/gpio2/value
+GPIO Usage (Wearable and Embedded)
+In hardware versions J and K (OEM only), GPIOs are available for programming through an on-board MCU which is interfaced to the Operating System over USB HID. A program sr-ctrl-usb is pre-installed in the system and is used to access the GPIOs. The general syntax for accessing the MCU is
+root@smartradio:~# sr-ctrl-usb <r/w> <param #> <value>
+r/w is either 0 for read or 1 for write. The parameter numbers for the three GPIOs are tabulated below. The possible values which can be read or written are 0 and 1 and correspond to 0-V and 3.3-V. Tables 1 and 2 summarize GPIO parameters.
+Table 1: GPIO Parameters for -J hardware
+Param #
+Function
+6
+Logic level of GPIO1, 0 is GND and 1 is 3.3-V
+7
+Logic level of GPIO2, 0 is GND and 1 is 3.3-V
+8
+Logic level of GPIO3, 0 is GND and 1 is 3.3-V
+11
+Direction of GPIO1, 0 is Output and 1 is Input
+12
+Direction of GPIO2, 0 is Output and 1 is Input
+13
+Direction of GPIO3, 0 is Output and 1 is Input
+Table 2: GPIO Parameters for -K hardware
+Param #
+Function
+5
+Logic level of GPIO1, 0 is GND and 1 is 3.3-V
+4
+Direction of GPIO1, 0 is Output and 1 is Input
+As an example, if we want to write a level 1 to GPIO2, we first set the direction of GPIO2 to 0 and then we set the logic level to 1.
+root@smartradio:~# sr-ctrl-usb 1 12 0
+root@smartradio:~# sr-ctrl-usb 1 7 1
+We can read the logic level of GPIO3 with,
+root@smartradio:~# sr-ctrl-usb 1 13 1
+root@smartradio:~# sr-ctrl-usb 0 8
+Note that the GPIO directions are reset to input when the MCU is reset. When the MCU is reset, a reset flag is raised at param # 13 and it should be reset to zero by the user.
+Wake-Up Timer
+For very low power monitoring applications, the Mesh Rider Radio can be configured to completely shut down and wake up on a timer. In order to conserve power, the CPU itself shuts down and it requires around 30 seconds to boot up again. The command to shutdown the system is,
+root@smartradio:~# sr-ctrl-usb 1 2 <time in seconds>
+where <time in seconds> is the amount of time that the CPU should shut down for. This feature is only available in -J hardware variants.
+LED Blinking
+A simple LED blinking script is available in the Mesh Rider Radio which will cause one of the GPIOs to toggle ON/OFF. This script only applies to Embedded, External, and mini/nano-OEM hardware. Wearable models (-K) have a built-in LED blinking function which works separately. By default, LED blinking is disabled, but it can be enabled by running
+root@smartradio:~# uci set led_blink.general.enable='1'
+root@smartradio:~# uci commit led_blink
+root@smartradio:~# /etc/init.d/startup_blink restart
+For mini/nano-OEM models, GPIO0 blinks for single-band radios, and GPIO2 blinks for multiband radios. On External/Embedded radios, GPIOs 1 and 2 can blink. You can see a full list of configuration parameters by running
+root@smartradio:~# uci show led_blink
+led_blink.general=led_blink
+led_blink.general.inactive_thres='1000'
+led_blink.general.blink_rate='0.3'
+led_blink.general.gpio_selected='2'
+led_blink.general.enable='0'
+The blink_rate is measured in seconds, and the inactive_threshold is the time since hearing from another station, after which the LED will start to blink.
+Table of Contents

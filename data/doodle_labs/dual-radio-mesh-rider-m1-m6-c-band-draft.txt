@@ -1,0 +1,59 @@
+Source: https://techlibrary.doodlelabs.com/dual-radio-mesh-rider-m1-m6-c-band-draft
+
+Products
+Product Index
+Mesh Rider Radios
+Industrial Wi-Fi Transceivers
+Legacy Products
+Dual Radio Mesh Rider – M1-M6 + C Band
+Webpage to PDF
+DR-2025-5200-69O3
+Dual Radio :
+Doodle Labs’ Mesh Rider Dual Radio is a new drone networking product that combines two Doodle Labs OEM Mesh Rider Radios and powerful networking software into a single, ultra-resilient datalink solution.
+Dual Radios operate in two distinct frequency bands simultaneously and can be deployed in many new and different network topologies.
+Accordion Example
+Datasheet
+Dual Radio - 1675 MHz - 2450 MHz and Nato C Band + Federal + ISM Band
+Getting Started w/ the Dual Radio
+General Hardware Integration Guides:
+Dual Radio OEM User Guide
+Hardware Information
+Radio Integration Information
+2D Diagrams
+3D Diagrams
+Heat Map
+Pin Diagrams
+HID Board Information
+2D Diagrams
+3D Diagrams
+Pin Diagrams
+Schematic
+Cables
+Evaluation Board Information
+2D Diagrams
+3D Diagrams
+Schematic
+Layout
+Pin Diagrams
+Cables
+Software Information
+Dynamic Mesh (DM) Firmware Downloads
+Dual Radio Dynamic Mes
+h
+Please contact your Sales Representative for Firmware
+Note:
+Dual-Radio Dynamic mesh is only to be used for dual radio setups and requires Dynamic Mesh licenses. Use with single radios could lead to unusable interfaces.
+Antennas + Accessories (M1-M6 and C Band)
+Accessories
+Heat Sink
+Antenna Information (M1-M6 Band)
+Evaluation Kit Antenna Datasheet (Legacy)
+GPS Antenna
+Wi-Fi Antenna
+Antenna Information (C Band)
+Evaluation Kit Antenna Datasheet (Legacy)
+GPS Antenna
+Wi-Fi Antenna
+Regulatory Information
+Coming Soon!
+Table of Contents

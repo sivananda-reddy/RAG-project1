@@ -1,0 +1,71 @@
+Source: https://techlibrary.doodlelabs.com/quick-start-guide-ch2
+
+Quick-Start
+Mesh Rider Quick Start Guide
+Chapter 1:  What's in the Box?
+Chapter 2: Getting Started on the Bench
+Chapter 3: Basic Radio Configuration
+Chapter 4: Bench Testing
+Chapter 5: Advanced Radio Configuration
+Chapter 6: Basic Field Testing
+Chapter 7: Troubleshooting
+GUI Quick Walkthrough Guide (Video)
+Throughput Estimation Tool
+Optimizing the RF Link
+Supported Networking Modes
+Recommended Antenna Matrix
+What's in the Box w/ Mesh Rider Radios?
+Webpage to PDF
+Explore the comprehensive contents of the Mesh Rider Radio + Eval kits, tailored to meet diverse communication needs. Each kit includes essential components and accessories, ensuring you have everything required for a smooth and efficient setup
+New in Box: Wearable Mesh Rider Radio + Eval Kit
+Itemized Component List:
+Multiband Wearable Mesh Rider Radio
+1. Wearable Mesh Rider Radio
+2. Top/Bottom View
+A)  2x TNC-F Connectors, 1x SMA-F Connector
+B) 1x USB-Device + PWR Connector, 1x ETH + USB-Host Connector
+3. Wearable Mesh Rider Battery
+4. 3x Antennas (2x RF + 1x GPS)
+5. Cables
+A) 1x USB-C Locking Cable
+B) 1x USB-C / CAT5 (RJ45) Locking Cable
+New in Box: mini-OEM Mesh Rider Radio + Eval Kit
+Itemized Component List:
+mini-OEM Mesh Rider Radio
+1. mini-OEM Mesh Rider Radio
+2. Side View -- 2x MMCX Connectors
+3. Cables
+A) MMCX-SMA cables
+B) LAN Ethernet cable
+C) USB-A to USB-C cable
+4. 2x Antennas + 2x Attenuators
+5. Eval Kit
+A) Evaluation test board
+B) Heatsink & thermal pad
+New in Box: nano-OEM Mesh Rider Radio + Eval Kit
+Itemized Component List:
+nano-OEM Mesh Rider Radio
+1. nano-OEM Mesh Rider Radio
+2. Side View -- 1x MMCX Connectors
+3. Cables
+A) MMCX-SMA cables
+B) LAN Ethernet cable
+C) USB-A to USB-C cable
+4. 1x Antennas + 1x Attenuators
+5. Eval Kit
+A) Evaluation test board
+B) Heatsink & thermal pad
+New in Box: OEM Mesh Rider Radio + Eval Kit
+Itemized Component List:
+Multiband OEM Mesh Rider Radio
+1. OEM Mesh Rider Radio
+2. Top / Bottom View
+A) 4x MMCX Connectors
+B) 5x Molex/JST Snap connectors (USB Device, USB Host, PWR, UART + ETH)
+3. Breakout Boards
+A) Evaluation test board
+B) HID test board
+4. 3x Antennas (2x RF + 1x GPS) + 3x Attenuators (2x RF + 1x GPS)
+5. Cables
+A) MMCX-SMA cables
+Table of Contents

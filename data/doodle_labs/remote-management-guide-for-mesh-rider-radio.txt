@@ -1,0 +1,126 @@
+Source: https://techlibrary.doodlelabs.com/remote-management-guide-for-mesh-rider-radio
+
+Software Guides
+Getting Started
+General Configuration
+Model Specific Configuration
+Multiband Radios
+Wearable/OEM Radios
+SENSE - Interference Avoidance Configuration
+Large Network Optimization
+Remote Management Guide
+Remote Management: CLI
+Remote Management: JSON RPC
+JSON RPC Reference
+GPS Guide
+Serial Interface Guide
+GPIO usage and LED Blinking
+Production Firmware Customization
+Mass Firmware Update
+Advanced Networking Guide
+Remote Management Guide for Mesh Rider Radio
+Webpage to PDF
+Introduction
+The Mesh Rider Radio runs the Mesh Rider OS. It is a customized version of Openwrt with enhancements useful for applications requiring low-latency command-and-control transmission and high-throughput video - e.g. UAV and robotics.
+The purpose of this guide is to aide a user in remotely configuring Mesh Rider Radio settings. There are three primary ways to configure the Mesh Rider Radio. All of these interfaces can be accessed either locally (over Ethernet/USB) or remotely (over the wireless link).
+1. The Web GUI
+2. SSH
+3. The JSON-RPC API
+Each of these interfaces serves a different purpose. The Web GUI is designed for initial configuration. For example, when you first start using the device, during bench testing.
+SSH access is enabled for advanced system configuration and status monitoring. It provides root access to the underlying Linux system and is a very powerful way to access the system. Typically, equipment manufacturers should not allow SSH access to the end users of the radios. SSH can be very fast when using multiplexing.
+The JSON-RPC API is designed for integration into customer software. As with SSH access, it potentially provides complete access to the underlying Linux system, however access permissions can also be tailored to the equipment manufacturer’s requirements so that end-users cannot access the nuts and bolts of the radios system.
+A summary of the differences between the command-line APIs is shown in Table 1.
+SSH
+JSON-RPC
+Network Model
+P2P, Client-server
+P2P, Client-server
+Primary Usage
+Debugging
+Software Integration
+Access
+Full
+User-Defined
+Command Set
+All
+ubus only
+Security
+Required
+Required
+Latency
+Fast with multiplexing (10s of milliseconds)
+Fast (10s of milliseconds)
+Table 1: Comparison of Mesh Rider Radio APIs
+End users will typically never use any of these APIs directly. In fact, they should not even have the password to access the radios. Instead, they use application software such as ground-control-station (GCS) software which uses the JSON-RPC API to talk to the radio and relay information to the user.
+The Web GUI
+The Web GUI can be accessed in any web browser at
+https://<IP ADDRESS>
+(port 443). Note that the web browser uses a self-signed certificate. This means that connection to the web browser is encrypted, but not authenticated. The first time you access the Mesh Rider Radio from a new browser, you will get an SSL certificate warning. It is okay to ignore the warning and proceed.
+SSH
+SSH or Secure Shell is a way to securely login to the Mesh Rider Radio. The easiest way to do so is to open up a command prompt (Windows) or terminal (Linux), and type
+ssh root@<IP ADDRESS>
+Where
+<IP ADDRESS>
+is the IP address of the Mesh Rider Radio. There are numerous configuration options that your SSH client supports, such as public key authentication, and quiet output and you are encouraged to research them.
+Note that your SSH client keeps a list of known hosts, and after a firmware upgrade, you may need to remove the Mesh Rider Radio from the known hosts list. You can do so by running
+ssh-keygen -R <IP ADDRESS>
+Sending Remote Commands
+You can remotely execute a command via SSH to obtain network information from the node. For example,
+ssh root@<IP ADDRESS> "iw wlan0 info"
+Interface wlan0
+ifindex 13
+wdev 0x7
+addr 00:30:1a:4e:86:46
+type mesh point
+wiphy 0
+channel 12 (915 MHz), width: 20 MHz, center1: 915 MHz
+txpower 32.00 dBm
+Speeding up the Connection
+If your SSH client supports Multiplexing (OpenSSH for example), then it is a good way to improve the connection speed. Multiplexing allows you to send multiple commands over a single SSH connection. Information about the setup can be found here:
+https://en.wikibooks.org/wiki/OpenSSH/Cookbook/Multiplexing
+As an example, modify your SSH config file (usually
+~/.ssh/config
+) with the following settings
+Host *
+IdentitiesOnly yes
+ControlPersist yes
+COntrolMaster auto
+ControlPath ~/.ssh/%r@%h:%p
+Create the file if it doesn't exist.
+SSH-RSA Connection Error
+Some SSH clients will reject a connection to the radio due to the algorithm employed by the radio's SSH server. The message my look similar to this:
+To fix this on Linux or MacOS, place the following in
+/home/<user>/.ssh/config
+. It may be necessary to create this file if it does not already exist.
+Host *
+HostKeyAlgorithms +ssh-rsa
+PubkeyAcceptedAlgorithms +ssh-rsa
+For Windows, the file location is
+C:\ProgramData\ssh\ssh_config
+. Admin privileges is required to create or modify this file. (Run notepad.exe as Admin)
+Alternatively, you can pass the following command line options to allow the algorithm inline: `
+-o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa
+`
+SSH Known Hosts Error
+After factory resetting, flashing, or upgrading the firmware, the following error may be presented when trying to log in via SSH:
+This is caused because new encryption keys are generated when resetting the radio. To fix this on Linux and MacOS, either run the
+ssh-keygen
+command as displayed by the error message, remove the offending line in known_hosts, or unless you have any particular reason to retain your known_hosts file, simply delete the file. After updating, it'll prompt you to accept the new key when attempting to log in again.
+In Windows, this file is located at
+C:\Users\<username>\.ssh\known_hosts
+.
+To prevent this check from ever occurring globally, add the `StrictHostKeyChecking no` option to your config or ssh_config (as described in the previous section):
+Host *
+HostKeyAlgorithms +ssh-rsa
+PubkeyAcceptedAlgorithms +ssh-rsa
+StrictHostKeyChecking no
+Alternatively, without modifying the configuration, you can choose to ignore the message inline with the `
+-o StrictHostKeyChecking=no
+" option:
+The JSON-RPC API
+The JSON-RPC API is preferred when integrating radio access into custom software. As the name suggest
+JSON-RPC
+allows for remote procedure calls (RPC) over JSON. It provides a way to interact with ubus services and methods using HTTP requests and JSON-formatted data. This makes it accessible to a wide range of clients, including web applications, scripts, and other tools.  For more information about using the JSON-RPC API visit our
+JSON-RPC API guide
+.
+Table of Contents

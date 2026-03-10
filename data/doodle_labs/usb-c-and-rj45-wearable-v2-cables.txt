@@ -1,0 +1,17 @@
+Source: https://techlibrary.doodlelabs.com/usb-c-and-rj45-wearable-v2-cables
+
+Wearable: Accessories
+Wearable Battery Pack
+Wearable Mounting Bracket Kit
+Wearable V2 Cables
+Datasheets: USB-C and RJ45 Wearable V2 Cables
+Webpage to PDF
+USB-W01-A
+Datasheet: USB-C to USB-C Power or USB Data Wearable V2 Cable
+USB-W02-A
+Datasheet: RJ45F Non-Magnetic to USB-C Ethernet Wearable V2 Cable
+USB-W03-A
+Datasheet: Splitter USB-C to USB-C Power and USB Data Wearable V2 Cable
+USB-W04-A
+Datasheet: RJ45 Magnetic to USB-C Ethernet Wearable V2 Cable
+Table of Contents

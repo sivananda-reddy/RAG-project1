@@ -1,0 +1,45 @@
+Source: https://techlibrary.doodlelabs.com/mesh-rider-mobile-app
+
+Mesh Toolbox
+Mesh Rider Firmware & Release Notes
+Throughput Estimation Tool
+Range Estimation Tool
+Mesh Rider Log File Viewer
+Mesh Rider Mobile App
+Firmware Update Tool
+Mesh Rider Real-Time Graphing Tool
+Mesh Rider Mobile App
+Webpage to PDF
+Advanced mobile management & control for Mesh Rider Radios. Perfect for UAVs, Robots, and Industrial IoT applications.
+Now available in Android OS, Windows OS and Linux/Ubuntu OS.
+Mesh Rider Mobile App Webpage
+Android OS
+User Guide: Android (OS)
+User Guide: Mesh Rider Mobile App Android (OS)
+Android Installation Notes
+Download the Android APK file
+Open the downloaded APK
+Follow installation prompts
+Launch and enter demo credentials
+Latest Android Download
+Download APK
+Windows OS
+User Guide: Windows (OS)
+User Guide: Mesh Rider App
+Windows Installation Notes
+Open Microsoft Store on Windows PC
+Search for "Mesh Rider" or use our link
+Click "Get" or "Install" button
+Launch and enter demo credentials
+Latest Windows Download
+Linux/Ubuntu OS
+User Guide: Linux/Ubuntu (OS)
+User Guide: Mesh Rider App
+Linux Installation Notes
+Download the Linux package
+Extract the downloaded file
+Run:
+sudo ./install_mesh_rider.sh
+Launch from Applications Menu
+Latest Linux Download
+Table of Contents

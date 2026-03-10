@@ -1,0 +1,358 @@
+Source: https://techlibrary.doodlelabs.com/multiband-wearable-mesh-rider-radio-44005925-mhz-nato-c-federal-ism-datasheet
+
+Datasheet: Multiband Wearable Mesh Rider Radio – 4400~5925 MHz (Nato-C + Federal + ISM)
+Webpage to PDF
+Overview
+The Multiband Wearable RM-5200-92 Mesh Rider Radio operates in the 4400 - 5925 MHz frequency range allowing it to be used in the NATO, 4.9-GHz public safety, UAS and C-Band US Government bands. Each device is a node on a long-range Mesh Rider network and uses Wi-Fi to bridge Tablets and Smartphones onto the network. The Multiband Wearable Mesh Rider Radio is used by tactical teams to collaborate by streaming voice, video, and data on a fast, low latency, and encrypted network.
+The Multiband Wearable RM-5200-92 Mesh Rider Radio was designed to be conveniently carried and is capable of streaming HD video to a teammate up to 1 km away. External antenna ports are included to integrate with high-gain antennas for longer distances. The radio is available with or without a battery pack, or with additional interfaces for fixed installations.
+As with all Mesh Rider Radio form factors, the Multiband Wearable Mesh Rider Radio is available in many frequency bands between 900 MHz and 6 GHz freq range. This flexibility allows customers to use their industry specific frequency bands for deploying private wireless networks.
+The Mesh Rider Radio employs Doodle Labs' patented Mesh Rider® technology with state-of-the-art RF and networking capabilities that enable communication further, faster, and more reliably than any comparable solution on the market. For example, optimized video streaming carries crystal clear 4K video while simultaneously carrying Ultra Reliable Low Latency (URLLC) command and control (C&C) data for machines.
+For more information, please visit:
+https://doodlelabs.com/smart-radio/
+Frequency Bands
+Band
+Frequency Range
+4600-MHz
+4400-MHz to 4800 MHz
+Nato C-Band
+4870-MHz
+4800-MHz to 4940 MHz
+US Govt Band
+4965-MHz
+4940-MHz to 4990 MHz
+FCC Part 90Y, Public Safety Band
+5060-MHz
+5030-MHz to 5091 MHz
+UAS band (planned)
+5230-MHz
+5180-MHz to 5280 MHz
+US Govt band
+5660-MHz
+5390-MHz to 5925 MHz
+US Govt band
+5785-MHz
+5725-MHz to 5825 MHz
+US Govt band
+5790-MHz
+5650-MHz to 5925 MHz
+US Govt band
+5500-MHz
+5150-MHz to 5895 MHz
+UNII Bands 1 - 4
+Key Features - Mesh Rider Radio Platform
+PERFORMANCE RF
+Long range (field tested >100km) and high throughput (up to 100 Mbps) Mesh Rider waveform
+Interference resistant COFDM for robust link quality in difficult RF environments
+Exceptional Multipath and NrLOS MIMO performance
+Adaptive radio modulations from BPSK up to 64QAM, with fast per packet optimization to maximize link performance in dynamic environments
+Software defined channel bandwidth for efficient re-use of spectrum
+Convolutional coding, Forward Error Correction (FEC), ACK-retransmits, Maximal Ratio Combining, Spatial Multiplexing, and Space Time Block Coding for robust data transmission over noisy channel/spectrum
+Single channel, Time Division Duplexing (TDD) for bi-directional traffic
+Resistant to high-power jamming signals
+ATPC for widely dispersed mesh network
+Built-in Spectrum Scanner to help mitigate interference issues
+PERFORMANCE NETWORKING
+Ultra-Reliable Low Latency Channel (URLLC) for Command and Control
+Optimized video streaming channel for Unicast and Multicast transport
+Self-healing/self-forming multi-frequency mobile mesh for highly reliable network with redundancy
+FIPS Certified AES 256- and 128-bit encryption
+End-to-end IP architecture with Ad Hoc, WDS transparent bridge, Client, AP, and Internet Gateway operating modes
+Embedded network management APIs
+ADDITIONAL FEATURES
+Very small size, weight, and power for mobile applications
+Ethernet, USB, and UART interfaces to allow easy integration into different system architectures
+Leverage the benefits of the most extensible OpenWrt ecosystem and install 3rd party IoT applications
+Rugged, vibration resistant construction to meet MIL-specs
+MIL-spec temp range (-40C to +85C)
+High quality, manufactured in ISO 9001 and ISO 14001 certified facilities
+COTS – Commercial off the Shelf
+Extended lifespan and availability
+System Integration
+The Mesh Rider Radio has been designed to be plug and play. Only USB and a power supply are required for integration.
+Visit
+Doodle Labs Technical Library
+for extensive design-in documents.
+Technical Specifications (4400 - 5925 MHz)
+Model Category
+XTreme
+ORDERING INFORMATION
+Radio Configuration
+2x2 MIMO
+Model #
+Wearable:
+RM-5200-92W3 (w/ Battery, GPS)
+Antenna (Optional)
+ANT-5200-3-O
+Evaluation Kit (Optional)
+EK-5200-92W: 2x Multi-band Antenna, Cables
+Design-In Documentation
+Doodle Labs Technical Library
+PERFORMANCE OVERVIEW
+Data Throughput at 10-meter range with Attached 3 dBi Antennas (Indicative)
+80 Mbps (20 MHz Channel)
+40 Mbps (10 MHz Channel)
+20 Mbps (5 MHz Channel)
+12 Mbps (3 MHz Channel)
+Over the Air Data Encryption
+128-bit AES (Full throughput)
+256-bit AES (12 Mbps max throughput)
+FIPS Certification (Optional)
+FIPS 140-3
+Operating Modes
+WiFi Radio: AP, Client
+Mesh, WDS AP, WDS Client
+Bridged or Internet Gateway with NAT
+Command & Control channel
+Ultra-Reliable Low Latency Channel (URLLC). Latency 1.5-10 ms
+Video Channel
+Optimized video streaming with Unicast and Multicast transmission
+RF SPECIFICATIONS
+Protocol Compatibility
+Fully compatible with Doodle Labs Mesh Rider Waveform
+Operating Bands (Software Selectable)
+4400 - 4800 MHz
+4800 - 4940 MHz
+4940 - 4990 MHz
+5030 - 5091 MHz
+5180 - 5280 MHz
+5390 - 5925 MHz
+5650 - 5925 MHz
+5725 - 5825 MHz
+5150 - 5895 MHz (ISM)
+Advanced Band Filters
+Dedicated filters for high interference immunity
+Max RF Power at SMA port (Software control)
+Each radio individually calibrated
+1.0W (30 dBm) @ MCS 0,8
+0.8W (29 dBm) @ MCS 3,11
+0.5W (27 dBm) @ MCS 5,13
+250mW (24 dBm) @MCS 7,15
+Channel Sizes
+(Software Selectable)
+3, 5, 10, 20 MHz
+Radio Data Rate
+Auto adapting Modulation Coding Scheme (MCS0-15)
+Antenna Signal Strength
+-30 to -90 dBm (Recommended), Absolute Maximum= +12 dBm
+RF Power Control
+In 1 dBm steps, Tolerance ±1 dBm
+Automatic Transmit Power Control (ATPC)
+Intelligently adjusts the transmit power for very close range operation
+Integrated Antenna Port Protection
+Able to withstand open port, >10 KV (contact) and >15KV (open air discharge) as per IEC-61000-4-2
+Wireless Error Correction
+FEC, ARQ
+Receive Noise Figure
++4 dB
+Receive Adjacent Channel Rejection (ACRR)
+34 dB @ MCS0 for 20 MHz channel (Typ)
+Transmitter Adjacent Channel Leakage Ratio (ACLR)
+< 28 dBr (Fc ± ChBW)
+Transmitter Spurious Emission Suppression
+< 40 dBc
+Frequency Accuracy
+±10 ppm max over life
+WI-FI HOTSPOT SPECIFICATIONS
+WiFi Standard
+IEEE 802.11n, 1x1 SISO
+Frequency Range
+2400 - 2482 MHz
+RF Power Output (Typ)
+50 mW (17 dBm) EIRP
+Channel Size
+20 MHz
+Radio Data Rate
+Auto adapting Modulation Coding Scheme (MCS 0-7)
+Antenna Signal Strength
+-25 to -85 dBm (Recommended), Absolute Maximum= +12 dBm
+RF Power Control
+In 1 dBm steps, Tolerance ±1 dBm
+Wireless Error Correction
+FEC, ARQ
+NETWORKING SPECIFICATIONS
+Mesh Router
+Self-Forming/Self-Healing, Peer to Peer
+Custom Software Package Manager
+Image Builder, OPKG, ipk
+Radio Management
+Web GUI (HTTPs), SSH and JSON-RPC
+Access control
+Password, MAC, IP, Port filtering
+Supported Protocols
+IPv6, QoS, DNS, HTTPS, IP, ICMP, NTP, DHCP
+Software Upgrade
+Over the air software upgrade supported
+HARDWARE SPECIFICATIONS
+Power Input
+6V - 24V, USB-PD Compliant
+DC Power Consumption
+4400 - 4800 MHz:
+14W Peak Tx power @ max range, 5W Rx mode, 2W Standby Mode
+4800 - 5895 MHz:
+12W Peak Tx power @ max range, 5W Rx mode, 2W Standby Mode
+Dimensions
+134.3mm x 63.0mm x 17.0mm
+203 grams, 467 grams with battery
+Mesh Rider Antenna Ports
+2x TNC-Female Connector
+Host Interface
+Wearable: USB-Device Interface (Ethernet only)
+External: USB-Device Interface (Ethernet only), Ethernet (100 Base-T), 1x UART (3.3V), USB-Host
+Temperature range (Operating)
+Industrial: -30°C to +70°C
+* System's thermal design should ensure that the radio's case temperature is maintained within these specifications.
+Temperature range (Non-Operating)
+-40°C to +100°C
+Ingress Protection
+Waterproof (IP67)
+Relative Humidity
+5% to 95% noncondensing
+Shock and Vibration Resistance
+Compliant to MIL-STD-810H for high shock and vibration
+Reliability
+Extreme Reliability, IPC Class 2 standard with Class 3 options
+WiFi Hotspot Antennas
+1x Embedded Antenna
+GPS Features
+Simultaneous multiple constellations (GPS/SBAS/Galileo/Glonass/BeiDou/QZSS)
+Receive Sensitivity -167 dBm, Max. Velocity 500m/sec ± 0.05m/S, Heading ± 0.3 degrees, Position Accuracy 2m
+Integrated GPS Module with LNA
+u-blox MAX-M8 series Concurrent GNSS Module (u-blox.com)
+GPS Antenna
+1x Embedded Antenna
+Integrated CPU
+MIPS 24Kc, 540 MHz, 32MB Flash, 64MB DDR2 RAM
+ESD Protection
+IEC 61000-4-2 test criteria, Level 3 (±6KV) for Contact Discharge and Level 4 (±15KV) for Air Discharge
+MTBF
+>235k hours (25 years)
+Life Cycle Planning
+Extended lifespan with 7 years guaranteed availability
+REGULATORY INFORMATION
+J/F-12 Certification
+N.A.
+FCC ID
+2AG87RM-5500 (in progress)
+Industry Canada (IC)
+21411-RM5500 (in progress)
+CE
+Fully Certified (in progress)
+Japan (MIC)
+N.A.
+Regulatory Requirements
+Designed and verified to meet various regulatory requirements. Formal testing and approval are required for the Integrator's antenna type. The Integrator is responsible for obtaining all regulatory approvals in target markets for the finished product.
+RoHS/WEEE Compliance
+Yes. 100% Recyclable/Biodegradable packaging
+EXPORT INFORMATION
+ECCN Code
+5A992
+HS Code
+85256010
+ADDITIONAL RF SPECIFICATIONS
+MCS Rate
+Modulation
+Combined Output Power (dBm)
+Sensitivity (dBm)
+UDP Throughput (Mbps)
+0
+BPSK (1/2)
+30
+-93
+5.4
+1
+QPSK (1/2)
+29
+-91
+10.62
+2
+QPSK (3/4)
+29
+-89
+15.66
+3
+16-QAM (1/2)
+29
+-87
+20.52
+4
+16-QAM (3/4)
+28
+-83
+29.88
+5
+64-QAM (2/3)
+27
+-79
+38.88
+6
+64-QAM (3/4)
+26
+-77
+43.11
+7
+64-QAM (5/6)
+24
+-75
+47.34
+8
+BPSK (1/2)
+30
+-90
+10.53
+9
+QPSK (1/2)
+29
+-88
+20.43
+10
+QPSK (3/4)
+29
+-86
+29.7
+11
+16-QAM (1/2)
+29
+-84
+38.52
+12
+16-QAM (3/4)
+28
+-80
+54.72
+13
+64-QAM (2/3)
+27
+-76
+69.3
+14
+64-QAM (3/4)
+26
+-74
+76.14
+15
+64-QAM (5/6)
+24
+-72
+82.8
+Note 1: Performance based on 20-MHz bandwidth
+Note 2: Sensitivity and throughput are approximately proportional to bandwidth.
+FCC Statement
+Changes or modifications not expressly approved by the party responsible for compliance could void the user's authority to operate the equipment.
+This equipment has been tested and found to comply with the limits for a Class B digital device, pursuant to Part 15 of the FCC Rules. These limits are designed to provide reasonable protection against harmful interference in a residential installation. This equipment generates uses and can radiate radio frequency energy and, if not installed and used in accordance with the instructions, may cause harmful interference to radio communications. However, there is no guarantee that interference will not occur in a particular installation. If this equipment does cause harmful interference to radio or television reception, which can be determined by turning the equipment off and on, the user is encouraged to try to correct the interference by one or more of the following measures:
+Reorient or relocate the receiving antenna.
+Increase the separation between the equipment and receiver.
+Connect the equipment into an outlet on a circuit different from that to which the receiver is connected.
+Consult the dealer or an experienced radio/TV technician for help
+This device complies with part 15 of the FCC rules. Operation is subject to the following two conditions (1)this device may not cause harmful interference, and (2) this device must accept any interference received, including interference that may cause undesired operation
+IC Statement
+This device complies with Industry Canada’s licence-exempt RSSs. Operation is subject to the following two conditions:
+This device may not cause interference; and
+This device must accept any interference, including interference that may cause undesired operation of the device.
+The term "IC: " before the certification/registration number only signifies that the Industry Canada technical specifications were met. This product meets the applicable Industry Canada technical specifications.
+Le présent appareil est conforme aux CNR d'Industrie Canada applicable aux appareils radio exempts de licence. L'exploitation est autorisée aux deux conditions suivantes : (1) l'appareil ne doit pas produire de brouillage, et (2) l'utilisateur de l'appareil doit accepter tout brouillage radioélectrique subi, même si le brouillage est susceptible d'en compromettre le fonctionnement
+CE Statement
+This is a Class A product. In a domestic environment, this product may cause radio interference, in which case the user may be required to take adequate measures.
+CAUTION:
+To comply with the Europe CE requirement, this device must be installed with CE certified computer equipment which meet with Class A limits. Be aware that outdoor installations require special attention and will only be handled by trained and qualified installation personnel.
+All cables used to connect this device must be shielded and grounded. Operation with non-certified computers or incorrect cables may result in interference to other devices or undesired effects to the product. Particular attention has to be given allowed operational frequencies.
+Table of Contents

@@ -1,0 +1,780 @@
+Source: https://techlibrary.doodlelabs.com/json-rpc-api-guide
+
+Software Guides
+Getting Started
+General Configuration
+Model Specific Configuration
+Multiband Radios
+Wearable/OEM Radios
+SENSE - Interference Avoidance Configuration
+Large Network Optimization
+Remote Management Guide
+Remote Management: CLI
+Remote Management: JSON RPC
+JSON RPC Reference
+GPS Guide
+Serial Interface Guide
+GPIO usage and LED Blinking
+Production Firmware Customization
+Mass Firmware Update
+Advanced Networking Guide
+JSON-RPC API Guide
+Webpage to PDF
+Click here for the JSON-RPC API Reference List
+Introduction
+To explain JSON-RPC, a bit of context must be given to UBUS. UBUS is a framework used in OpenWrt to provide a structured way for applications to communicate with each other. It acts as a central bus for inter-process communication (IPC).
+JSON-RPC
+is a protocol that allows for remote procedure calls (RPC) over JSON. In the context of UBUS, it provides a way to interact with UBUS services and methods using HTTP requests and JSON-formatted data. This makes it accessible to a wide range of clients, including web applications, scripts, and other tools.
+As such the JSON-RPC API is the best method for integrating radio access into custom software.
+How it Works:
+1. UBUS Service:
+A UBUS
+service is a collection of related methods that perform specific tasks. For example, a network service might have methods to get the IP address, set the DNS server, or configure WiFi.
+2. JSON-RPC Request:
+A client sends an HTTP POST request to the UBUS server, with the request body containing a JSON object. This object specifies the desired method, its parameters, and a unique identifier.
+3.
+UBUS
+Processing:
+The UBUS server receives the request, parses the JSON data, and routes the request to the appropriate UBUS service and method.
+4. Method Execution:
+The specified method is executed, and the result is encoded as JSON.
+5. JSON-RPC Response:
+The UBUS server sends an HTTP response containing the JSON-encoded result, including the request identifier.
+Since the JSON-RPC API requires knowledge of UBUS, please read the following
+section.
+For greater detail into UBUS please visit this
+link
+.
+Note:
+The default configuration of the radio only allows for HTTP/HTTPS access over IPV4. The firewall rules for HTTP and HTTPS need to be configured if IPV6 access is needed.
+Configuring JSON-RPC
+As of the June 2024 firmware, JSON-RPC should be enabled by default.
+If for some reason the JSON-RPC is not enabled, navigate to
+https://<IP ADDRESS>/cgi-bin/luci/admin/services/rpcjson
+For older versions of the firmware the URL is
+https://<IP ADDRESS>/cgi-bin/luci/admin/services/rpcd
+As of the
+June 2024 (06/24) Web GUI Update Firmware
+the default
+username and password is
+user
+,
+DoodleSmartRadio
+.
+Prior to this firmware version, the default username and password for the JSON-RPC API is
+root
+,
+DoodleSmartRadio
+.
+Fig. 1 JSON RPC API Configuration Page
+In the JSON RPC API configuration page, you can click Add to create a new user. The access field allows you to choose between 3 sets of predefined Access Control List(ACL) configurations. The Access Control List is a set of rules that determine who can access and use specific services and methods. They are defined in JSON files and enforced during user authentication and request processing. Choosing Restricted Access opens up the API for a limited set of commands which you will see in the Restricting Access section. You can also choose Full Access which allows unrestricted access to the Linux filesystem, and Custom Access, if you know how to customize the JSON RPC API. We recommend choosing Restricted Access if you are not sure.
+Restricting Access using the Access Control List
+The Access Control List (ACL) can be found at
+/usr/share/rpcd/acl.d.
+The default user ACL is named
+custom_dl_user.json
+. We suggest that you read the file to gain an understanding of how to control user access.
+A listing is shown below with
+Restricted Access
+applied.
+root@smartradio-301a3ac345:/# cat /usr/share/rpcd/acl.d/custom_dl_user.json
+{
+"custom_dl_user": {
+"description": "user access role",
+"read": {
+"ubus": {
+"file": [ "exec", "read", "stat" ],
+"iwinfo": [ "info" ],
+"system": [ "reboot", "info" ],
+"dhcp": [ "*" ],
+"central-config" : [ "*" ],
+"uci": [ "*" ]
+},
+"uci": [ "wireless", "network" ],
+"file": {
+"/usr/bin/free": [ "exec" ],
+"/usr/bin/top -n1": [ "exec" ],
+"/bin/dmesg": [ "exec" ],
+"/sbin/logread": [ "exec" ],
+"/usr/sbin/alfred *": [ "exec" ],
+"/usr/sbin/batadv-vis *": [ "exec" ],
+"/usr/sbin/batctl *": [ "exec" ],
+"/usr/sbin/iw *": [ "exec" ],
+"/etc/init.d/* start": [ "exec" ],
+"/etc/init.d/* stop": [ "exec" ],
+"/etc/init.d/* restart": [ "exec" ],
+"/usr/bin/link-status.sh *": [ "exec" ],
+"/tmp/run/pancake.txt": [ "read" ],
+"/var/run/gps/*": [ "read" ],
+"/tmp/status.json": [ "read" ],
+"/tmp/longtermlog/status.json": [ "read" ]
+}
+},
+"write": {
+"ubus": {
+"central-config" : [ "*" ],
+"uci": [ "*" ]
+},
+"uci": [ "wireless", "network" ],
+"file":{
+"uci *": [ "exec" ]
+}
+}
+}
+}
+The ACL below has
+Full Access
+applied. As of the June 2024 firmware, this is the default user access.
+root@smartradio:/# cat /usr/share/rpcd/acl.d/custom_dl_user.json
+{
+"custom_dl_user": {
+"description": "user access role",
+"read": {
+"ubus": {
+"*": [ "*" ]
+},
+"uci": [ "*" ],
+"file": {
+"*": ["*"]
+}
+},
+"write": {
+"ubus": {
+"*": [ "*" ]
+},
+"uci": [ "*" ],
+"file": {
+"*": ["*"]
+},
+"cgi-io": ["*"]
+}
+}
+}
+For custom access, you should create or edit a user to have custom access then edit the corresponding ACL JSON file
+/usr/share/rpcd/acl.d
+Opening a JSON-RPC API Session in Python
+To use the JSON API,
+you need to get a session ID and use it for subsequent requests.
+The example below shows how to open up a session in Python3 and how to extract an authenticated session id for subsequent JSON RPC calls.
+The session id
+00000000000000000000000000000000
+(32 zeros) is a special null-session which only has the rights from the
+unauthenticated
+access group, only enabling the
+session.login
+UBUS call.
+#!/usr/bin/python3
+import requests
+import json
+IPADDR = "192.168.1.210"
+USER = "user"
+PW = "DoodleSmartRadio"
+url = 'https://{}/ubus'.format(IPADDR)
+# Create a session
+session = requests.Session()
+# JSON payload for login request
+login_payload = {
+"jsonrpc": "2.0",
+"id": 1,
+"method": "call",
+"params": ["00000000000000000000000000000000", "session", "login", {"username": USER, "password": PW}]
+}
+# Send the login POST request
+response = session.post(url, json=login_payload, verify=False)
+# Parse the JSON response
+data = json.loads(response.text)
+# Extract the desired value (token)
+token = data['result'][1]['ubus_rpc_session']
+# Print the token
+print("Token:", token)
+# Close the session
+session.close()
+Assembling a JSON-RPC Call
+The JSON RPC container format is:
+{ "jsonrpc": "2.0",
+"id": <unique-id-to-identify-request>,
+"method": "call",
+"params": [
+<ubus_rpc_session>, <ubus_object>, <ubus_method>,
+{ <ubus_arguments> }
+]
+}
+The “id" key is a unique identifier for the client to keep track of requests. It can be a string or a number.
+Example: JSON RPC Call for reading the Firmware Version
+The following is the JSON RPC container for reading the firmware version. The UBUS
+object is system, the UBUS method is board and there are no UBUS arguments.
+doodle_payload = {
+"jsonrpc": "2.0",
+"id": 1,
+"method": "call",
+"params": [ token, "system", "board", {} ]
+}
+With a session established we can send the payload using session.post as below.
+# Send the JSON payload POST request
+response
+=
+session
+.
+post
+(
+url
+,
+json
+=
+doodle_payload
+,
+verify
+=
+False
+)
+JSON Response Payload
+The following is the response from the JSON payload POST request above. The id is echoed by the server for identification purposes.
+result[0] contains the error code. Please refer to <error code section>
+result[1] contains the actual response to the call.
+response = {"jsonrpc":"2.0","id":1,"result":[0,{"kernel":"4.14.221","hostname":"smartradio-301a3ac345","system":"Qualcomm Atheros QCA9533 ver 2 rev 0","model":"DoodleLabs SmartRadio","board_name":"smartradio","release":{"distribution":"Doodle Labs","version":"firmware-2024-06.2","revision":"r11306-c4a6851c72","target":"ar71xx/generic","description":"Doodle Labs firmware-2024-06.2 r11306-c4a6851c72"},"parent_model":"MB-2025-2KM-XW","sub_model":"RM-1675-2KM-XW"}]}
+Extracting the information
+The response we got from the POST request is a JSON string that we can convert to a Python dictionary for easy data extraction.
+# Convert the JSON string to Python Dictionary
+data = json.loads(response.text)
+Here is the resulting python dictionary.
+data = {'jsonrpc': '2.0', 'id': 1, 'result': [0, {'kernel': '4.14.221', 'hostname': 'smartradio-301a3ac345', 'system': 'Qualcomm Atheros QCA9533 ver 2 rev 0', 'model': 'DoodleLabs SmartRadio', 'board_name': 'smartradio', 'release': {'distribution': 'Doodle Labs', 'version': 'firmware-2024-06.2', 'revision': 'r11306-c4a6851c72', 'target': 'ar71xx/generic', 'description': 'Doodle Labs firmware-2024-06.2 r11306-c4a6851c72'}, 'parent_model': 'MB-2025-2KM-XW', 'sub_model': 'RM-1675-2KM-XW'}]}
+Since the data is a dictionary we can easily extract the firmware version from the json response as follows.
+result = data['result'][1]['release']['version']
+It should be noted that non-UBUS commands may not have output format as JSON and might require additional parsing.
+Putting it all together
+Here we have the completed script for getting the firmware version of a Mesh Rider radio.
+#!/usr/bin/python3
+import
+requests
+import
+json
+IPADDR
+=
+"192.168.1.210"
+USER
+=
+"user"
+PW
+=
+"DoodleSmartRadio"
+url
+=
+'https://
+{}
+/ubus'
+.
+format
+(
+IPADDR
+)
+# Create a session
+session
+=
+requests
+.
+Session
+()
+# JSON payload for login request
+login_payload
+=
+{
+"jsonrpc"
+:
+"2.0"
+,
+"id"
+:
+1
+,
+"method"
+:
+"call"
+,
+"params"
+: [
+"00000000000000000000000000000000"
+,
+"session"
+,
+"login"
+, {
+"username"
+:
+USER
+,
+"password"
+:
+PW
+}]
+}
+# Send the login POST request
+response
+=
+session
+.
+post
+(
+url
+,
+json
+=
+login_payload
+,
+verify
+=
+False
+)
+# Parse the JSON response
+data
+=
+json
+.
+loads
+(
+response
+.
+text
+)
+# Extract the desired value (token)
+token
+=
+data
+[
+'result'
+][
+1
+][
+'ubus_rpc_session'
+]
+# Print the token
+print
+(
+"Token:"
+,
+token
+)
+# JSON payload
+doodle_payload
+=
+{
+"jsonrpc"
+:
+"2.0"
+,
+"id"
+:
+1
+,
+"method"
+:
+"call"
+,
+"params"
+: [
+token
+,
+"system"
+,
+"board"
+, {} ]
+}
+# Send the JSON payload POST request
+response
+=
+session
+.
+post
+(
+url
+,
+json
+=
+doodle_payload
+,
+verify
+=
+False
+)
+# Parse the JSON response
+data
+=
+json
+.
+loads
+(
+response
+.
+text
+)
+# Extract the desired value
+result
+=
+data
+[
+'result'
+][
+1
+][
+'release'
+][
+'version'
+]
+# Print the result
+print
+(
+"Result:"
+,
+result
+)
+# Close the session
+session
+.
+close
+()
+Alternative Curl Approach
+It is also possible to use the JSON RPC API using the command line. This method is not recommended when speed is a concern as each curl command opens and closes a session. The following is a snippet for opening a session. The JSON container format is the same as the Python example.
+USER=myusername
+PASS=mypassword
+curl -k https://<IP-ADDRESS>/ubus -d '
+{
+"jsonrpc": "2.0",
+"id": 1,
+"method": "call",
+"params": [ "00000000000000000000000000000000", "session", "login", { "username": '\"$USER\"', "password": '\"$PASS\"'  } ]
+}'
+the
+-k
+option is required because the Mesh Rider Radio doesn’t use a third party certificate authority.
+Here is the output of the curl script.
+{"jsonrpc":"2.0","id":1,"result":[0,{"ubus_rpc_session":"f88c8fea459242687864adcb3266fdc5","timeout":300,"expires":299,"acls":{"access-group":{"custom_dl_user":["read","write"],"unauthenticated":["read"]},"cgi-io":{"*":["write"]},"file":{"*":["*"]},"ubus":{"*":["*"],"luci":["getFeatures"],"session":["access","login"]},"uci":{"*":["read","write"]}},"data":{"username":"user"}}]}
+An example of using JSON-RPC API for file access is shown below. Substitute
+<RPC_TOKEN>
+with the value returned above for
+ubus_rpc_session.
+TOKEN=<RPC_TOKEN>
+curl -k https://<IP-ADDRESS>/ubus -d '
+{
+"jsonrpc": "2.0",
+"id": 1,
+"method": "call",
+"params": [ '\"$TOKEN\"', "file", "read", { "path": "/tmp/status.json" } ]
+}'
+We recommend parsing data on your local machine rather than trying to parse it on the Mesh Rider Radio.
+Using the JSON-RPC API requires knowledge of
+UBUS
+. Please read the section Running Commands in the CLI for more information.
+UBUS Services
+These are all of the registered services with UBUS. For a list of all UBUS services, you can use the following command
+root@smartradio:~# ubus list
+Service
+Description
+dhcp
+DHCP Server
+dnsmasq
+DNS Masquerading/Caching Server
+file
+File System
+hostapd.wlan1
+Access Points
+iwinfo
+Wireless Information
+log
+Logging
+luci
+GUI
+luci-rpc
+RPC Interface for GUI
+message-system
+Message system
+network
+Network configuration
+network.device
+Network device configuration
+network.interface
+Network interface configuration
+network.interface.bat0
+Bato interface configuration
+network.interface.loopback
+Loopback interface configuration
+network.interface.mesh_dev
+Mesh device interface configuration
+network.interface.mrlan
+MR-LAN interface configuration
+network.interface.wan
+WAN interface configuration
+network.interface.wan2
+WAN2 interface configuration
+network.interface.wan3
+WAN3 interface configuration
+network.rrdns
+Reverse DNS configuration
+network.wireless
+Wireless configuration
+rc
+rpc-sys
+Sys Upgrade/Password Change
+service
+Service Configuration
+session
+Session Management
+sr_ctrld
+Led Control
+system
+System Misc
+uci
+Unified Configuration Interface
+wpa_supplicant.wlan0
+WPA  Supplicant
+You can get information about how to use specific UBUS calls by running
+root@smartradio:~# ubus -v list <CALL>
+UCI
+UCI is one of the main systems for configuring the radio. It can configured via the CLI, GUI or through JSON-RPC.
+The UCI system is used for persistent configuration. Most UCI files are found at
+/etc/config/
+. This is a slow method of configuration, but changes are saved over a reboot. For a quick introduction to the UCI system check out this
+link
+.
+UCI set commands
+The
+UCI set
+command is how you would update a configuration setting in the UCI system.When you use the
+UCI set
+command, the change is stored in a temporary area. You must also run
+UCI commit
+to save the changes. A
+service restart
+is then typically required to have the radio apply the change immediately otherwise the change does not occur till the next reboot.
+Service Restart
+Here are a few service restarts used in configuring the Mesh Rider Radio. They are fairly self-explanatory and should typically correlate with the UCI config system you are configuring.
+Services
+CLI command
+JSON API Params
+network
+/etc/init.d/network restart
+"params": [ token, "file", "exec", { "command": "/etc/init.d/network", "params": ["restart"] } ]
+wireless
+wifi
+"params": [ token, "file", "exec", { "command": "wifi", "params": [] } ]
+diffserv
+/etc/init.d/diffserv restart
+"params": [ token, "file", "exec", { "command": "/etc/init.d/diffserv", "params": ["restart"] } ]
+socat
+/etc/init.d/socat restart
+"params": [ token, "file", "exec", { "command": "/etc/init.d/socat", "params": ["restart"] } ]
+firewall
+/etc/init.d/firewall restart
+"params": [ token, "file", "exec", { "command": "/etc/init.d/firewall", "params": ["restart"] } ]
+There are a few quirks with service reloads.
+1. Service restarts can take a few seconds to occur. Try the CLI command to get an idea on the how long it takes.
+2.
+Network
+restarts also restarts wireless. So to save time, you only need to run Network restart for network and wireless changes.
+3. Due to the lengthy nature of service restarts it may take a while for the JSON POST request to respond.
+4. Some service restarts such as network or wireless may cause your JSON-RPC session to end on the radio side.
+Doodle Labs recommended approach with UCI commands for JSON-RPC
+There are two ways to run UCI commands with the API.
+Recommended Approach:
+Indirectly with the ubus file exec service as the example below. This method is equivalent to running the UCI commands in the command line. This might seem a bit strange but please read the explanation below for more details.
+"params": [ token, "file", "exec", { "command": "uci", "params": ["set","wireless.radio'${PHY}'.channel='${CHANNEL}'" ] } ]
+Alternative Approach:
+Directly through the ubus UCI service as the example below.
+"params": [ token, "uci", "set",
+{
+"config"
+:
+"wireless"
+,
+"section"
+:
+"radio'${PHY}'"
+,
+"values"
+:{
+"channel"
+:
+"'${CHANNEL}'"
+}}]
+Please note the above params is just one of the fields you must include in the JSON object. The full JSON payload is detailed
+here
+.
+Explanation for using UCI with ubus file exec service.
+Doodle Labs Mesh Rider OS is branched off OpenWrt and as such we have inherited a few of its quirks. One of the quirks is that there are some UCI commands executed on the command line that will differ from UCI commands executed over JSON-RPC.The UCI commands via the command line is handled by a OpenWRT module called
+UCI
+and the UCI commands via the RPC interface are handled by a different OpenWRT module called
+RPCD
+. Both of these modules will successfully read/write/modify the UCI system but they differ on how they implement their interaction with the UCI system.
+The biggest difference that matters to Doodle Labs is the behavior of the UCI Commit commands.
+CLI Version:
+only saves the temporary changes to the UCI system.
+JSON-RPC Version:
+saves the temporary changes and also attempts to do service reload for the changes.
+We have found the automatic
+service reload
+done by the JSON-RPC uci commit does not always work as well as a
+service restart
+.The method we have found to work best with our radio is to
+save the UCI changes
+and then do a
+service restart
+.
+Unfortunately there does not seem to be a JSON-RPC UCI command that saves only the temporary changes to the UCI system so we must rely on using the ubus file exec method as the means to execute the CLI version of the UCI commands.  Having more granular control of when a service is restarted is important in the design of system software.
+Another quirk is that the JSON-RPC UCI and CLI UCI commands do not share the same temporary storage area for staging changes to the UCI config system so there can be inconsistency when mixing JSON-RPC and CLI commands.
+Based on the quirks described above we recommend our users to use the ubus file exec service method for all UCI commands.
+Here is the recommended JSON-RPC params field for executing a UCI commit.
+"params": [ token, "file", "exec", { "command": "uci", "params": ["commit"] } ]
+Custom/Command Line
+There are a few scripts, programs and useful data files which are not registered with UBUS that might be useful. For this custom group we typically use the UBUS
+file
+service. Think of this as running command line commands that are not UBUS or UCI related.
+An example of a custom call is seen at <insert link for Get Temperature>.  In this example to get the temperature, we are using the file service to execute the cat command with the following parameter "/tmp/run/pancake.txt". This effectively displays the contents of pancake.txt.
+It should be noted that non-UBUS commands may not have output format as JSON and might require additional parsing.
+Wireless Parameter Examples
+Get Bandwidth
+Payload
+doodle_payload = {
+"jsonrpc": "2.0",
+"id": 1,
+"method": "call",
+"params": [ token, "file", "exec", { "command": "uci", "params": ["get","wireless.radio'${PHY}'.chanbw" ] } ]
+}
+'${PHY}' - Substitute with radio phy of interest. On Mesh Rider radios, this is typically 0 or 1 so the substituted text should either be radio0 or radio1 depending on which you wish to use.
+Data Parsing
+result=data['result'][1]['stdout']
+Get Channel
+Payload
+doodle_payload = {
+"jsonrpc": "2.0",
+"id": 1,
+"method": "call",
+"params"
+: [
+token
+,
+"file"
+,
+"exec"
+, {
+"command"
+:
+"uci"
+,
+"params"
+: [
+"get"
+,
+"wireless.radio'${PHY}'.channel"
+] } ]
+}
+'${PHY}' - Substitute with radio phy of interest. On Mesh Rider radios, this is typically 0 or 1 so the substituted text should either be radio0 or radio1 depending on which you wish to use.
+Data Parsing
+result=data['result'][1]['stdout']
+Set Channel
+Payload
+doodle_payload = {
+"jsonrpc": "2.0",
+"id": 1,
+"method": "call",
+"params": [ token, "file", "exec", { "command": "uci", "params": ["set","wireless.radio'${PHY}'.channel='${CHANNEL}'" ] } ]
+}
+'${CHANNEL}' - Substitute this with channel of interest
+'${PHY}' - Substitute this with radio phy of interest.
+Post Condition:
+UCI Commit + Service Reload
+Service Reload
+:
+wireless
+System Information Examples
+Get Temperature
+Payload
+doodle_payload = {
+"jsonrpc": "2.0",
+"id": 1,
+"method": "call",
+"params": [ token, "file", "exec", { "command": "cat", "params": [ "/tmp/run/pancake.txt" ] } ]
+}
+Data Parsing
+result = eval(data['result'][1]['stdout'])['Temperature']
+Get Hardware Version
+Payload
+doodle_payload = {
+"jsonrpc": "2.0",
+"id": 1,
+"method": "call",
+"params": [ token, "file", "exec", { "command": "fes_model.sh", "params": [ "get","parent" ] } ]
+}
+Data Parsing
+result = data['result'][1]['stdout']
+Link State Example
+The link state daemon as described
+here
+contains many useful metrics which can be queried using the JSON-RPC API.
+Here are the metrics: Cpu_load, Memory usage, Localtime, Operating channel, Operating freq, Channel width, Noise, Activity, Lna status, Stations statistics, Mesh stats.
+Payload
+doodle_payload = {
+"jsonrpc": "2.0",
+"id": 1,
+"method": "call",
+"params"
+: [
+token
+,
+"file"
+,
+"read"
+, {
+"path"
+:
+"/tmp/linkstate_current.json"
+,
+"base64"
+:
+0
+} ]
+}
+Additional examples
+Hopefully with the aid of this document you are able to execute other CLI examples listed
+here
+.
+JSON-RPC Error Codes
+The first element of the result field result[0] from a JSON RESPONSE is the JSON-RPC error code. The following table lists error codes and their corresponding error message. These error codes can be highly valuable when trying to debug using the JSON-RPC API.
+Error Code
+Meaning
+0
+UBUS_STATUS_OK
+1
+UBUS_STATUS_INVALID_COMMAND
+2
+UBUS_STATUS_INVALID_ARGUMENT
+3
+UBUS_STATUS_METHOD_NOT_FOUND
+4
+UBUS_STATUS_NOT_FOUND
+5
+UBUS_STATUS_NO_DATA
+6
+UBUS_STATUS_PERMISSION_DENIED
+7
+UBUS_STATUS_TIMEOUT
+8
+UBUS_STATUS_NOT_SUPPORTED
+9
+UBUS_STATUS_UNKNOWN_ERROR
+10
+UBUS_STATUS_CONNECTION_FAILED
+11
+UBUS_STATUS_NO_MEMORY
+12
+UBUS_STATUS_PARSE_ERROR
+13
+UBUS_STATUS_SYSTEM_ERROR
+-32002
+JSON-RPC Error: Access Denied
+-32600
+JSON-RPC Error: Invalid Request
+-32601
+JSON-RPC Error: Method Not Found
+-32602
+JSON-RPC Error: Invalid Parameters
+-32700
+JSON-RPC Error: Parse Error
+Table of Contents

@@ -1,0 +1,109 @@
+Source: https://techlibrary.doodlelabs.com/mini-oem-helix-mesh-rider-radio-16252500-mhz-m1-m6-hex-bands
+
+Products
+Product Index
+Mesh Rider Radios
+Industrial Wi-Fi Transceivers
+Legacy Products
+mini-OEM Helix Mesh Rider Radio - 1625~2500 MHz (M1-M6 Hex bands)
+Webpage to PDF
+RM-2025-62M3 (
+2023 Update
+) / RM-2025-62M4 (
+SOC Variant
+)
+2023 Update
+The Doodle Labs mini and nano -OEM Mesh Rider Radios were updated in Q1 of 2023. Customers are encouraged to switch over to the newer design. Legacy hardware should not be used for new designs. Look for updated ordering codes in the model's datasheet.
+Change List
+1. Primary connector replaced by 6 connectors with different hardware interfaces
+2. Added USB Host connector
+3. Added 3x GPIO
+SOC Variant
+The SOC variant (nano-OEM / mini-OEM) includes 2 x 18-pin headers, enabling direct PCB mount for enhanced hardware connectivity. This design provides additional flexibility for integrating the radios into customizable embedded applications where space and connectivity are mission critical.
+Change List
+1. This variant comes in 2 x 18-pin headers for a direct PCB mount option.
+2. New SOC variant Evaluation Kits (EVK) for integration support.
+Scroll Buttons
+Top of Article
+▼
+Last
+▲
+Next
+End of Article
+RM-2025-62M3 (
+2023 Update
+) / RM-2025-62M4 (
+SOC Variant
+)
+Accordion Example
+Datasheet
+mini-OEM Helix Mesh Rider Radio - 1625~2500 MHz (M1-M6 Hex bands)
+Getting Started w/ the mini-OEM
+General Hardware Integration Guides:
+Hardware Integration Guidelines
+Mesh Rider Radio Hardware Interfaces
+Model-Specific Hardware Integration Guides:
+mini-OEM (2023 Update)
+General Software Setup Guides:
+Getting Started
+Flashing new firmware
+Hardware Information (2023 Update)
+Radio Integration Information
+2023 Update:
+Pin Diagrams
+2D Drawings
+3D Drawings
+Heat Map
+Cable Drawings
+Evaluation Kit Information
+2023 Update:
+EVK Pin Diagram and Wiring Guide
+EVK Schematic
+EVK Layout
+EVK 2D Drawing
+EVK 3D Drawing
+Hardware Information (SOC Variant)
+Radio Integration Information
+SOC Variant:
+Pin Diagrams
+2D Drawings
+3D Drawings
+Heat Map
+Screws (Mechanical Drawing)
+SOC Variant (Baseboard):
+2D Drawings
+3D Drawings
+Evaluation Kit Information
+SOC Variant:
+EVK Schematic
+EVK Layout
+EVK Pin Diagrams
+EVK 2D Drawing
+EVK 3D Drawing
+Software Information
+Mesh Rider Firmware Downloads
+Latest Firmware
+June 2025 Release
+Older Firmware
+Older firmware (not recommended)
+Long-Term-Stable Firmware
+May 2023 Long-Term-Stable Release
+Antennas + Accessories
+Accessories Information
+Heat Sink
+Antenna Information
+Evaluation Kit Antenna Datasheet (2024)
+Evaluation Kit Antenna Datasheet (Legacy)
+Regulatory Information
+2.4-GHz ISM Band Certifications
+FCC (United States)
+IC (Canada)
+CE (Europe)
+Scroll Buttons
+Top of Article
+▼
+Last
+▲
+Next
+End of Article
+Table of Contents

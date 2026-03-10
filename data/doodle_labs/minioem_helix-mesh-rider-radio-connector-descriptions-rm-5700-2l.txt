@@ -1,0 +1,123 @@
+Source: https://techlibrary.doodlelabs.com/minioem/helix-mesh-rider-radio-connector-descriptions-rm-5700-2l
+
+mini-OEM: Hardware Integration Guides
+Hardware Integration Guidelines
+Hardware Interfaces
+mini-OEM (2023 update)
+mini-OEM (Japan Robotics)
+mini-OEM: Pin Diagrams
+mini-OEM Radio (2023 update)
+mini-OEM Eval Kit (2023 update)
+mini-OEM Radio (Japan Robotics)
+mini-OEM Eval Kit (Japan Robotics)
+mini-OEM/Helix Mesh Rider Radio – Connector Descriptions (RM-5700-2L)
+Webpage to PDF
+Connectors
+S. No
+Description
+Manufacturer
+MPN
+1
+Primary Connector
+JST
+SM15B-GHS-TBLFSN
+2
+Power Connector
+JST
+SM6B-GHS-TBLFSN
+3
+Antenna Connectors
+Molex
+73414-0100
+Primary Connector Pinout
+RM-5700-2L Top view
+Port 1 pin numbering
+Port 1 Wire Descriptions
+Pin Number
+Direction
+Voltage
+Pin Description
+PIN 1
+I
++5-V
+5-V Input Supply
+PIN 2
+I
++5-V
+5-V Input Supply
+PIN 3
+GND
+GND
+PIN 4
+GND
+GND
+PIN 5
+I/O
++2.8-V
+RESET – default high, pull low to reset
+PIN 6
+I
++3.3-V
+UART_RX
+PIN 7
+O
++3.3-V
+UART_TX
+PIN 8
+GND
+GND
+PIN 9
+I
+Diff Signal
+ETH1_RX_P
+PIN 10
+I
+Diff Signal
+ETH1_RX_N
+PIN 11
+O
+Diff Signal
+ETH1_TX_P
+PIN 12
+O
+Diff Signal
+ETH1_TX_N
+PIN 13
+GND
+GND
+PIN 14
+I/O
+Diff Signal
+USB-Dev-D- (Ethernet only)
+PIN 15
+I/O
+Diff Signal
+USB-Dev-D+ (Ethernet only)
+Port 2 pin numbering
+Port 2 Wire Descriptions
+Pin Number
+Direction
+Voltage
+Pin Description
+PIN 1
+I
++5-V
+5-V Input Supply
+PIN 2
+I
++5-V
+5-V Input Supply
+PIN 3
+I
++5-V
+5-V Input Supply
+PIN 4
+GND
+GND
+PIN 5
+GND
+GND
+PIN 6
+GND
+GND
+Table of Contents

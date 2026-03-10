@@ -1,0 +1,127 @@
+Source: https://techlibrary.doodlelabs.com/gcs-profile-and-eud-wizard-guide
+
+Application Notes
+UXV Use-Cases
+Mesh Rider Radio Integration
+Low Latency C&C and Video Streaming
+Platform Integration Guide(VOXL and Skynode)
+Guidelines for RF Performance(UAV/UGV)
+Drone Performances & Use Cases
+Wearable Use-Cases
+Wearable Mesh Rider Radio Testing Results
+Starlink SATCOM Integration Guide
+GCS Profile and EUD Wizard Guide
+GCS Profile and EUD Wizard Livestreaming to YouTube Guide
+GCS Profile and EUD Wizard Guide
+Webpage to PDF
+Introduction
+The GCS Profile is a new “Simple Configuration” profile which extends internet access to all machines connected to the Mesh Rider network. For the Wearable Mesh Rider Radio, the internet access can come over either the USB-Dev port, the Ethernet port, or the Wi-Fi interface. An example of how the network can be set up is shown in Fig. 1.
+Fig. 1 – Example GCS Profile and EUD Wizard use case
+In Fig. 1, the drone can send its live video feed to a cloud-based server so that anybody with access can view the feed in real time. Internet access is provided by a Smart Phone’s or Tablet’s cellular network connection. These Android Smart Phone’s and Tablet’s we are referring to as “End User Devices or EUD.
+Software Note: The GCS Profile is a free and unlicensed feature which is available in the February 2024 release of the Mesh Rider firmware.
+Networking Configuration
+You can select the GCS with Internet profile from the Profile Selection dropdown at the top of the Simple Configuration page. Once selected, the relevant configuration section titled GCS with Internet Configuration will appear, allowing you to choose the connection method (e.g., USB/Ethernet), as shown in Fig. 2.
+Fig. 2 – Simple Configuration GCS with Internet Profile Menu
+The GCS Profile works in 2 basic modes.
+1. USB/Ethernet mode
+2. Wi-Fi Hotspot mode
+These two modes are distinguished by the way that the GCS radio connects to the GCS machine. This GCS machine is typically a Smart Phone with internet access over a cellular network. It is not possible to use your Android EUD as a Wi-Fi client while providing internet access to the Mesh Rider network unless your Android EUD is rooted. If that is an option for you, then you can use the USB/Ethernet mode.
+Application Note: You can select the mode using the drop-down menu next to the field “Connect Over”.
+USB/Ethernet Mode
+Referring back to Fig. 1, this mode is designed to support the case where the Smart Device (phone or tablet) has an internet connection and is connected to the GCS Mesh Rider radio over a USB connection.
+In USB/Ethernet mode, the Mesh Rider network adopts a flat architecture as shown in Fig. 3. This is actually the same architecture used by the Mesh Rider radio in its factory default state.
+1. The EUD acts as a gateway for internet traffic originating from the Mesh Rider network.
+2. The EUD starts a DHCP server. All devices in the network including the Mesh Rider radios, and the Drone’s OBC receive an IP address from the EUD.
+Fig. 3 – USB/Ethernet mode network
+Application Note: The Wearable Mesh Rider radio has both a USB device port, and a USB host port.
+USB Device port
+If you use the Wearable Mesh Rider radio’s USB device port, then the Smart Device will go into USB host mode. Not all Smart Devices support this kind of connection, but tablets typically do. We tested the connection on a Samsung Galaxy S7FE tablet.
+After connecting the USB port on your EUD to the USB-Device port on the Wearable Mesh Rider radio, you should
+1. First enable the Ethernet Connection
+2. In the Samsung Galaxy S7FE, this is in the Settings -> Connections -> More connection settings -> Ethernet menu
+3. After that enable Tethering under Settings -> Connections -> Tethering
+Application Note: These steps are shown in Android Settings in Fig. 4 and Fig. 5.
+Fig. 4 – Enabling the Ethernet Connection
+Fig. 5 – Enabling Tethering
+USB Host Port
+If you use the Wearable Mesh Rider’s USB Host port to connect to your EUD, then the EUD will be in USB device mode. You need to enable USB Tethering on your EUD. On the Samsung Galaxy S7FE, you then need to enable USB Tethering in menu shown in Fig. 5.
+IP Addressing
+If you are using an Android EUD, it may be difficult to find the IP addresses of devices in the network. In a rooted device, you could look at the dhcp leases file created by dnsmasq. In non-rooted devices, however, you may need to use network IP port scanner to search for hosts connected to the EUD.
+Conversely, if you have a rooted device + an USB OTG port on your EUD and further access to either a command line or shell scripting in your embedded Android EUD, you can also configure persistent usb0 static IP net-routing. The usb0 interface will not interfere with Android Network service priorities found with Wi-Fi, cellular/LTE or other eth0/eth1 interface preferences.
+Application Note: Another option is to pre-configure your drone applications to automatically connect to the gateway. Further options in this line of networking include adding static IPs to Wi-Fi interfaces.
+EUD Wizard May Not be Required -- Embedded Android EUD
+As previously mentioned, the IP addressing of usb0 can be statically routed for Android EUD such as embedded GCS designs as seen in Fig. 6 below. For efficient usb0 static IP addressing, embedded Android EUD include devices with the features and capabilities: a) devices that have rooted SBC or other rooted Android EUD, b) devices with an USB OTG port enabling an usb0 interface, and c) devices with an ability to run Linux Command Line or shell scripts.
+Fig. 6 – Embedded Android EUD and Command Line Static IP Addressing
+It is important to note that usb0 custom IP address routing generally requires root privileges which can void common Android tablet & smartphone warranties to install (i.e. install root Termux or Magisk on a Samsung Tablet). If attempting static IP routing with the eth0/eth1 interface this will still disable Wi-Fi due to Android Network service priorities (i.e. it will assume ethernet is more important so disable Wi-Fi).
+Whereas usb0/usb1 static IP routing & interfacing avoids these Android limitations. Example scripting for the IP addressing to connect to the Fig. 3 GCS-radio static IP at
+192.168.43.102
+(scripting on the Android EUD or Embedded GCS):
+ip a add 192.168.43.105/16 dev usb0 brd 10.223.255.255
+ip route add 192.168.43.1 dev usb0
+ip link set dev usb0 up
+ip rule add from all lookup main pref 1
+EUD Wizard May be Required -- Wi-Fi Production Android EUD
+In most newer Android OS versions (AOSP 13+, API 33+) and some older EUD, Wi-Fi networks can be assigned IP static routes and IP gateways. For reference even an entry level Samsung Tab A7 Lite this can be done if you go to
+Device Settings --> Connections --> Wi-Fi --> DoodleLabsWifi-505d95
+where you can then gather more network specific settings for your radio1 interface for Wi-Fi.
+Fig. 7 – Quick and Easy (But Limited) Wi-Fi Static IP Addressing
+Next, (in the Tab A7 Lite) if you go to
+Manage Network Settings --> View More --> IP Settings --> Static
+you can route a static route over your Wi-Fi interface to connect directly to your EUD. We will show what this looks like in Fig. 7 for the GCS-radio static IP given with the previous use case
+192.168.43.102
+and assigning a static IP of
+192.168.43.110
+for the Tab A7. For the radio ‘simple config’ in Fig.2, you can simply set up either the ‘GCS’, ‘General’ or ‘GCS + Internet’ profiles as a Wi-Fi AP and quickly be on your way to controlling your UAS or UGV.
+Application Note: Wi-Fi Limitations and Benefit of EUD Hotspot Wizard
+As mentioned in Fig. 7, the Wi-Fi AP configuration blocks any other external LTE, Wi-Fi or internet connectivity while in-use. However, the Wi-Fi AP can be quickly toggled ‘on’ or ‘off’ through Android Settings if internet connectivity is a lesser concern. To overcome this Doodle Labs designed the EUD Hotspot Wizard to share the Android EUDs hotspot over the network, create an advanced internet gateway schema and further added advanced port forwarding.
+The EUD Hotspot Wizard -- Wi-Fi Hotspot Mode
+You can also use the Wi-Fi hotspot on your EUD to provide an internet connection to the Mesh Rider network. In this mode, the GCS-side Wearable Mesh Rider radio acts as a router and an internet gateway for the rest of the Mesh Rider network. This is shown in Fig. 8.
+Fig. 8 – Wi-Fi hotspot mode network
+We can see that both the EUD and the Wearable Mesh Rider radio perform network address translation (NAT), and route traffic from their respective LANs towards the internet. The GCS-side Mesh Rider radio starts a DHCP at the address
+10.x.y.1/8,
+where
+x
+and
+y
+are the final two decimal values of the MAC address. For example, if the MAC address of the radio is
+00:30:1a:40:29:73
+, then
+0x29 = 41
+and
+0x73 = 115
+, so the gateway IP address is
+10.41.115.1/8.
+As the devices behind the GCS-side Mesh Rider radio’s NAT are not on the same LAN as the EUD, the EUD cannot communicate directly applications running on the Mesh Rider network. Instead, client applications running on the EUD, talk to the GCS-side Mesh Rider radio, and port forwarding needs to be set up on the GCS-side radio.
+For example, if you are running an RTSP server on host
+10.41.115.125
+at port 8000, then you should forward port 8000 on the GCS-side radio. The EUD would then connect to the RTSP feed at
+192.168.43.102:8000
+instead of
+10.41.115.125:8000
+.
+Wearable Mesh Rider Configuration
+To configure the Wearable Mesh Rider radio to connect to a Wi-Fi hotspot, navigate to
+Utilities → EUD Wizard
+from the sidebar. The EUD Wizard allows you to scan and connect to available Wi-Fi networks. While there is no dedicated status tab, all connection-related details, including hotspot events, can be monitored through the
+System Logs
+. Simply go to
+Utilities → System Logs
+and search for the keyword
+“hotspot”
+to view real-time messages and debug information regarding EUD operations.
+Example Setup
+In this example, the Pixhawk 4 flight controller on our drone is connected to a mini-OEM Mesh Rider radio over UART. The raspberry PI sends an RTP video feed to our GCS on port 5000. The serial to network bridge on our UAV-side radio runs in UDP server mode and listens on port 2000. A full diagram of the setup including IP addressing is shown in Fig. 13.
+Fig. 13 – Example setup diagram
+Example Note: The Simple Configuration page and EUD Hotspot Wizard pages were set up as discussed earlier.
+RTP Video Feed on the Raspberry PI
+The RTP Video Feed on the Raspberry PI is sent using a simple gstreamer pipeline.
+raspivid -n -t 0 -w 1280 -h 720 -rot 180 -fps 30 -b 2000000 -g 7 -fl -ih -if cyclic -ex sports -pf high -awb auto -o - | gst-launch-1.0 -v fdsrc ! h264parse ! rtph264pay config-interval=-1 pt=96 ! udpsink host=192.168.43.1 port=5000 sync=false
+Here,
+192.168.43.1
+is the IP address of the Android Smart Phone (the EUD). Fig. 14 shows how to set up the video in QGroundControl.
+Fig. 14 – Video Setup in QGroundControl
+Fig. 16 – MAVLink Comms setup in QGroundControl
+Ready to Fly
+Fig. 15 shows QGroundControl’s main screen after setting everything up.
+Fig. 15 – QgroundControl Main Screen
+Table of Contents

@@ -1,0 +1,313 @@
+Source: https://techlibrary.doodlelabs.com/mass-firmware-update
+
+Software Guides
+Getting Started
+General Configuration
+Model Specific Configuration
+Multiband Radios
+Wearable/OEM Radios
+SENSE - Interference Avoidance Configuration
+Large Network Optimization
+Remote Management Guide
+Remote Management: CLI
+Remote Management: JSON RPC
+JSON RPC Reference
+GPS Guide
+Serial Interface Guide
+GPIO usage and LED Blinking
+Production Firmware Customization
+Mass Firmware Update
+Advanced Networking Guide
+Mass Firmware Update
+Webpage to PDF
+Introduction
+This guide outlines a streamlined and reliable method for programming multiple radios simultaneously. The process automatically detects and connects to each radio without requiring a pre-configured list of IP addresses. Please note, this is not intended for over-the-air (OTA) updates—each radio must be connected via a central switch. For OTA updates or wired updates using a specific list of radio IPs, refer to our
+Firmware Update Tool
+.
+Note:
+Contact your Doodle Labs sales representative for the mass firmware update software. First read through this article to see if it fits your use-case.
+Required Equipment
+1. Monitor/Keyboard/Mouse
+2. Computer with Ubuntu 22.04 LTS with RJ45 Port
+3.  One TP-LINK L2 Smart Managed Switch
+The supported models are.
+a.
+TP-LINK TL-SG3428
+(Tested)
+b.
+TP-LINK TL-SG2428/P
+4. Monitor Cable
+5. Power Supply (alternatively could have one power brick per radio)
+6. Evaluation Kit for each Radio
+7. Mesh Rider Radio/s also known as Device Under Test (DUT) with factory default login
+(username:root with no password)
+8. RJ45 cable for each Radio.
+9. RJ45 Cable for computer
+10. Cooling Fan (Optional)
+Here is a picture of the required equipment. In this setup, please note that there are four Mesh Rider Radios ( labelled as
+6
+and
+7
+): two being the wearable variant (
+7
+) and other two being the mini-OEM (
+6
+).
+Here is a block diagram of the setup for further clarity. Please note in the diagram there is only one Eval Board but in the actual setup there is an eval board per DUT. The diagram has been streamlined for simplicity.
+Required Software
+1. MFU_Software
+(please contact a Doodle Labs Sales Rep to acquire this software)
+2. Ubuntu 22.04 LTS
+Wiring Diagrams
+TP-Link Smart Managed Switch to PC
+Ensure the 1st port of the Ethernet Switch is connected to the PC.
+Mini-OEM
+Diagram
+Parts List
+Items 2-4 are included with the Mini-OEM evaluation kit.
+No
+Item
+Details
+1
+2x Ethernet - RJ45 Cable
+One for PC to switch, One for device to switch
+2
+6 wire JST Cable
+Power Connector for Device
+3
+4 wire JST Cable
+Ethernet Connector for Device
+4
+Mini-OEM breakout board
+Facilitates ethernet and power connection to device
+5
+TP-Link Smart Managed Switch
+6
+DC Fan (Optional)
+Cooling
+7
+Computer/Mouse/Keyboard
+8
+Power Supply
+Voltage: 5V (at least 15W)
+Nano-OEM
+Diagram
+Parts List
+Items 2-4 are included with the Nano-OEM evaluation kit.
+No
+Item
+Details
+1
+2x Ethernet - RJ45 Cable
+One for computer to switch, One for device to switch
+2
+6 wire  JST Cable
+Power Connector for Device
+3
+4 wire  JST Cable
+Ethernet Connector for Device
+4
+Nano-OEM breakout board
+Facilitates ethernet and power connection to device
+5
+TP-Link Smart Managed Switch
+6
+DC Fan (Optional)
+Cooling
+7
+Computer/Mouse/Keyboard
+8
+Power Supply
+Voltage: 5V (at least 15W)
+OEM
+Diagram
+Parts List
+Items 2-4 are included with the Mini-OEM evaluation kit.
+No
+Item
+Details
+1
+2x Ethernet - RJ45 Cable
+One for computer to switch, One for device to switch
+2
+6 POS - Molex Cable
+Power Connector for Device
+3
+4 POS - Molex Cable
+Ethernet Connector for Device
+4
+OEM breakout board
+Facilitates ethernet and power connection to device
+5
+TP-Link Smart Managed Switch
+6
+DC Fan (Optional)
+Cooling
+7
+Computer/Mouse/Keyboard
+8
+Power Supply
+Voltage: 6V to 24V (at least 15W)
+Wearable
+Diagram
+Parts List
+Items 2-3 are included with the wearable evaluation kit.
+No
+Item
+Details
+1
+2x Ethernet - RJ45 Cable
+One for computer to switch, One for device to switch
+2
+USB-Device + PWR Connector
+Power Connector for Device
+3
+ETH USB-Host Connector
+Ethernet Connector for Device
+4
+TP-Link Smart Managed Switch
+5
+DC Fan (Optional)
+Cooling
+6
+Computer/Mouse/Keyboard
+7
+Power Supply
+Voltage: 6V to 24V (at least 15W)
+SOC
+Diagram
+Parts List
+No
+Item
+Details
+1
+2x Ethernet - RJ45 Cable
+One for computer to switch, One for device to switch
+2
+SOC breakout board
+Facilitates ethernet and power connection to device
+3
+TP-Link Smart Managed Switch
+4
+DC Fan (Optional)
+Cooling
+5
+Computer/Mouse/Keyboard
+6
+Power Supply
+Voltage: 6V to 24V (at least 15W)
+Creating Config File for SSH Connection
+The following should be done on the Ubuntu 22.04 LTS computer. This is for setting up the SSH configuration on the Ubuntu machine. It is explicitly telling the SSH service that we are ok with using the ssh-rsa algorithm otherwise it might throw an error.
+1. Open a terminal.
+2. Change directory to $HOME/.ssh/
+cd $HOME/.ssh
+3. Create a config file in the same directory
+touch config
+4. Open the config file with editor.
+gedit config
+5. Copy and paste lines in the config file as below;
+Host *
+StrictHostKeyChecking no
+Host 192.168.0.*
+StrictHostKeyChecking no
+PubkeyAcceptedKeyTypes +ssh-rsa
+6. Save and exit the editor.
+How to setup the SSH Key for the Ethernet Switch
+For the ethernet switch to interface with the radios it requires a SSH key to be setup for authentication. We will generate the SSH key on the Ubuntu 22.04 LTS computer.
+1. Create a directory named .ssh in the home directory. The -p option ensures the system does not return an error if the directory exists:
+mkdir -p $HOME/.ssh
+2. Change permissions of the directory to give the user read, write, and execute privileges:
+chmod 0700 $HOME/.ssh
+3.
+Execute the ssh-keygen command to create an RSA key pair:
+ssh-keygen
+4.
+When prompted, provide the path to the key file. If you press Enter without typing a file path, the key will be stored in the
+.ssh
+directory under the default file name
+id_rsa
+. (Eg,
+id_rsa.pub
+)
+5. The system asks you to create a passphrase as an added layer of security. Input a memorable passphrase, and press Enter.
+6. T
+he output below shows that the keys have been created successfully.
+7. Refer to this
+link
+for additional information.
+Configuring the Ubuntu 22.04 Network Settings
+Ensure the 1st port the switch is connect to the HOST computer.
+Configure the host computer with the following
+IPv4 address 192.168.0.100.
+Subnet Mask 255.255.255.0
+Default Gateway <leave empty>
+The switch address should be 192.168.0.1.
+Adding SSH Key to Ethernet Switch (
+TP-TLSG3428)
+1. Make sure the LAN connection is established before proceeding.
+Ethernet Switch (TP-TLSG3428) is powered on, initiated and connected to Host PC with RJ45 LAN cable in LAN port (enp2s0/enp3s0).
+Host PC is powered on.
+2. In a browser navigate to address ->
+192.168.0.1
+.
+Notes: make sure the host pc is not connected to any other network with router address ->
+192.168.0.1
+.
+3. Login to the user control interface for TP-TLSG3428 with username and password;
+Default username -> admin
+Default password -> admin
+You will be prompted to change the password on your first login.
+4. Navigate to the Security Tab like below.
+5. Import the SSH Key that we created in the SSH Key section.
+6. Save the configuration and logout.
+Preparing the Mass Firmware Update script
+1. Unzip the MFU_Customer_Release.zip file and navigate to the folder named
+main.
+2. Paste the firmware you wish to load into the images folder. The file must be named
+sysupgrade.bin
+like above.
+3. Determine the ethernet interface name. Go into Settings -> Network ->Identity as below. Note the ethernet interface name in the MAC Address field, in this example it is
+(enp2s0)
+.
+4. Open the configuration_common file and make the following changes.
+Edit Line 9: Enter the ethernet interface name as we have noted in the previous step. In this case it is
+(enp2s0)
+.
+ports=(enp2s0)
+Edit Line 24: Disable set parent
+setparent="disable"
+Edit Line 25: Insert the model number of the devices being upgraded.
+modelNumber = "<insert model number of devices being upgraded>"
+Below highlights the changes to be made.
+5. Open a terminal in the directory of the mass firmware scripts. Execute the following to ensure all the scripts have the proper file permissions.
+chmod +x *.*
+6.  Final checklist before executing mass firmware script.
+a) Ensure all the ethernet connections are in between the DUTs, switch and host pc. Host PC in the port0 position of the switch.
+b) Check that you have placed the proper firmware in the images folder and labelled it "sysupgrade.bin
+c) Make sure all the DUTs are powered up with the correct voltage and sufficient power.  Each device should be able powered with a supply capable of at least 15W of power.
+Mini OEM
+- 5V
+Nano OEM
+- 5V
+OEM
+- 6V to 24V
+Wearable
+- 6V to 24V
+d) Make sure all radio login information is the factory default. That being a username of root with no password.
+7. Reboot the switch and host pc. This is necessary as when the switch and pc are connected together for too long and remain idle, we see some unintended consequences.
+8. Run the programming script. The maximum number of devices supported by this script is 20.
+./tplink_check.sh <insert # of DUT>
+In the example below we are programming 2 devices.
+WARNING: DO NOT CLOSE OR STOP THE TERMINAL/PROCESS WHILE FLASHING THE FIRMWARE
+If the DUTs are successfully connected and detected, the program will flash the final firmware to the DUTs without any additional user input.
+Once the process is done you will see a window like below.
+The duration for the firmware update process can vary as it is dependent on the host pc performance and the number of DUTs.
+Error: DUT is missing
+If the number of DUTs detected by the script do not match the input, the script will send an error message.
+In this example below, we are attempting to flash 5 DUTs but only 4 DUTs are able to be detected.
+./tplink_check.sh 5
+The program will keep trying to connect to 5 DUTs till it hits the timeout period defined in the configuration_common file. After the attempts to reach 5 DUTs, a prompt like below will appear that says only 4 DUTs have been detected and one is missing.
+Press "
+OK
+" in the window above to stop the program. The program will not proceed to flashing the DUTs. Next check the physical connections for the DUTs before trying again.
+Table of Contents

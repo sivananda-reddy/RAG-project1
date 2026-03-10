@@ -1,0 +1,85 @@
+Source: https://techlibrary.doodlelabs.com/mesh-rider-radio-hardware-interfaces
+
+General: Hardware Integration Guides
+Hardware Integration Guidelines
+Hardware Interfaces
+Mesh Rider Radio Hardware Interfaces
+Webpage to PDF
+Mesh Rider Radios are available in different variants: Embedded, External, Wearable, mini/nano-OEM. As each form factor is designed to cater to a particular use case, there are differences in the hardware interfaces between these designs. Table 1 shows the available interfaces for the different variants. ETH1 is configured by default as a configuration interface which is not remotely accessible, but it can be re-configured if necessary. Please note that the -H variant of the Embedded Mesh Rider Radio is a legacy model. We recommend new designs to use the -J models. For the -H it comes with either a UART or a USB Host port.
+Table 1 : Hardware interfaces for different Mesh Rider Radio variants
+Interface
+Embedded/
+External
+Wearable
+mini/nano OEM
+(legacy)
+mini/nano OEM
+(2023 update)
+Mesh Rider Radio
+Yes
+Yes
+Yes
+Yes
+Ethernet (ETH0)
+Yes
+No
+No
+No
+Ethernet (ETH1)
+Yes
+Yes
+Yes
+Yes
+USB Device Port
+No
+Yes
+Yes
+Yes
+USB Host Port
+Yes
+Yes
+No
+Yes
+WiFi Radio
+No
+Yes
+No
+No
+UART
+Yes
+Yes
+Yes
+Yes
+GPIOs
+2
+1
+0
+3
+Mesh Rider Interface
+The Mesh Rider interface is the main wireless interface and is available on all Mesh Rider Radio products. Because it uses a proprietary wireless protocol, it is only accessible from other Mesh Rider devices.
+ETH0 and ETH1 Interface
+ETH0 and ETH1 are standard Ethernet interfaces and are bridged to the Mesh Rider Interface. USB Device Port The USB Device port is an Ethernet over USB interface and can be connected to USB host ports like those found on PCs, or USB OTG ports like those on Smart Devices. It is bridged to the Mesh Rider interface.
+Scroll Buttons
+Top of Article
+▼
+Last
+▲
+Next
+End of Article
+USB Host Port
+The USB Host port is set up as an Ethernet over a USB interface and can be connected to USB device ports or USB OTG ports like those found on Smart Devices. It is bridged to the Mesh Rider interface. Its functionality can be extended by installing additional USB drivers on the Mesh Rider Radio, like USB HID drivers.
+WiFi Radio
+The WiFi radio is bridged to the Mesh Rider Interface and provides standard WiFi connectivity to devices such as PCs and Smart Devices. The default SSID is DoodleLabsWiFi and the password is DoodleSmartRadio. By default the WiFi Radio is in AP mode, but it can be configured as a client to connect to a standard Wi-Fi access point.
+UART Interface
+All Mesh Rider Radio models include a UART interface. This interface can be bridged to the Mesh Rider network.
+Embedded/Wearable/OEM: Up to 1 Mbps baud rate, 3.3-V TTL.
+External: Up to 1 Mbps baud rate, RS232.
+mini/nano OEM: Up to 115200 baud rate, 3.3-V TTL.
+Scroll Buttons
+Top of Article
+▼
+Last
+▲
+Next
+End of Article
+Table of Contents

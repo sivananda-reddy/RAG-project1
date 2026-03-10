@@ -1,0 +1,74 @@
+Source: https://techlibrary.doodlelabs.com/link-quality-issues
+
+Troubleshooting
+Link Status Log Walkthrough Guide (Video)
+Link Quality issues
+Radio Access issues
+UART and USB Issues
+Backup Reset and Upgrade
+Crashes, Reboots etc
+Link Quality Issues
+Webpage to PDF
+This section covers troubleshooting problems with the link quality. If you are looking for information on optimizing the link quality, please read the guide,
+Optimizing the RF Link
+, in our technical library.
+"The radios are not connected to each other at all"
+Make sure you can access the radios before troubleshooting the wireless link. If the radios are not connected to each other at all, then the most likely causes are:
+1. The radios have been configured in different modes
+2. The antennas are not connected properly
+3. Power supply issues
+The radios are configured in different modes
+This could happen if you have inadvertently configured one radio in WDS AP/Client mode and another in Mesh mode or both radios as WDS AP for example. Navigate to the wireless configuration in the web GUI and check whether the mode is "station", "master", or "mesh point". Make sure the two radios are in compatible modes. We suggest using the Simple Configuration menu to configure your radios.
+The antennas are not connected properly
+Make sure that the connectors on the antennas are compatible with the connectors used on the cables. RP-SMA (reverse polarity SMA) is not compatible with SMA.
+Power Supply Issues
+Make sure to follow the power supply recommendations of the particular model which you have ordered. The power supply must be of the correct voltage and have sufficient current sourcing capability to power the radio.
+"The throughput is poor even at close range"
+As the radios are optimized for long range, they do not work well when they are within a close range of each other. At close range, the radios are likely to saturate the RF front-end, resulting in poor performance. For bench evaluation, please use RF attenuators supplied in the Eval kit. You should also reduce the output power of the radios and not use high gain antennas. , It is further possible to enable Transmit-Power Control (TPC). Note that TPC is only recommended for point-to-point networks.
+If the radios are more than 5-10 meters apart and the throughput is still poor, then it could be an interference or power supply issue. Please see the advice in the next section.
+"The radios are connected, but the range is poor"
+This could be a rather wide topic. The datasheets provide typical performance over distance assuming a reasonable fade margin (10-15 dB). The fade margin accounts for variations in the link quality due to things like antenna misalignment or environmental noise. The most common reasons for poor range are:
+1. Network congestion
+2. Not adhering to recommended Fresnel Zone clearance requirements
+3. Noise and Interference (and self-interference)
+4. Power Supply Issues
+5. Overheating
+6. Poor choice of antennas
+7. Antenna cable loss
+We will only briefly discuss these topics. Before covering these topics, if your radios are linked, then you can use the "Link Status Log" utility to get detailed information about the link status. This can help you to determine the root-cause for the poor performance. The Link Status Log utility is described in detail in the
+Command Line Interface
+software guide.
+Network Congestion
+The network capacity degrades at longer ranges, and if the network is congested, then packets will be dropped. An example of a cause of network congestion is attempting to transmit raw or inadequately compressed video.
+Fresnel Zone Clearance
+The required Fresnel Zone clearance is the radius around the line-of-sight path which must be clear of obstacles. The Fresnel Zone clearance is frequency dependent, so we recommend using an RF calculator to calculate the required clearance for your application. Drone applications typically do not need to worry about Fresnel Zone clearance, but it is critical for unmanned ground vehicles (UGV).
+Noise and Interference
+Background noise and interference has a direct effect on the achievable range. The 2.4-GHz ISM band may be the most crowded frequency band in the world due to the ubiquity of 2.4-GHz WiFi. Therefore, the achievable range in urbanized areas is notably poorer for the 2.4-GHz band than other bands. Aside from the 2.4-GHz band, the 915-MHz band and the 5-GHz bands are also license-free and may be highly congested depending on where the radios are being deployed. You can measure the level of the background noise picked up by the radio using the built-in spectrum analyzer. See the
+Spectrum Scanning
+software guide.
+Another very common source of interference is having multiple radios on the same product. For example, UAVs often have a separate RC link using a third-party system. If the RC link is in the same band (e.g. both the Mesh Rider radio and the RC radio operate in the 2.4-GHz band), then they will strongly interfere with one another even if they are on different channels. This is not a limitation of the Mesh Rider radio, but rather a physical limitation of all radios. Ideally the radios should be on different bands, and should be physically separated as much as possible.
+Power Supply Issues
+Please make sure to follow the power supply requirements mentioned in your product's datasheet. The Mesh Rider Radios have voltage and power requirements. Most AC/DC regulators specify an output voltage, and the maximum current they can supply. The maximum power they can supply is simply the voltage multiplied by the current (in amperes). So a 9-V, 2-A adapter can supply 18-W of power.
+Some power supplies are noisier than others. Devices such as powerful motors create supply noise when they pull current from the source. The Mesh Rider Radios have power supply isolation built in, but their effectiveness depends on how noisy the supply really is. If you are unsure whether your supply is causing a problem, power the Mesh Rider Radio from a separate battery.
+Please also follow our recommended power supply guidelines in our
+Hardware Integration Guidelines
+document.
+Overheating
+The Mesh Rider Radios are rated to operate at a case temperature of up to 85 C. At 85 C there will be some degradation in the output power (model dependent, but typically up to 2-3 dB) which will result in reduced operating range. If your application allows it, we recommend good heat sinking.
+Poor Choice of Antennas
+Antenna selection is a very broad topic, so we will only provide a few important reminders.
+1. Make sure to choose an antenna which is designed for the operating frequency of the Mesh Rider Radio. Wideband and dual-band antennas which are designed to work over many bands generally don’t perform as well as narrowband antennas a single particular band of interest.
+2. ¼-wave antennas normally need to be mounted to a ¼-wave radius ground plane. For example, at 915-MHz, the ¼ wavelength is 82 mm in air. Therefore, a ¼-wave antenna would need to be mounted to a metal plane of at least 82-mm radius.
+3. ½-wave dipole antennas normally do not need to be mounted to a ground-plane.
+4. Chip antennas normally need to be mounted on a PCB which serves as a ground plane. These are not recommended unless you are familiar with antenna design.
+5. High gain antennas are directional. That means that the antenna will only have high gain when they are pointed in a particular direction. Look up the radiation chart if you are unsure.
+6. Antennas have a polarization (horizontal, vertical, R/L handed circular). Polarizing TX and RX antennas differently can lead to significant loss.
+7. In general, cheap antennas should not be trusted unless you have tested them.
+Antenna Cable loss
+When choosing an antenna cable, keep the following in mind.
+1. Make sure to use 50-ohm coaxial cable (not 75-ohm cable)
+2. Coaxial cables have different loss per unit length depending on the type and frequency. Use a calculator like this one
+https://www.qsl.net/co8tw/Coax_Calculator.htm
+, or look up the loss specifications from the coaxial cable's datasheet.
+3. Every 3-dB coaxial cable loss results in 3-dB loss in the TX power and 3-dB loss in the RX signal which results in 2x reduction in the operating range.
+Table of Contents

@@ -1,0 +1,186 @@
+Source: https://techlibrary.doodlelabs.com/vehicle-validation-guide
+
+Vehicle Validation Guide
+Webpage to PDF
+This guide provides a structured checklist for system integrators to validate the performance, reliability, and robustness of Doodle Labs radios during platform integration. It includes hardware validation, RF environment checks, and automated diagnostics using the built-in GUI tools.
+Signal Quality Reference
+Too Strong:
+RSSI ≥ -30 dBm (may cause receiver saturation)
+Good:
+RSSI > -70 dBm, SNR > 25 dB
+Acceptable:
+RSSI -70 to -85 dBm, SNR 10–25 dB
+Bad:
+RSSI < -85 dBm, SNR < 10 dB
+Note:
+To view real-time link statistics, run:
+cat /tmp/linkstate_current.json
+This log provides fields such as RSSI, SNR, TX/RX bitrate, retries, packet counts, MCS, link quality, peer MAC, channel/frequency, channel width, and system info.
+An example output is shown below.
+simpleconfig.cfg03f223=general
+{
+"cpu_load": [
+5088,
+11072,
+16800
+],
+},
+"oper_chan": 12,
+"oper_freq": 915,
+"chan_width": "26",
+"noise": "-98.808556",
+"activity": 1,
+"lna_status": "1",
+"sta_stats": [
+{
+"mac": "00:30:1a:50:3b:a0",
+"inactive": 30,
+"rssi": -49,
+"rssi_ant": [
+-51,
+-54
+],
+"pl_ratio": 0.0804505,
+"tx_bytes": 1242,
+"tx_retries": 1,
+"tx_failed": 0,
+"mcs": 13
+},
+],
+"mesh_stats": [
+{
+"orig_address": "00:30:1a:50:3b:a0",
+"tq": 255,
+"hop_status": "direct",
+"last_seen_msecs": 400
+},
+]
+}
+You can capture this file in a loop. For example, to print the RSSI and background noise, try running
+#!/bin/sh
+while sleep 1; do
+date | tr "\n" ","
+cat /tmp/linkstate_current.json \
+| jsonfilter -e '@.noise' -e '@.sta_stats[0].rssi' \
+| tr "\n" ","
+echo
+done
+Example output
+You can capture this file in a loop. For example, to print the RSSI and background noise, try running
+root@smartradio-301a3b901d:/opt# ./test.sh
+Sat May  7 02:21:08 UTC 2022,-94.515457,-58,
+Sat May  7 02:21:09 UTC 2022,-94.515457,-58,
+Sat May  7 02:21:10 UTC 2022,-94.515457,-58,
+Sat May  7 02:21:11 UTC 2022,-90.120377,-54,
+Note:
+Doodle Labs is actively developing dedicated tools to simplify and automate link monitoring for both bench testing and live deployments —
+coming soon
+.
+1. Link Budget Simulation Using Attenuators
+Objective
+: Emulate long-range link conditions without flying the full range.
+Procedure:
+1. Connect 10–20 dB fixed attenuators to both ends (Ground Control Station                  (GCS) and UAV).
+Approximation
+Each 20 dB of attenuation simulates roughly
+10× the                            operational range
+under ideal free-space conditions.
+2.Perform a test over ~1–1.5 km Line of Sight (LOS).
+3.Ensure video and telemetry links are active.
+4.Repeat your tests for every channel and bandwidth that you intend to use as                  they may perform differently.
+Important Limitations:
+1.Antenna beam width and Fresnel zone effects are not represented in this test.
+2.For ultra-long links (>50 km), time-of-flight delays may affect performance,                   which this method cannot replicate.
+3.Attenuators reduce both the desired signal and any incoming noise.
+- If testing the impact of
+drone EMI
+on the radio, remove the attenuator                           from the UAV side and move all attenuators to the GCS side so that noise                       coupling can be measured directly.
+- Repeat the experiment with the attenuators on the UAV side.
+Monitoring:
+1.Most importantly, make sure that your application runs smoothly. E.g. no frame             drops or telemetry packet losses.
+2.Monitor background noise levels. If any channels exhibit higher than normal                 background noise levels, blacklist them.
+2. Minimum Modulation Rate Test
+Objective:
+Validate link stability at the lowest modulation and coding scheme that your application is designed to work at. Usually this is MCS0, and this is determined by a link budget analysis.
+Procedure:
+1.Set the MCS rate to
+MCS0
+(lowest modulation rate). See the
+technical library
+for information on how to do this.
+2.Run telemetry and video streaming on all operational channels.
+Observed Result:
+1.As before, make sure that your application runs smoothly.
+2.If the application does not run smoothly,
+- check if the network is overloaded. This can be observed from the
+activity
+field in the linkstate, which is a percentage measure of congestion.
+- check if the network congestion is coming from higher than normal packet                     loss ratio (pl_ratio in the linkstate) or from too much data being sent over the n                 network.
+- It may be that your application simply needs more bandwidth or a higher                       MCS rate than predicted in your link budget analysis.
+3. Link Recovery and Channel Hopping (Sense)
+Objective:
+Test automatic recovery under link loss.
+Procedure:
+1.In the GUI, enable
+Sense
+in the
+License Features → Sense
+menu (follow the              Sense configuration guide).
+2.If you are not running Sense, you can still run this experiment to see how                      quickly the link is restored after a momentary disruption.
+3. Simulate link break by either:
+- Covering antennas with RF shielding.
+- Using a Jammer
+What to Observe:
+1.Measure
+how long it takes for the video feed or telemetry stream to                     recover
+after the link is restored.
+2.Verify that the radios automatically reconnect without requiring manual                         intervention.
+3.Check if the system
+hops to a new channel
+when interference is present and               note whether the video feed resumes on the new channel.
+4.Document if there is
+any degradation in video quality
+(e.g., pixelation,                     buffering) during recovery.
+4. EMI and Electrical Noise Impact
+Objective:
+Detect interference from onboard electronics.
+Procedure:
+1.Activate Onboard Electronics : Power on all motors, servos, cameras,                            autopilot, and any other electronic systems on the UAV/UGV while the radio link             is active.
+2. Check Application-Level Impact :
+Observe how your application behaves                       during EMI conditions:
+- For video streaming: look for
+frame drops, pixelation, or lag
+.
+- For telemetry/control: check for
+delays or packet loss
+in your ground c                      control software.
+3. Monitor Link Statistics :Monitor noise floor, RSSI, and retry counts in                           real time.
+- Look for sudden increases in the
+noise
+value.
+- Watch for spikes in retries or drops in SNR.
+4.Investigate and Mitigate
+- EMI normally comes from the antennas (e.g. harmonics from other on-                          board radios) or over the power supply. In rare cases, it may be very high                      level EMI being picked up from cables.
+What to Observe:
+1.Any noticeable degradation in video quality (pixelation, buffering, lag).
+2.Telemetry/control performance
+, e.g., packet loss, delayed updates, or control                 input lag.
+3.Noise floor spikes
+correlated with activation of specific onboard electronics                  (motors, cameras, gimbals, etc.).
+4.RSSI stability
+—sudden drops during EMI events.
+Tip:
+Always test EMI impact under
+full load conditions
+(e.g., motors at throttle, cameras transmitting video) to simulate real mission scenarios.
+5. Antenna Orientation & Misalignment Sensitivity
+Objective:
+Identify weak link sectors during platform movement and determine the signal tolerance to angular offsets.
+Procedure:
+1.Mount antennas in their intended final configuration.
+2.Rotate the platform through yaw, pitch, and roll axes.
+3.Tilt patch antennas 30°–60° off-axis from optimal alignment to simulate                         misalignment conditions.
+What to observe:
+1.Make sure the application runs smoothly under all expected conditions.
+2.Carefully monitor RSSI, as a key indicator of signal strength and link quality.
+Table of Contents

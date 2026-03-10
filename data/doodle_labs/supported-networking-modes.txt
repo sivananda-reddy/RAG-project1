@@ -1,0 +1,87 @@
+Source: https://techlibrary.doodlelabs.com/supported-networking-modes
+
+Quick-Start
+Mesh Rider Quick Start Guide
+Chapter 1:  What's in the Box?
+Chapter 2: Getting Started on the Bench
+Chapter 3: Basic Radio Configuration
+Chapter 4: Bench Testing
+Chapter 5: Advanced Radio Configuration
+Chapter 6: Basic Field Testing
+Chapter 7: Troubleshooting
+GUI Quick Walkthrough Guide (Video)
+Throughput Estimation Tool
+Optimizing the RF Link
+Supported Networking Modes
+Recommended Antenna Matrix
+Supported Networking Modes
+Webpage to PDF
+Default Network Configuration
+The Mesh Rider Radio runs Doodle Labs Mesh Rider® OS, a customized version of Openwrt with enhancements. These enhancements are useful for applications requiring low-latency command-and-control transmission, HD Video, high-throughput, and long range. Fig. 1 shows the default network configuration of Mesh Rider Radio.
+Fig. 1 Default Network Configuration
+Mesh Rider Radio Network Topologies
+The Mesh Rider Radio supports several different network configurations. The Simple Config menu makes it easy to configure the radio. The Simple Config menu is accessed in the web GUI at
+network -> simple config
+.
+Basic Network Configurations
+The Simple Configuration menu (shown in Fig. 2) is the recommended starting point for any network design. In the updated GUI, this menu is organized into multiple sections including Profile Selection, UAV Configuration (if applicable), Active Frequency Band, Mesh Rider Radio Configuration, WiFi Radio Configuration, and Network Configuration.
+Start by selecting a profile under Profile Selection, such as General, UAV/UGV/Robot, or Ground Control System (GCS). This will auto-fill recommended configuration values relevant to your application. You can then modify the basic settings based on your specific network design.
+- UAV Configuration appears only if the selected profile is UAV/UGV/Robot. It includes fields like GCS IP address, port number, and baud rate. The GCS Finder utility is enabled by default.
+- Active Frequency Band allows you to choose the frequency band used by the radio (e.g., 915v4 MHz).
+- Under Mesh Rider Radio Configuration, select the scenario (e.g., Mesh), Mesh ID, password, channel, bandwidth, operating distance, and number of devices. There's also an option to optimize for latency.
+- WiFi Radio Configuration enables configuration of SSID, password, and WiFi scenario (e.g., Access Point).
+- The Network Configuration section allows you to set additional static IPv4 addresses and netmask for BR-WAN interface if needed.
+Once all necessary settings are applied, click Save Configuration to apply the changes.
+Fig. 2 Simple Configuration Menu
+These are the supported network configurations.
+1. Mesh
+2. WDS AP/Client
+3. Dynamic Mesh
+The basic network configuration in any of these modes is designed so that the entire Mesh Rider Radio network acts like one big Ethernet switch. Any host machines plugged into this "Ethernet switch" will be able to communicate with one another if they are on the same IP subnet, regardless of the IP addresses of the Mesh Rider Radios. To access the Mesh Rider Radios themselves, however, it is necessary for the host machines to be on the same IP subnet as the Mesh Rider Radios.
+Mesh
+All Mesh Rider Radios are set up in Mesh mode by default. In mesh mode, all nodes are able to communicate directly with each other and data can even hop between nodes to reach a destination. This is illustrated in Fig. 3. Maintaining the mesh requires additional network overhead compared to WDS AP/Client mode. Some benefits of Mesh mode compared to other modes include:
+●
+The network is homogenous and there is no need to configure each node differently
+●
+There is no single point of failure
+●
+The network can be extended beyond the line of sight through intelligent packet routing
+Fig. 3 Mesh mode
+WDS AP/Client
+WDS AP/Client mode is a star network configuration. All data must go through the AP. If meshing is not required, this is the preferred network mode as it is more responsive than Mesh mode.
+Fig. 4 WDS AP/Client mode
+Some benefits of WDS AP/Client mode compared to the others:
+●
+It provides the highest throughput
+●
+It automatically searches for the best channel on start-up
+●
+Client devices automatically scan and reconnect to the AP if the AP switches channels
+Dynamic Mesh
+Dynamic Mesh is a state-of-the-art network protocol based on establishing multiple redundant paths in a mesh network. Dynamic Mesh has ZERO packet re-routing or failover time. Dynamic Mesh also supports dual radio failover where two back-to-back radios on the same or different frequency bands route packets redundantly between nodes (Fig. 5). This makes Dynamic Mesh best-in-class in terms of latency and resiliency in highly dynamically changing environments.
+Fig. 5 Dual Radio Dynamic Mesh
+Some benefits of Dynamic Mesh mode compared to other modes include:
+●
+ZERO failover or packet re-routing time
+●
+No single point of failure
+●
+Can support very large number of nodes in a single network
+Note : The firmware and user guide can be downloaded from the product page.
+Extended Modes
+Aside from the basic network configurations above, the Mesh Rider Radio also supports:
+1. Gateway mode
+2. Wired Backbone
+Gateway Mode
+Gateway mode is supported in both WDS AP/Client and Mesh modes. In Gateway mode, one node is elected as a gateway to a wider network (the internet for example). The main data interface is connected to your modem, and performs NAT between the Mesh Rider Radio's LAN and the wider network. Additionally, the gateway Mesh Rider Radio starts a DHCP server on the LAN on the
+10.222.0.0/16
+subnet and a gateway IP address of
+10.222.1.1
+. From
+firmware version 2022-02
+onwards, ETH1 runs the DHCP client which connects to your modem, and ETH0 is bridged to the local network. Fig. 6 illustrates gateway mode for a mesh configuration.
+Fig. 6 Gateway mode
+Wired Backbone
+Although not a selectable mode, the Mesh Rider Radio supports extension of the network with a wired backbone in all three basic modes. In Mesh mode, it is necessary to enable "Bridge Loop Avoidance" when using a wired backbone. In WDS AP/Mode, no additional configuration is required, and clients can roam between WDS APs even with the APs on different operating channels. The typical handover duration is 0.2 seconds for APs in the same channel and 0.6 seconds for APs in different channels. Dynamic Mesh also supports use of a wired backbone with zero failover time.
+Fig. 9 Wired Backbone
+Table of Contents

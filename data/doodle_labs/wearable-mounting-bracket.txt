@@ -1,0 +1,25 @@
+Source: https://techlibrary.doodlelabs.com/wearable-mounting-bracket
+
+Wearable: Accessories
+Wearable Battery Pack
+Wearable Mounting Bracket Kit
+Wearable V2 Cables
+Datasheet: Wearable Mounting Bracket Kit
+Webpage to PDF
+Explore heightened versatility with the Doodle Labs "Wearable Mounting Bracket Kit". Precision-crafted from IP67 ruggedized Aluminum, it seamlessly integrates with our Wearable Mesh Rider products, offering a tailored solution for efficient mounting.  Committed to MIL-STD-810H standards, this kit guarantees optimal performance for Wearable Mesh Rider Radios across various applications.
+The "Wearable Mounting Bracket Kit" user-friendly design incorporates a custom-developed mechanism for a secure attachment to the Wearable Radio to a number of mounting surfaces. With this kit the Wearable Radio can be both wall mounted or tube/pole mounted as pictured in the diagram(s) below.
+Dual-Use Design: Wall Mount & Tube Mount
+Design-in Documentation
+2D Drawing (Mechanical)
+2D Drawing (Application Drawing)
+3D Drawing
+Compatible Wearable Mesh Rider® Radios
+Datasheet: Multiband Wearable Mesh Rider Radio – 915 MHz and 2450 MHz (ISM bands)
+Datasheet: Multiband Wearable Mesh Rider Radio – 1370 MHz and 2200~2510 MHz
+Datasheet: Multiband Wearable Mesh Rider Radio – 1625~2500 MHz, Hex band
+Datasheet: Multiband Wearable Mesh Rider Radio – 4400~5925 MHz (Nato-C + Federal + ISM)
+Datasheet: Multiband Wearable Mesh Rider Radio – 4940~5895 MHz (Public Safety + ISM)
+Datasheet: Wearable Mesh Rider Radio – 5150~5895 MHz (WiFi Band)
+Datasheet: Multiband Wearable Mesh Rider Radio – 5150~5895 MHz (UNII Band)
+Datasheet: Multiband Wearable Mesh Rider Radio – 5700-MHz Japan Robotics
+Table of Contents

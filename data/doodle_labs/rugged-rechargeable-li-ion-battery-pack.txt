@@ -1,0 +1,94 @@
+Source: https://techlibrary.doodlelabs.com/rugged-rechargeable-li-ion-battery-pack
+
+Wearable: Accessories
+Wearable Battery Pack
+Wearable Mounting Bracket Kit
+Wearable V2 Cables
+Datasheet: Rugged, Rechargeable Li-Ion Wearable Battery Pack
+Webpage to PDF
+BAT-W01-A
+Doodle Labs' battery pack is designed to be used with our Wearable Mesh Rider products. The battery pack attaches securely to the Wearable Smart Radio using a custom developed simple Lock/Release mechanism for vibration resiliency. It uses an IP67 rugged aluminum casing which is verified to MIL-STD-810H standards.
+The battery pack is fully USB-PD compliant and also supports a standard 5-V to 15-V power supply, so it can be charged by a wide variety of chargers for cell phones, laptops and even the USB port of a vehicle. The battery pack uses a smart battery management system (BMS) which supports fast charging and is large enough to support several hours of continuous operation.
+Technical Specifications
+Model Number
+BAT-W01-A
+Battery Capacity
+5000mAh @ 36Wh
+Cell Configuration
+2x 21700 Li-Ion cells in 2S1P configuration
+Output voltage
+Nominal: 7.2 V
+Fully Charged: 8.4 V
+Discharge cutoff: 6.0 V
+Charging voltage/current
+USB-PD Charger: 5V/3A (lowest priority), 12V/2A5, 15V/3A (highest priority)
+DC Power Supply: DC 5V ~ DC 15V
+Charging time to full capacity
+(without radio load)
+5-V Charging Voltage: 220 mins
+12-V Charging Voltage: 125 mins
+15-V Charging Voltage: 115 mins
+Temperature and relative humidity
+Charging: 10 to 40℃, 60±25% R.H
+Discharging: -10 to 55℃, 60±25% R.H
+Storage: -5 to 35℃, 60±25% R.H
+Interfaces
+Power ON/OFF Button
+1x USB-C port (input only)
+1x bi-color Green/Red LED indicator
+Operation Time
+(start w/ full battery charge, no USB-C PD charger plugged in)
+Max Usage: 3.5 hours typical
+(Wearable MR Radio RM-1700-22W3 @ 915MHz, Ch BW 20MHz, MCS8, Turbo ON, GPS OFF, WiFi OFF @ 25°C)
+Normal Usage: 5.2 hours typical
+(Wearable MR Radio RM-1700-22W3 @ 915MHz, Ch BW 20MHz, MCS0, Turbo OFF, GPS OFF, WiFi OFF @ 25°C)
+standby: 6.5 hours
+(Wearable MR Radio RM-1700-22W3 @ Standby mode @ 25°C)
+Storage leakage current
+4.5 mA typically
+Dimensions
+99.75mm x 63.0mm x 30.4mm
+Weight
+291 grams
+Ingress and resiliency
+IP67 rated ingress protection
+MIL-STD-810H for vibration and shock
+Technical Note:
+If the battery box has to be stored for a long time (over 3 months), the environmental condition should be: Temperature: 23±5℃, Humidity: 60±25％RH
+The voltage for a long time storage should be 7.4V~7.8V range.
+Recharging the battery every 1 month is recommended.
+LED and Power Behavior
+USB-C PD Charger NOT plugged in
+System is OFF
+Battery charging, USB-C PD Charger plugged in, Battery capacity < 5%
+Fast blink RED LED
+Battery charging, USB-C PD Charger plugged in, 5% ≤ Battery capacity < 60%
+Medium blink YELLOW LED
+Battery charging, USB-C PD Charger plugged in, 60% ≤ Battery capacity < 100%
+Slow blink GREEN LED
+Battery fully charged, USB-C PD Charger plugged in, Battery capacity 100%
+GREEN LED is SOLID ON
+Press PWR Button - ON mode
+Solid YELLOW LED is ON and user shall hold the PWR button. Then solid GREEN LED is ON and user can release PWR button anytime then
+Press PWR Button - OFF mode
+Solid RED LED is ON and user shall hold the PWR button. Then RED LED will go off and user can release PWR button anytime then
+Battery's temperature exceeds battery warm threshold or battery cool threshold
+RED and GREEN LED blinks alternatively
+a. Battery's temperature exceeds battery hot threshold or battery cold threshold
+b. Battery is missing
+RED LED blinks twice consecutively then
+GREEN LED blinks twice consecutively and repeat
+Special Safety Features
+Detachment Protection
+Auto power OFF battery box when the battery box is accidentally detached from Wearable MR radio during normal operation
+Preventive Power Cycling
+Battery box will be forced to enter power OFF mode whenever there is no detection of Wearable MR radio even if the power ON button is pressed
+Forced Manual Shut Down
+Battery box will be forced to enter power OFF mode in the event of long press of power button
+Regulatory Information
+CE (Europe)
+CB Test Cerificate
+CU Cerificate
+MSDS Certificate
+UN 38.3
+Table of Contents

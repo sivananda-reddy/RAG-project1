@@ -1,0 +1,107 @@
+Source: https://techlibrary.doodlelabs.com/quick-start-guide-ch4
+
+Quick-Start
+Mesh Rider Quick Start Guide
+Chapter 1:  What's in the Box?
+Chapter 2: Getting Started on the Bench
+Chapter 3: Basic Radio Configuration
+Chapter 4: Bench Testing
+Chapter 5: Advanced Radio Configuration
+Chapter 6: Basic Field Testing
+Chapter 7: Troubleshooting
+GUI Quick Walkthrough Guide (Video)
+Throughput Estimation Tool
+Optimizing the RF Link
+Supported Networking Modes
+Recommended Antenna Matrix
+Chapter 4: Bench Testing
+Webpage to PDF
+Bench Testing Guide for Doodle Labs Mesh Rider Radios
+Purpose
+: To test the Mesh Rider radio’s baseline performance in a controlled environment, assessing sensitivity, connectivity, and link stability without interference from environmental factors.
+Setup Requirements
+Hardware
+:
+Mesh Rider radios
+Laptop or desktop (Windows or Linux preferred for data capture)
+RF attenuators (20-60 dB recommended to prevent radio overloading in close proximity)
+RF cables (to connect radios directly, avoiding external signal interference)
+Thermal management (use a metal enclosure or heatsink)
+5V Barrel Plug and USB C (PD)
+Software
+:
+SSH client for remote radio management
+iperf3
+for throughput testing
+ping
+for latency assessment
+Physical Setup
+For the OEM, Mini-OEM, and Nano-OEM form factors, we recommend designing a simple housing for the radios for field and even bench usage. The housing will make it easier to connect your PC or Smart Device, and hook up antennas, without the risk of damaging the radios (e.g. ESD, or mechanical damage). An example of how you could design a simple box is shown in Fig. 1.
+Fig. 1 Field testing box
+When designing your box,
+1. Use a metal box which can act as a heat sink.
+2. Use a thermally conductive adhesive tape to mount the radio to the box, or use a thermal pad or paste to ensure good thermal contact between the radio and the box.
+3. Ensure there is sufficient slack on internal cabling, but secure longer cables to the chassis to prevent excessive shaking.
+4. Ideally, antennas should be separated as much as possible for maximum diversity.
+Testing Procedure
+Throughput Testing with
+iperf3
+:
+Start the
+iperf3
+server on one computer connected to a radio.
+Use commands such as
+iperf3 -c <server IP> -t 10 -i 1
+to measure maximum throughput over a 10-second interval.
+For UDP testing, set a fixed bandwidth and packet loss monitoring with
+iperf3 -c <server IP> -u -b 5M -t 60 -i 1
+.
+Latency Testing with
+ping
+:
+Execute
+ping <IP address> -i 0.2 -s 250 -Q 0xC0
+to set up a high-priority DSCP flag for low-latency packet transfer.
+Monitor round-trip times to assess link stability and responsiveness.
+Metrics to Monitor
+Signal Strength
+:
+Use
+iw wlan${PHY} station dump
+to check RSSI values. Values above -70 dBm are ideal.
+Data Rates
+:
+The transmit and receive bitrate (MCS rate) indicates link quality and stability.
+CPU and Airtime
+:
+Run
+cat /proc/loadavg
+for CPU load and
+sysutils activity
+for network airtime usage.
+Link Metrics
+:
+Real-time link metrics can be viewed with
+ubus listen linkstate
+See the Link Status Log section below for more details.
+Tips for Optimal Results
+Avoid RF saturation by maintaining proper attenuation and monitoring signal strength.
+Use a stable power source to avoid fluctuations that may impact performance.
+Keep radios in shielded environments or RF isolation boxes for consistent testing conditions.
+Link Status Log
+The Link Status Log utility is designed to log the radio's link status over time. Aside from downloading the logs, you can also get the latest status from any particular node.
+Enabling the Link Status Log in the GUI
+The Link Log utility allows users to monitor and analyze mesh radio link performance over time. Introduced in the October 2022 firmware release, it is available in the latest GUI under
+Utilities → Link Status Log
+. To enable logging, toggle the
+Enable Link Status Log
+switch. Once activated, the system begins recording detailed link performance metrics, which are stored locally on the device. These logs can be downloaded directly from the GUI by clicking the
+Download
+button. The interface also displays the log duration, total size, and last update information when available. Alternatively, the logs can be accessed via the file path
+/tmp/longtermlog
+. This utility is useful for evaluating network connectivity, signal strength, and link quality during testing or deployment.
+Note
+: The Link Status Log, by default, is not persistent. The archive must be downloaded before power cycling the radio.
+For more detailed information, visit our
+Link Status Log Guide
+Table of Contents

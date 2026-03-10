@@ -1,0 +1,169 @@
+Source: https://techlibrary.doodlelabs.com/quick-start-guide-ch3
+
+Quick-Start
+Mesh Rider Quick Start Guide
+Chapter 1:  What's in the Box?
+Chapter 2: Getting Started on the Bench
+Chapter 3: Basic Radio Configuration
+Chapter 4: Bench Testing
+Chapter 5: Advanced Radio Configuration
+Chapter 6: Basic Field Testing
+Chapter 7: Troubleshooting
+GUI Quick Walkthrough Guide (Video)
+Throughput Estimation Tool
+Optimizing the RF Link
+Supported Networking Modes
+Recommended Antenna Matrix
+Chapter 3: Basic Radio Configuration
+Webpage to PDF
+This guide demonstrates and details how to get started with a basic configuration for current Mesh Rider radios.
+Simple Configuration
+The
+Simple Configuration
+page in the new GUI serves as a quick-start assistant for configuring the Mesh Rider Radio. It presents all essential parameters—such as profile, frequency band, Mesh and Wi-Fi settings, and basic network configuration—in a single unified view.
+Once your desired settings are selected, click
+Save Configuration
+in the bottom-right corner. The system will apply multiple backend changes automatically. This is typically a one-time setup process, and any further customization can be done later using the advanced configuration menus like
+Mesh Configuration
+,
+Link Optimization
+, and
+Network Interfaces
+.
+Fig. 1 Simple Configuration
+What profile & settings should I choose?
+When determining the best profile and settings for your needs, it is crucial to consider the specific requirements of your application and the environment in which the radio will operate.
+Below
+, we provide a detailed explanation of the options available and the factors to consider when making your choice. For a comprehensive understanding of the different networking modes, please refer to the
+Supported Networking Modes
+guide.
+General Tips & Considerations
+Firstly, consider the band, channel, and bandwidth settings, as these elements significantly influence the radio's performance and range. The band options you can select from will depend on your radio model. Each band has its own characteristics and trade-offs.
+For instance, the 915 MHz band is known for its superior ability to penetrate walls and other obstacles, making it suitable for environments with physical barriers. However, it offers lower throughput and may face Fresnel zone clearance issues, especially if the radio is positioned close to the ground. On the other hand, the 2.4 GHz band is more prone to noise and interference but can provide higher throughput under the right conditions. In terms of bandwidth, opting for a larger bandwidth will typically increase throughput, making it ideal for applications requiring high data transmission rates. However, this often comes at the cost of reduced range, so it's essential to weigh the benefits of higher data rates against the need for extended range.
+Additionally, understanding the trade-offs between throughput and range is vital. Your goal should be to strike a balance that aligns with your technical requirements and operational goals. Consider the environment where the radio will be used and any physical obstacles or interference sources present. For users seeking a deeper dive into radio frequency (RF) properties and how they impact performance, further detailed resources and technical documentation are recommended. These can provide insights into the complex interactions between RF settings and environmental factors, helping you make informed decisions about the optimal configuration for your specific scenario.
+Simple Configuration Profiles
+The available profiles can be selected, with key settings detailed for each one.
+Fig. 2 Profile Modes
+General
+Default profile with most frequently used configuration settings
+Transmit Power Control ON (In all modes)
+Aggressive Transmit Power Control ON (In all modes)
+Wide Bandwidth
+Number of nodes (default: 1 to 2)
+Turn off low latency optimizations
+UAV/UGV/Robot
+Mesh/WDS Client Only
+GCS Finder or serial port client
+Sense client
+10-MHz bandwidth
+Transmit Power Control ON (dynamic_txpower) (In all modes)
+Aggressive Transmit Power Control ON (both dynamic_txpower and dynamic_txpower_aggr should be on) (In all modes)
+Turn off low latency optimizations
+Number of nodes (default: 1 to 2)
+GCS
+Mesh/WDS AP Only
+Sense Master
+10-MHz bandwidth
+Transmit Power Control ON  (dynamic_txpower) (In all modes)
+Aggressive Transmit Power Control ON (both dynamic_txpower and dynamic_txpower_aggr should be on) (In all modes)
+Turn off low latency optimizations
+Number of nodes (default: 1 to 2)
+GCS with Internet
+Mesh/WDS AP Only
+Gateway for internet access when Wi-Fi is EUD
+EUD Wizard ON
+Optional serial port server
+Sense Master
+10-MHz bandwidth
+Transmit Power Control ON (In all modes)
+Aggressive Transmit Power Control ON (In all modes)
+RTK GPS setup
+Choose Wi-Fi or USB. In Wi-Fi mode, enable port forwarding. Detect drone IP address (only 1 DHCP address to serve?)
+Turn off low latency optimizations
+Number of nodes (default: 1 to 2)
+Factory infrastructure
+WDS AP Only
+Wide Bandwidth
+Transmit Power Control ON (In all modes)
+Aggressive Transmit Power Control OFF (In all modes)
+Turn off low latency optimizations
+Number of nodes (default: 10+)
+Factory robot
+WDS Client Only
+Wide Bandwidth
+Transmit Power Control ON (In all modes)
+Aggressive Transmit Power Control OFF (In all modes)
+Turn off low latency optimizations
+Number of nodes (default: 10+)
+Factory Mesh
+Mesh Only
+Wide Bandwidth
+Bridge Loop Avoidance
+Number of nodes (default: 10+)
+Transmit Power Control ON (In all modes)
+Aggressive Transmit Power Control OFF (In all modes)
+Turn off low latency optimizations
+Connected Teams
+Mesh Only
+Wide Bandwidth
+Number of nodes (default: 10+)
+Transmit Power Control ON (In all modes)
+Aggressive Transmit Power Control OFF (In all modes)
+Turn off low latency optimizations
+Max Throughput
+Number of nodes (default: 10+)
+Transmit Power Control OFF (In all modes)
+Aggressive Transmit Power Control OFF (In all modes)
+Disable Differentiated Services
+Turn off low-latency settings
+Maximum channel bandwidth (26-MHz or 40-MHz)
+Mesh (default) / WDS AP / Client
+Wide Bandwidth
+Connecting to Hotspot (Wearable & OEM Models Only)
+Wearable and OEM models feature an additional Wi-Fi interface that can be used either as an access point (AP) or function as a client to connect to an access point. This interface is bridged by default to the other interfaces available on the radio. This interface, if connected to an internet source, can provide internet to the rest of the Doodle network. This interface may also be useful to connect an end user device (EUD) such as a tablet or phone to the network.
+By default, this interface is running as an AP. The network name and password can be configured on the Simple Configuration menu.
+Fig. 3 WiFi Radio Configuration
+GCS Finder
+If you are using a MAVLink-based Ground Control Station (GCS) such as QGroundControl or Mission Planner, you can configure the built-in
+GCS Finder
+utility to automatically establish a connection. In the new GUI, this can be done by navigating to
+Utilities → GCS Finder
+from the left sidebar.
+Once in the GCS Finder section, toggle the
+GCS Finder Enabled
+switch to activate the service. You will then need to enter a valid
+Broadcast IP Address
+(e.g.,
+10.223.255.255
+) and the
+Source IP Address
+of the radio (e.g.,
+10.223.228.237
+). The
+Source Port
+can be configured (default is
+2000
+), along with a
+Connection Checking Timeout
+in seconds (default is
+30
+).
+You should also select the correct
+Baud Rate
+(e.g.,
+57600
+) and
+Device interface
+(typically
+/dev/uart0
+) depending on how your GCS is connected. After configuring these parameters, click the
+Save Configuration
+button at the bottom right.
+Once enabled, the radio will start broadcasting MAVLink packets on the specified port to help your GCS automatically detect and connect. Note that enabling the GCS Finder will automatically disable the
+socat
+service to avoid conflicts.
+Fig. 4 GCS Finder
+Simple Traffic Prioritization
+In the new GUI, Traffic Prioritization can be accessed via Mesh Configuration > Traffic Prioritization, where users can enable Differentiated Services and prioritize traffic types such as Command & Control, video streaming, and latency-sensitive data. The interface allows toggling specific optimization options and configuring Automatic C\&C Queue Detection using rate and size thresholds. Additionally, classification rules can be set based on UDP port numbers (e.g., 14550 for MAVLink) and DSCP tags (e.g., CS6), ensuring that critical C2 traffic is prioritized over less urgent data like video, which is vital for maintaining reliable drone control in weak signal conditions.
+Fig. 5 Traffic Prioritization
+Table of Contents

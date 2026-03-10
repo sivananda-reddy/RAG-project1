@@ -1,0 +1,176 @@
+Source: https://techlibrary.doodlelabs.com/gcs-profile-and-eud-wizard-video-livestreaming-to-youtube-guide
+
+Application Notes
+UXV Use-Cases
+Mesh Rider Radio Integration
+Low Latency C&C and Video Streaming
+Platform Integration Guide(VOXL and Skynode)
+Guidelines for RF Performance(UAV/UGV)
+Drone Performances & Use Cases
+Wearable Use-Cases
+Wearable Mesh Rider Radio Testing Results
+Starlink SATCOM Integration Guide
+GCS Profile and EUD Wizard Guide
+GCS Profile and EUD Wizard Livestreaming to YouTube Guide
+GCS Profile and EUD Wizard Video Live Streaming to YouTube Guide
+Webpage to PDF
+Introduction
+This comprehensive guide is designed to assist users in seamlessly integrating their Android Operating System (OS) phones, tablets, Ground Control Stations (GCS) or other devices with YouTube for live video streaming. Building off of the innovative GCS Profile, this guide introduces a simple methodology to utilize the free Android OS app “AZ Screen Recorder” to initiate a screen recording session on an GCS to a real-time YouTube Livestream on your own YouTube account.
+Application Note: The intention of this guide is to show how Android mobile apps, such as for video livestreaming through screen casting can augment or increase the functionality of the Doodle Labs Smart Radio via the GCS Profile and EUD Wizard. Additionally by utilizing the Android EUD itself  for these services no additional strain is induced across the Mesh Rider network.
+To help you better understand the setup, Fig. 1 illustrates a practical example of configuring the Drone to GCS view to livestream to YouTube.
+Fig. 1 – Example YouTube video livestream use case
+In Fig. 1, the drone can send its live video feed to a cloud-based server so that anybody with access can view the feed in real time. Internet access is provided by a Smart Phone’s cellular network connection or by Wi-Fi access.
+Software Note:
+It's important to explore various streaming platforms and their unique features to determine which is most suitable for your needs.
+The choice of YouTube for this article is due to its wide accessibility, substantial user base, and robust infrastructure which supports high-quality live streaming. Additionally, YouTube's integration capabilities with various 3rd party software and hardware might make it a preferred choice. For more secure video streaming see the list compiled below.
+High Security Cloud-Based Video Streaming Alternatives to YouTube:
+Amazon Web Services (AWS) Kinesis Cloud Video Streaming
+Android AWS Kinesis SDK Video Streaming
+IBM Enterprise Video Streaming
+Google Cloud Anvato Video Streaming
+Microsoft Azure Media Services Video Streaming
+YouTube Livestreaming Video Quality (Latency/Resolution)
+In most cases, this guide will stream at YouTube Live "Normal Latency" mode, which results in a 15 to 60+ second delay. The anticipated latency is highly depending on your bandwidth available to your
+wlan1
+Wi-Fi connection in total throughput (Mpbs), the graphics quality / GPU of your Android EUD and the processing power / CPU of your Android EUD.
+The average video live streaming resolution of the AZ Screen Recorder mobile app directly to YouTube is 720p @ 30 FPS and the max general screen recording is 4k @ 144 FPS. These values are dependent on the Android EUD.
+YouTube Livestreaming Technical Specs
+Latency: 15 to 60+ seconds (anywhere in the world)
+Resolution: 720p (1280 x 720)
+Frame Rate: 30 FPS
+Android GCS Profile and EUD Wizard Setup
+The first step in this process is connecting the Smart Radio to an Android OS phone, tablet, Ground Control Stations (GCS) or other device End User Device (EUD). Information on connecting Doodle Labs Smart Radios à Android Devices can be found in the following guides:
+GCS Profile and EUD Wizard Guide
+(Most Recent),
+Mesh Rider Radio GCS Reference Design
+,
+Mesh Rider Radio with QGroundControl and the Flight Controller
+, and for Multiband Smart radios in general (i.e. the Wearable / OEM) in the
+Multiband-Wearable User Guide
+.
+It is important to note, the Android EUD must be connected to the Smart Radio in such a way that the EUD still has access to the internet to enable YouTube Livestreaming (ie Android EUD must have Wi-Fi, LTE or secondary usb0/eth0 connectivity). This secondary connectivity to internet access while the Smart Radio is connected by usb0/eth0 or Wi-Fi/LTE is best documente
+d in the
+GCS Profile and EUD Wizard Guide
+.
+Application Note:
+This particular guide was tested with a Samsung Galaxy S7FE + LTE with a primary Multi-Band Wearable  Helix Smart Radio connection utilizing ethernet over USB (ie eth0), with a secondary internet connectivity over 5G- LTE
+AZ Screen Recorder (Android App) Installation
+A variety of “screen recording” applications exist for Android OS devices, for this guide the AZ Screen Recorder was chosen for ease of use and the free availability. Fig. 2 shows the mobile app based appearance of AZ Screen Recorder as offered for free in the
+Google Play Store
+.
+Fig. 2 – AZ Screen Recorder in the Google Play Store
+To begin, download the mobile app and enable all of the walk-through app permissions which are prompted by AZ Screen Recorder. The AZ app is compatible with all Android 5.0 Lollipop or newer devices (2014+).
+The Android OS mobile app basic-level permissions include:
+Allow pop-up button
+:
+Select Allow
+Appear on Top
+:
+Toggle Allow (i.e. select AZ app from dropdown list and toggle right and then hit the back button in the top left-hand corner of the AZ app)
+Allow AZ Screen Recorder to send you notifications
+:
+Select Allow
+Allow video access permission
+:
+Select allow (i.e. select allow in top right-hand corner of the AZ app, the when the Android notification pops up, select allow again)
+To initiate a screen recording first select the AZ Record icon in the middle-right of the screen as shown in Fig. 3 a) on the next page. To begin a livestream instance then select the AZ Live icon as Fig. 3 b) shows.
+After the AZ Live icon is selected, you will be prompted to “Choose a live platform”, then select the YouTube icon. You are then prompted to “Upgrade to Pro” or to “Watch Ads to Unlock”, if you desire an experience without having to wait on the ads to begin live streaming it is recommended to upgrade.
+Mobile App Note: Currently, to download “AZ Screen Recorder PRO” it is available for $2.49 monthly or $11.99 yearly as a subscription. The PRO features include no ads, full YouTube livestreaming (higher resolution, up to 2k resolution @120 FPS ), hidden popup windows after recording, removed watermarks and video compression capabilities.
+The YouTube livestreaming is still possible with the free version and the selection of the PRO version of the app are up to your video quality requirements.
+Fig. 3 – Highlighted AZ Screen Recorder Record & Live Stream Button
+Google Account Setup
+After walk-through selection of the icons outlined above, then either installing PRO or watching ads to unlock for the free version (the ads on the free version are ~30 seconds), you will then be brought to a Google Account login page on Chrome. Sign in to your Google Account with your credentials you will then be prompted for Google Account permissions, simply scroll to the bottom of the web page and then select “Allow” to enable all permissions at once to be set.
+The Google Account mobile app permissions include:
+Manage your YouTube Account
+Associate you with your personal info on Google
+See your personal info
+(i.e. including personal info made publicly available)
+See your primary Google Account email address
+After you select “Allow”, the AZ app will show “My Live Stream with AZ Screen Record” Fig. 4a) and “Description” Fig. 4 b) page will show up as shown in Fig. 4 below. This is where you can input your Livestream’s name as you would like it to appear on YouTube. In the example of this Guide we simply set the description to “Doodle Test”.
+Fig. 4 – YouTube Livestream Video Naming & Description
+Android Device-Level Permissions
+After you have selected your desired Livestream name and description, select the “Start live streaming” button at the very bottom-middle of the app. You will then be prompted to “Enable Microphone Permissions” and select allow if you wish to have your device record audio.
+This will bring you to the “App info” page in your devices Android Settings. After this is selected go to “Permissions” and allow “Camera” (video) or allow “Camera” + “Microphone” (video + audio) then select “Allow only while using the app” as shown in Fig. 5 a) and Fig b) on the page following. Then select back in the top-left hand corner 3x times to bring you back to the AZ app. You will then be prompted to “Start recording or casting with AZ Screen Recorder” and then select Start Now as shown in Fig. 6 a) on the next page.
+The Android device-level permissions include:
+Camera Permission
+Allow only while using the app
+Optional -- Microphone Permission
+Allow only while using the app
+Start recording or casting with AZ Screen Recorder
+Select “Start Now”
+Fig. 5 – Android Device-Level Permissions for the Device (Video + Audio)
+Fig. 6 – Final Device-Level Permission to Start Livestream w/ the “AZ Screen Recorder” App
+YouTube Live Account Setup
+After you have selected your desired Livestream name and description, then select the “Start live streaming” button in Fig. 6 a) on the page above, for first-time setup you will then be prompted to “Verify your account before starting Live Stream in YouTube”. Select “OK” as shown in Fig. 7 a) below and proceed with YouTube Live verification.
+Fig. 7 – YouTube Live Account Setup Link to YouTube Studio in Web Browser
+Please note, the YouTube Live verification process can vary significantly depending on your type of Google Account (i.e. organization, personal or educational account) and is constantly subject to YouTube policy changes. In general, requirements can be found here
+YouTube Live Streaming on Mobile – Android
+.
+In general, the YouTube Studio page will walk you through requirements.
+As of February 2024, the current YouTube Live Android Mobile Requirements:
+Subscribers:
+At least 50 subscribers***
+No Restrictions:
+No live streaming restrictions within the last 90 days on your channel.
+Verify Channel:
+To verify your channel
+24- Hour Wait:
+To turn on live streaming. You may need to wait 24 hours.
+Android 5.0+ Device:
+An Android 5.0+ device is required for YouTube Live
+*** The AZ Screen Recorder mobile app, utilizes a link to YouTube Studio in a web-browser to get around this 50-subscriber requirement which is difficult if you are just getting started
+YouTube Note: As of 2024, YouTube is almost always enforcing the 24-hour waiting period but fortunately this is a one time waiting period as YouTube verifies your account authenticity on the back-end, then once you are setup this will not happen again.
+In Fig. 8 directly below, provides a display of what this 24-hour waiting period looks like and if this occurs to your account, simply re-try YouTube Live account setup when the YouTube verification period is over.
+Fig. 8 – YouTube Live Verification 24-Hour Wait Period
+After YouTube Live verification, your Livestream will be good to go and the stream has the normal YouTube Studio controls to show your current Livestream(s), play back or delete content as well. For more information on YouTube Studio Creator options please review the
+YouTube Digital Events Playbook.
+Example: Livestreaming QGroundControl to YouTube Live
+The QGroundControl (QGC) Android mobile app, is a robust and trusted Ground Control Station (GCS) software for controlling Unmanned Aircraft Systems (UAS). The QGC app is free and can be downloaded for Android OS, but is temporarily unavailable on Google Play.
+QGC can be downloaded directly as an APK from QGC’s official GitHub page by this link under “Android”,
+QGroundControl Download and Install
+.
+QGroundControl Note: There is also an unofficial mirror by Dagar here at the
+Google Play Store
+but this is an “un-official” image and was last updated Jan 27, 2021, so is not recommended for production use.
+Fig. 9 – QGroundControl for Android OS  Downloaded from the Official GitHub
+After you have successfully downloaded the QGC App, or if you previously have the QGC App, open the Application to begin the QGC focused Livestream. Now that you have the AZ Recorder App successfully setup with correct permissions (i.e. allow to display over other apps) and a successful YouTube Live account you can now very easily screen record and Livestream your session of QGroundControl.
+3x Steps to Start a QGroundControl YouTube Livestream Session:
+1. To initiate a screen recording inside the QGC App select the AZ Record icon in the middle-right of the screen as shown in Fig. 10 a) on the next page
+2. To begin a YouTube Livestream instance select the AZ Live icon as shown in Fig. 10 b) directly below
+3. Add Livestream name or description & start streaming as shown in Fig. 4 and Fig. 6
+If the UAS’s video Livestream is a higher priority of your stream session, you can expand the QGC Livestream view located in the bottom left-hand corner of the QGC App to expand the size on your screen or you can stream the QGC main screen including the map.
+Fig. 10 – QGroundControl w/ AZ Screen Recorder Livestream Setup
+It is recommended before flying to test the full functionality of QGC in a Disconnected state from your Unmanned Aircraft System (UAS).
+During your on-going Livestream or after it is ended, the session on YouTube can be watched by going to YouTube Studio -> Profile Icon -> Your Channel and can be viewed on YouTube Studio in a web-browser or the YouTube Android OS mobile app as in Fig. 11 below.
+Fig. 11 – QGroundControl w/ Disconnected UAS Livestream Viewed on YouTube
+Discussion Notes: Ready to Fly
+If you find that the Unmanned Aircraft System's (UAS) video Livestream is of higher importance during your streaming session, you have the option to enlarge the Livestream view within the QGroundControl (QGC) application.
+This can be accomplished by expanding the Livestream window, which is initially positioned in the bottom left-hand corner of the QGC interface. By doing so, you can increase the Livestream's visual prominence on your screen, allowing for better visibility and focus on the video feed.
+References:
+1. AZ Screen Recorder,
+https://play.google.com/store/apps/details?id=com.hecorat.screenrecorder.free&hl=en_US&gl=US
+, 19-12-2023
+2. Android 5.0 Lollipop,
+https://www.android.com/versions/lollipop-5-0/
+, 11-3-2021
+3. Android Permissions,
+https://source.android.com/docs/core/permissions
+, 23-08-2023
+4. Livestreaming on Mobile – Android,
+https://support.google.com/youtube/answer/
+9228390
+hl=en&co=GENIE.Platform%3DAndroid
+, 2-2-2024
+5. YouTube Digital Events Playbook,
+https://www.youtube.com/howyoutubeworks/product-features/live/
+#youtube-live
+, 10-12-2019
+6. QGroundControl Download and Install,
+https://docs.qgroundcontrol.com/master/en/
+qgc-user-
+guide/getting_started/download_and_install.html
+, 2-2-2024
+7. GCS Profile and EUD Wizard Guide,
+https://techlibrary.doodlelabs.com/gcs-profile-and-eud-wizard-guide
+, 20-2-2024
+Table of Contents

@@ -1,0 +1,127 @@
+Source: https://techlibrary.doodlelabs.com/link-status-log-quick-self-serve
+
+Troubleshooting
+Link Status Log Walkthrough Guide (Video)
+Link Quality issues
+Radio Access issues
+UART and USB Issues
+Backup Reset and Upgrade
+Crashes, Reboots etc
+Link Status Log Walkthrough Guide (Video)
+Webpage to PDF
+Link Status Log Utility
+The Link Status Log utility is designed to log the radio's link status over time. Aside from downloading the logs, you can also get the latest status from any particular node.
+Enabling the Link Status Log in the GUI
+The Link Log utility allows users to monitor and analyze mesh radio link performance over time. Introduced in the October 2022 firmware release, it is available in the latest GUI under
+Utilities → Link Status Log
+. To enable logging, toggle the
+Enable Link Status Log
+switch. Once activated, the system begins recording detailed link performance metrics, which are stored locally on the device. These logs can be downloaded directly from the GUI by clicking the
+Download
+button. The interface also displays the log duration, total size, and last update information when available. Alternatively, the logs can be accessed via the file path
+/tmp/longtermlog
+. This utility is useful for evaluating network connectivity, signal strength, and link quality during testing or deployment.
+Fig. 1 Link Status Log
+Viewing the logs
+The contents of the Link Log utility are shown here,
+root@smartradio:/tmp/longtermlog# ls
+22-05-05_13-26-21.log  22-05-05_13-51-09.log  22-05-05_14-14-34.log  ipv6list status.json
+The log files are limited to 500 lines, and the file name is the date when the log started. Aside from long term logs, the Link Log utility keeps the latest status line in the file
+/tmp/longtermlog/status.json
+. The output of each line is,
+'{
+"sysinfo": {
+"cpu_load": [
+5088,
+11072,
+16800
+],
+"freemem": 14684160,
+"localtime": 1651760076
+},
+"oper_chan": 12,
+"oper_freq": 915,
+"chan_width": "26",
+"noise": "-98.808556",
+"activity": 1,
+"lna_status": "1",
+"sta_stats": [
+{
+"mac": "00:30:1a:50:3b:a0",
+"inactive": 30,
+"rssi": -49,
+"rssi_ant": [
+-51,
+-54
+],
+"pl_ratio": 0.0804505,
+"tx_bytes": 1242,
+"tx_retries": 1,
+"tx_failed": 0,
+"mcs": 13
+},
+],
+"mesh_stats": [
+{
+"orig_address": "00:30:1a:50:3b:a0",
+"tq": 255,
+"hop_status": "direct",
+"last_seen_msecs": 400
+},
+]
+}'
+Link Status Log Fields Explained
+The output is in JSON format with the following sections.
+Field
+Subfield
+Information
+sysinfo
+General system information
+cpu_load
+CPU load normalized to 65535, reported over 1 minute, 5 minutes, and 15 minutes
+freemem
+Free memory in Bytes
+localtime
+Local time in seconds since the epoch
+oper_channel
+Operating Channel
+oper_freq
+Operating Frequency
+chan_width
+Channel Bandwidth in MHz
+noise
+Noise level in dBm
+activity
+A percentage measure of air-time congestion. A 100% reading implies that the air time is completely saturated with transmissions.
+sta_stats
+Information for each station
+mac
+The MAC address of the station
+inactive
+The time since a packet was received from that station in milliseconds
+rssi
+The received signal strength indication in dBm
+pl_ratio
+Packet loss ratio. A measure of the packet loss percentage at the PHY layer. Lost packets are retransmitted, so this does not indicate packet loss at the application layer.
+tx_packets
+Number of packets transmitted in this time interval
+tx_retries
+Number of packets retried in this time interval
+tx_failed
+Number of packets which failed in this time interval
+mcs
+The MCS rate being used to transmit to this station
+mesh_stats
+General mesh statistics
+orig_address
+The address of the mesh node . The station that this set of statistics cover. Each station in the mesh is called an orginator.
+tq
+The transmit quality to reach this node out of 255.
+hop_status
+Whether the node can be reached directly or not
+last_seen_msecs
+The time since a packet originating at the mesh layer was seen coming from this node, in milliseconds
+First Time Link Status Log Setup and Analysis Video
+The Link Status Log Quick Walkthrough Guide Video, shows the initial configuration of the Link Status Log utility, and takes you step-by-step through the detailed analysis of a Link Status Log. This shows the common self-debugging that can be done through careful analysis of your Mesh Rider Radio's logs.
+Contact Us
+Table of Contents

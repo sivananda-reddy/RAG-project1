@@ -1,0 +1,440 @@
+Source: https://techlibrary.doodlelabs.com/the-command-line-interface
+
+Software Guides
+Getting Started
+General Configuration
+Model Specific Configuration
+Multiband Radios
+Wearable/OEM Radios
+SENSE - Interference Avoidance Configuration
+Large Network Optimization
+Remote Management Guide
+Remote Management: CLI
+Remote Management: JSON RPC
+JSON RPC Reference
+GPS Guide
+Serial Interface Guide
+GPIO usage and LED Blinking
+Production Firmware Customization
+Mass Firmware Update
+Advanced Networking Guide
+The Command-Line Interface
+Webpage to PDF
+Introduction
+If you login to the Mesh Rider Radio's Linux Ash shell (similar to Bash) using SSH, you can run Linux commands. This guide discusses the following types of CLI commands
+1. Common CLI Commands
+2. UCI
+3. UBUS
+Ultimately, you may want to run some of these commands remotely over the API. This is discussed in our Remote Management Guide.
+Common CLI Commands
+The Mesh Rider Radio uses the Almquist shell (commonly known as "Ash", further reading material here
+https://en.wikipedia.org/wiki/Almquist_shell
+), which is similar to Bash. If you know Bash, you will find the Mesh Rider Radio CLI very familiar. If not, we recommend going through one of the many online tutorials on Bash. The tables below summarize commands you are likely to use in the course of your Mesh Rider Radio testing.
+Real-Time Configuration
+The commands below work on-the-fly, but do not survive a network restart or reboot.
+Command
+Purpose
+iw wlan0 set txpower fixed 2000
+Sets the TX power to 20 dBm. Note that the power is measured in millibels, so divide by 100 to get decibels.
+iw wlan0 set txpower auto
+Sets the TX power to auto (highest power)
+iw wlan0 set bitrates ht-mcs-2.4 <RATE>
+Fixes the bitrate. is the MCS rate between 0 and 15 where 0-7 are single-stream rates, and 8-15 are dual-stream rates.
+iw wlan0 set bitrates
+Sets the MCS rate to auto
+iw dev wlan0 mesh chswitch <CHANNEL> <# BEACONS>
+Sends a channel switch announcement to all MESH nodes to switch to after sending <# BEACONS> beacons.
+hostapd_cli chan_switch <# BEACONS> <FREQ> ht
+Sends a channel switch announcement to all WDS Client nodes to switch to after sending <# BEACONS> beacons.
+Getting Connection Information
+Command
+Purpose
+iw wlan0 station dump
+OR
+iw wlan0 station get
+<MAC>
+Gets information about all connected stations or an individual station.
+iwinfo wlan0 assoclist
+Information on all associated stations
+iw wlan0 info
+Get information about the current wireless settings
+iw wlan0 survey dump
+Get channel usage statistics
+batctl
+See a list of commands for mesh interface information and configuration
+batctl o
+See information about connected mesh nodes including preferred hop (*), last-seen time, transmit quality (#/255)…
+Networking Information
+Command
+Purpose
+ifconfig br-wan
+Show information about the WAN bridge
+ip a show br-wan
+Show information about the WAN bridge
+route -n
+Show the routing table
+netstat -tuapn
+Show socket connection information
+arp
+Show the address resolution protocol table.
+ip a
+Show information about IP addresses
+fw3 print
+fw3 is a front end to iptables and can be used to configure the firewall.
+cat /proc/net/nf_conntrack
+See exiting network connections
+bmon -b
+OR
+bmon -b -p wlan0
+Network usage information
+System Information
+Command
+Purpose
+dmesg
+See kernel messages
+cat /var/log/messages
+OR
+logread
+See system log messages
+top
+Check processor load
+free
+Check memory usage
+UCI
+The UCI system is used for persistent configuration. Most UCI files are found at
+/etc/config/
+. This is a slow method of configuration, but changes are saved over a reboot. The general procedure for making a UCI configuration change is
+1. To show the existing configuration, run
+uci show
+to show the full UCI configuration or
+uci show wireless
+to shows the wireless configuration (for example).
+2. Modify a configuration and commit the change (this saves the change)
+uci set wireless.radio.chanbw=5
+uci set wireless.radio0.txantenna='1'
+uci commit
+This sets the channel bandwidth to 5 MHz. You can save individual sections too. For example
+uci commit wireless
+. After committing changes, you need to restart the service.
+3. After making configuration changes, restart the relevant service. You can see a list of services by running
+ls /etc/init.d
+After that, restart the service. For example,
+/etc/init.d/socat restart
+will restart the socat service (serial interface). Note that
+/etc/init.d/network restart
+will restart all networking related services including the wireless. If you have only made changes to the
+wireless
+configuration, you can just run
+wifi
+(this is an exception as the wireless config file doesn't have a corresponding init script).
+UBUS
+Making calls using UBUS
+Calls to the JSON-RPC API go through the Openwrt ubus system (further reading here
+https://openwrt.org/docs/techref/ubus
+). Before going into the JSON-RPC API, you should become familiar with ubus. In order to run ubus directly, first SSH into the radio. You can view a list of available ubus commands using (result abridged)
+root@smartradio:~# ubus list
+central-config
+dhcp
+dnsmasq
+file
+iwinfo
+…
+Note that the central-config call is only available after enabling the Central Configuration utility. You can get information about how to use specific ubus calls by running
+root@smartradio:~# ubus -v list <CALL>
+For example,
+root@smartradio:~# ubus -v list iwinfo
+'iwinfo' @68374f72
+"devices":{}
+"info":{"device":"String"}
+"scan":{"device":"String"}
+"assoclist":{"device":"String","mac":"String"}
+"freqlist":{"device":"String"}
+"txpowerlist":{"device":"String"}
+"countrylist":{"device":"String"}
+"survey":{"device":"String"}
+"phyname":{"section":"String"}
+An example of how to use the
+iwinfo
+call is shown below. We replaced
+"String"
+with
+"wlan0"
+(result abridged).
+root@smartradio~# ubus call iwinfo assoclist '{"device":"wlan0"}'
+{
+"results": [
+{
+"mac": "00:30:1A:4E:BB:09",
+"signal": -47,
+…
+Parsing the json output
+We can filter these results using the
+jsonfilter
+utility. Note in the JSON file above that the results property is an array of values, one for each connected station.
+root@smartradio:~# ubus call iwinfo assoclist '{"device":"wlan0"}' | jsonfilter -e '@.results[1].mac' -e '@.results[1].signal'
+00:30:1A:4E:BB:01
+-62
+Or if you know the MAC address of the device you want to filter, you can use
+root@smartradio:~# ubus call iwinfo assoclist '{"device":"wlan0"}' | jsonfilter -e '@.results[@.mac="00:30:1A:4E:BB:01"].signal'
+-62
+In general, however, we recommend parsing data on your local machine where it should be easier.
+Sense
+Sense
+is the name of our upgraded Central Configuration, Automatic Band / Channel / Bandwidth selection, and Link Recovery utility.
+Sense
+was introduced in the July 2023 Beta Resilience Release and heavily updated in the Sept 2023
+Sense
+release.
+Sense
+is discussed in more detail
+here
+.
+Messaging System ( June 2024+)
+The following is an example script showing how to use the new messaging system. Central config can no longer be used.
+ubus call message-system chswitch '{"count": 3, "model": "RM-2450-2KM-XW", "frequency": 2412, "bandwidth": 10, "mode_change": 0 }'
+# count = number of times to send the message
+# model = submodel to switch to
+# frequency = New operating frequency
+# bandwidth = New operating bandwidth
+# mode_change = 1 or 0 to indicate true or false. A mode change occurs when toggling between a 40-MHz bandwidth setting and any other bandwidth setting.
+Noise scanning over the CLI
+The firmware integrates a manual band scanning utility which allows the user to scan specific band/channel/bandwidths for noise. You can modify the list of scanned frequencies by editing the file
+/etc/scanlist.json
+. The default is shown below. A limitation of this utility is that the second frequency to be scanned in each submodel must be more than 5-MHz higher than the first (they also must be valid channels). Therefore, you will not be able to scan frequencies 2412 MHz and 2417 MHz in the RM-2450-2L-X submodel. In general, you should scan non-overlapping channels with a wide bandwidth, but scanning the 2.4-GHz band with a 20-MHz bandwidth could lead to incorrect results due to the presence of third-party Wi-Fi devices.
+$ cat /etc/scanlist.json
+{"scanlist":[
+{"model":"RM-1675-2L-X","bandwidth":"10000","freq":["1650","1670","1690"]},
+{"model":"RM-2245-2L-X","bandwidth":"10000","freq":["2220","2250","2280"]},
+{"model":"RM-2450-2L-X","bandwidth":"10000","freq":["2412","2432","2452"]}
+]}
+To run a scan, execute the command
+switch-scan-new.sh
+. The results will be in a table format at
+/tmp/scan_results
+$ cat /tmp/scan_results
+FREQ noise-AVG noise-75% noise-90% noise-MAX num-scans
+1650 -102.923950 -97.472015 -94.953606 -83.101387 24
+1670 -96.610970 -91.465370 -86.563614 -84.484718 29
+1690 -95.679008 -89.701218 -86.749275 -79.336105 24
+2220 -103.718758 -97.790871 -93.297089 -88.014229 26
+2250 -108.324417 -102.998260 -100.864838 -97.243042 25
+2280 -104.529037 -98.920143 -94.081635 -91.797234 27
+2412 -97.080002 -89.835823 -83.133896 -71.869949 25
+2432 -91.229301 -79.683624 -68.121605 -62.148979 17
+2452 -99.396301 -96.636200 -86.066101 -71.173927 27
+FREQ :
+The frequency being scanned
+noise-AVG :
+The average noise level over all OFDM sub-carriers
+noise-75% :
+The noise level which 75% of the OFDM sub-carriers is below
+noise-90% :
+The noise level which 75% of the OFDM sub-carriers is below
+noise-MAX :
+The maximum noise level of any sub-carrier
+num-scans :
+The number of scans performed at this frequency
+Typically, the
+noise-75%
+column is a good reference as the radio uses Forward-Error Correction (FEC) to correct for some percentage of the bit errors. You can sort the table using
+awk
+. For example, to sort the table by the
+noise-75%
+level, run
+$ cat /tmp/scan_results | awk '{print $3" "$1}' | sort -n -r | awk '{print $2" "$1}'
+FREQ noise-75%
+2432 -79.683624
+2412 -89.835823
+1690 -89.701218
+1670 -91.465370
+2452 -96.636200
+2220 -97.790871
+1650 -97.472015
+2280 -98.920143
+2250 -102.998260
+As a scan at a single frequency is very brief, it will not capture intermittent sources of noise that are not present at the time of the scan. You can see how the noise in a particular channel is changing over time by simply repeating it in the scan list. For example,
+$ cat /etc/scanlist.json
+{"scanlist":[
+{"model":"RM-1675-2L-X","bandwidth":"10000","freq":["1650","1650","1650","1650","1650","1650","1650","1650","1650","1650","1650","1650"]}
+]}
+Linkstate
+The linkstate daemon periodically checks the link state every 2 seconds. If you are logged into the radio over SSH, the linkstate can be read using the following command.
+ubus listen linkstate
+However, if you want to retrieve link status information over the JSON RPC API, then you should poll the file
+/tmp/linkstate_current.json
+The linkstate is the recommended way for getting all status information from the radio such as received signal strength (RSSI) of each connected station, background noise, CPU usage, memory usage, mesh information etc. The latest linkstate json format is shown below. Check this
+link
+for an explanation of the fields. The linkstate daemon is also used by the Link Status Log utility.
+'{
+"sysinfo": {
+"cpu_load": [
+5088,
+11072,
+16800
+],
+"freemem": 14684160,
+"localtime": 1651760076
+},
+"oper_chan": 12,
+"oper_freq": 915,
+"chan_width": "26",
+"noise": "-98.808556",
+"activity": 1,
+"lna_status": "1",
+"sta_stats": [
+{
+"mac": "00:30:1a:50:3b:a0",
+"inactive": 30,
+"rssi": -49,
+"rssi_ant": [
+-51,
+-54
+],
+"pl_ratio": 0.0804505,
+"tx_bytes": 1242,
+"tx_retries": 1,
+"tx_failed": 0,
+"mcs": 13
+},
+],
+"mesh_stats": [
+{
+"orig_address": "00:30:1a:50:3b:a0",
+"tq": 255,
+"hop_status": "direct",
+"last_seen_msecs": 400
+},
+]
+}'
+Bandswitching.sh Script
+The band switching script allows the user to switch to a different band, frequency or channel bandwidth. It requires a bit of additional information to use.
+Here is the usage of this script
+/usr/share/simpleconfig/band_switching.sh ${SUBMODEL} ${CHANNEL} ${BW}
+It has the following parameters: SUBMODEL, CHANNEL, BANDWIDTH
+SUBMODEL:
+Multi-band radios list the bands they cover as submodels.
+There are additional scripts on the radio to help determine these submodels.
+Determining the current model
+fes_model.sh get
+Determining the parent model.
+fes_model.sh get parent
+Getting a list of submodels from parent.
+cat /usr/share/.doodlelabs/fes/${PARENT}
+The following is an example with the
+MB-2025-2KM-XW
+which covers 6 bands each represented by a submodel.
+root@smartradio:~# fes_model.sh get parent
+MB-2025-2KM-XW
+root@smartradio:~# cat /usr/share/.doodlelabs/fes/MB-2025-2KM-XW
+sub_model0="RM-1675-2KM-XW"
+sub_model1="RM-1815-2KM-XW"
+sub_model2="RM-2065-2KM-XW"
+sub_model3="RM-2245-2KM-XW"
+sub_model4="RM-2350-2KM-XW"
+sub_model5="RM-2455-2KM-XW"
+sub_model6="RM-2450-2KM-XW"
+Switching to a different band
+/usr/share/simpleconfig/band_switching.sh ${SUBMODEL}
+CHANNEL
+To find all the support frequencies/channels in the current band. Run the following command.
+iwinfo wlan0 freqlist
+BANDWIDTH
+The available inputs for bandwidth are
+Available Inputs
+Channel Bandwidth
+0
+20 MHz
+3
+3 MHz
+5
+5 MHz
+10
+10 MHz
+26
+20 MHz
+Example Usage of band_switching.sh
+The following example is for frequency = 1.718 GHz, channel BW= 5MHz.
+1. Switch to desired band
+root@smartradio:/# /usr/share/simpleconfig/band_switching.sh RM-1675-2KM-XW
+Selected interface 'wlan0'
+OK
+2. Determine your channel of interest
+root@smartradio:/# iwinfo wlan0 freqlist
+1.720 GHz (Channel 6)
+1.719 GHz (Channel 7)
+1.718 GHz (Channel 8)
+1.717 GHz (Channel 9)
+...
+3.
+Run band_switching.sh with the band, channel and channel bw.
+(The previous two command were not necessary, it was ran to demonstrate how to find the channel of interest.)
+root@smartradio:/# /usr/share/simpleconfig/band_switching.sh RM-1675-2KM-XW 88 5
+Selected interface 'wlan0'
+OK
+Blacklisting Submodels
+In multiband Mesh Rider radios, it is possible to blacklist different bands. This is useful if the country that the radio is to be deployed in does not allow particular bands, and they should not be exposed to the end user. Blacklisting can only be done through the CLI, and a blacklisted model is not reinstated through a factory reset. It can only be  reinstated using the same blacklisting script. Blacklisting is handled through the
+blacklist.sh
+utility.
+Usage
+blacklist.sh <parent model> [<submodel1> <submodel2> ...]
+You can undo blacklisting using
+blacklist.sh <parent model>
+An example of how to blacklist a particular sub-model is
+blacklist.sh MB-0001-2KM-XW RM-1675-2KM-XW
+This blacklists the sub-model
+RM-1675-2KM-XW
+when the parent model is
+MB-0001-2KM-XW
+. You can find the parent model using
+fes_model.sh get parent
+You can see a list of supported sub-models using
+cat /usr/share/.doodlelabs/fes/$(fes_model.sh get parent)
+Calibration Check
+Calibration Check is an application introduced in firmware 2024-06. It allows the user to check the calibration of their radio. The calibration for the Mesh Rider Radio is handled by a microcontroller(MCU) with factory tuned calibration data. A back up of the MCU calibration is stored in /opt/picfailsafe/PIC_FLASH_DUMP.
+dl-pical-check -c
+Validates the MCU calibration on the current channel.
+To see if it passes calibration look for "No issue with current band"
+dl-pical-check -a
+Checks the validity of the calibration backup.
+This command will fail if/opt/picfailsafe/PIC_FLASH_DUMP doesn't exist or corrupt.
+dl-pical-check -w
+Copies the backed-up calibration to the MCU. A power cycle is required for the calibration to take place. This command will fail if
+/opt/picfailsafe/PIC_FLASH_DUMP doesn't exist.
+As of the firmware 2024-10.0, the program output is not JSON friendly.
+Creating a Bootup Script
+The Mesh Rider Radio uses Openwrt's procd system for init scripts:
+(
+https://openwrt.org/docs/guide-developer/procd-init-script-example
+).
+Example
+We will create a simple script to echo a message to the system logs every 5 seconds.
+Save the following listing as
+/usr/bin/my_startup_script.sh
+#!/bin/sh
+while (sleep 5) do
+logger -t "My Message" "Hello"
+done
+You now have to make the script executable. Run
+chmod +x /usr/bin/my_startup_script.sh
+You can use the following basic listing for a startup script. Save the file in your Mesh Rider Radio as
+/etc/init.d/my_init_script
+.
+#!/bin/sh /etc/rc.common
+USE_PROCD=1
+START=99
+PROG="/usr/bin/my_startup_script.sh"
+start_service() {
+procd_open_instance
+procd_set_param command $PROG -p $PORT
+procd_set_param respawn 0 5 0
+procd_close_instance
+}
+After creating the file, make it executable, and then enable and start the init script.
+chmod +x /etc/init.d/my_init_script
+/etc/init.d/my_init_script enable
+/etc/init.d/my_init_script start
+You can also follow the system log messages from
+my_startup_script.sh
+by running
+logread -f "My Message"
+Table of Contents

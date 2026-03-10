@@ -1,0 +1,121 @@
+Source: https://techlibrary.doodlelabs.com/firmware-update-tool
+
+Mesh Toolbox
+Mesh Rider Firmware & Release Notes
+Throughput Estimation Tool
+Range Estimation Tool
+Mesh Rider Log File Viewer
+Mesh Rider Mobile App
+Firmware Update Tool
+Mesh Rider Real-Time Graphing Tool
+Doodle Labs Firmware Update Tool
+Webpage to PDF
+The Doodle Labs Firmware Update Tool is a cross-platform application that allow users to update firmware on multiple Mesh Rider radios sequentially with a single operation.  During operation, the tool verifies check sums to ensure data integrity and create backups of radios before updating. The tool supports Windows(x86_64,ARM), macOS (ARM) and Ubuntu (x86_64).
+Getting Started
+IMPORTANT: DO NOT POWER OFF RADIO FOR 3 MINUTES AFTER FIRMWARE UPDATE. FIRMWARE NEEDS TIME TO APPLY ON THE RADIO.
+Download and Installation
+Visit the
+Doodle Labs FileCloud Page
+to get the latest version for your operating system. Please note you will have to create a user account to access this software:
+Windows
+: Download the
+.exe
+file and run it directly
+Linux
+: Download either the standalone executable or the
+.deb
+package
+macOS
+: Download the
+.dmg
+file, open it, and drag the application to your Applications folder
+Source Code
+: The python source code is also provided to the user to build their own variation of the firmware update tool if they wish. Please follow the best practices highlighted in the application.
+Before You Begin
+Before starting the firmware update process, make sure you have:
+1. The desired firmware file (.bin) for your devices
+2. The corresponding SHA256 checksum file (.txt)
+3. IP addresses of all devices to be updated
+4. Login credentials for the devices (username/password)
+5. A stable network connection to all devices.
+6. Enough battery life to last through the firmware update process
+Here is an example of the 2024-10.4 firmware binary and the accompanying sha256-firmware-2024-10.4 file
+Update Sequence Best Practices
+IMPORTANT 1
+:You should update remote devices first before updating devices with direct wired connections. This is particularly important as in some instance remote radios could be installed inside vehicles or locations where it is difficult to connect to physically. The local wired radio may be the only way you are able to access these remote radios so we want to make sure all remote radios are updated first before the local radio. Also if one remote radio is used as a relay to update another remote radio, update the most remote radio first. Recall that a firmware update can cause incompatibility with different firmware versions. It is also possible to have configuration mismatch between radios after the firmware update is applied as the current behavior for this tool is to upgrade the radio without bringing over the old settings.
+IMPORTANT 2:
+This tool was designed to be used in a controlled environment with good connectivity to the radios. Please refrain from using it to update radios in the field.
+Step-by-Step Update Process
+1. Configure Device Connections
+Launch the Firmware Update Tool and input the following information:
+IP Addresses
+: Enter comma-separated IP addresses of all target devices
+(Remember to input a list of remote radios first and run the firmware update. Do a second run of the program after all remote radios have been updated)
+Username
+: Enter the SSH username for the devices
+Password
+: Enter the SSH password (leave blank if passwordless)
+Connection Settings
+:
+Retries
+: Number of connection attempts (1-10)
+Timeout
+: Maximum wait time for connections in seconds
+Here is an example showing the tool connecting to 4 radios with the username root and no password.
+2. Select Firmware File
+Click the "Browse" buttons to:
+Select your firmware (
+.bin
+) file
+Select the SHA256 checksum (
+.txt
+) file
+The tool will verify the local checksum to ensure the firmware file integrity before attempting any updates.
+3. Start the Update Process
+Click "Start Firmware Update" to begin the sequence.
+The tool will:
+1. Connect to each device in the sequence
+2. Verify available space on the device
+3. Transfer the firmware file via SCP
+4. Verify the transferred file's checksum
+5. Create a backup of the current configuration. The backup is stored in the persistent /opt directory of the radio and the folder on your computer where the firmware binary is.
+6. Apply the firmware update
+7. Wait for the device to reboot
+8. Move to the next device
+The log window will show detailed progress information for each step.
+It will take 2 to 5 minutes for each updated radio to come back online again so please refrain from powering down the radios. The program does not reconnect to the radios to ensure the correct firmware version was loaded, it is up to the user to check that the radios have been updated to the correct version of the firmware.
+IMPORTANT: DO NOT POWER OFF RADIO FOR 3 MINUTES AFTER FIRMWARE UPDATE. FIRMWARE NEEDS TIME TO APPLY ON THE RADIO.
+4. Monitor and Retry Failed Updates
+If any device fails to update, it will be added to a "failed devices" list. After all devices have been processed, you'll have the option to retry the failed devices.
+Additional Features
+Device Backup
+Before applying new firmware, the tool automatically:
+1. Creates a backup of the device configuration in the persistent /opt directory
+2. Transfers this backup to your local computer
+3. Names the backup using the device's MAC address for easy identification
+This ensures you can restore device settings if needed after the update.
+Low Space Handling
+If a device doesn't have enough free space, the tool will notify you with specific details and ask you to choose one of these options
+• Reboot the device to clear temporary files
+• Skip to the next device
+• Stop the update process
+Troubleshooting
+Common Issues and Solutions
+1. Connection Failures
+• Verify the IP address is correct
+• Ensure the device is online and accessible
+• Check that SSH is enabled on the device
+• Verify firewall settings aren't blocking connections
+2. Checksum Verification Failures
+• Re-download the firmware file
+• Ensure you're using the correct SHA256 file
+• Check for file corruption during download
+3. Storage Issues
+• Reboot the device to clear temporary files
+• Remove unnecessary files from the device
+• Verify the firmware file is correct
+4. Update Failures
+• Check the device logs for specific error messages
+• Ensure the device supports the firmware version
+• Try updating the device manually if issues persist
+Table of Contents

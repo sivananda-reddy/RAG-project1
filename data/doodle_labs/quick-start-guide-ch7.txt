@@ -1,0 +1,84 @@
+Source: https://techlibrary.doodlelabs.com/quick-start-guide-ch7
+
+Quick-Start
+Mesh Rider Quick Start Guide
+Chapter 1:  What's in the Box?
+Chapter 2: Getting Started on the Bench
+Chapter 3: Basic Radio Configuration
+Chapter 4: Bench Testing
+Chapter 5: Advanced Radio Configuration
+Chapter 6: Basic Field Testing
+Chapter 7: Troubleshooting
+GUI Quick Walkthrough Guide (Video)
+Throughput Estimation Tool
+Optimizing the RF Link
+Supported Networking Modes
+Recommended Antenna Matrix
+Chapter 7: Troubleshooting
+Webpage to PDF
+These are commonly asked questions and troubleshooting resources.
+1.
+How do I power the Mesh Rider radio?
+The radio can be powered via a terminal block or a 2.5mm X 5.5mm pin-positive barrel jack. Make sure to use the correct polarity with the terminal block to avoid short circuits. If using the barrel jack, it's a safer option since it reduces the likelihood of shorting​.
+2.
+Why can't I connect to my Mesh Rider radio via USB or Ethernet?
+Ensure your computer is set to a static IP within the same subnet as the radio (10.223.X.X). If you encounter an IP conflict, choose a different IP from the one on the radio’s sticker. After manual configuration, restart the interface and check the connection using a ping test​​.
+3.
+The Mesh Rider evaluation board’s LED isn’t lighting up after powering it on. Is this normal?
+Yes, it’s normal. By default, the radio doesn’t have an LED indicator for power. However, this can be configured through the software to act as a status light​.
+4.
+How can I optimize my radio's link quality?
+Link quality can be improved by choosing an appropriate antenna and positioning to minimize obstructions. For UAV applications, make sure to maintain line-of-sight as much as possible. Using a lower bandwidth (5/10/15 MHz) instead of 20 MHz can reduce interference​​.
+5.
+Why is my radio experiencing connection drops?
+Check for IP conflicts, antenna misalignments, and power issues. Connection drops can also be due to interference or obstacles in the environment. For best results, ensure that you’re using the correct antenna with a clear line of sight​​.
+6.
+What should I do if my Mesh Rider radio reboots unexpectedly?
+If your radio is rebooting, it might be related to power fluctuations or overheating. Make sure the power supply is stable and that the heatsinks are properly installed​.
+7.
+Can I use my Mesh Rider radio for UAV applications?
+Yes, Mesh Rider radios are commonly used for UAVs. Configure your system with the appropriate profile for UAV applications through the Simple Configuration Menu. Also, using UDP for command and control data is recommended to minimize latency​.
+8.
+What antennas are recommended for a 5-10 km range?
+For longer ranges like 5-10 km, higher-gain antennas such as Yagi or Horn types are recommended. Check the recommended antenna matrix for specific models based on the frequency range​.
+9.
+How can I access the Web GUI to configure the Mesh Rider radio?
+After connecting via USB or Ethernet, enter the radio’s IP address in your browser. You may need to bypass security warnings by selecting “Accept the Risk and Continue.” You’ll then be prompted with a login screen. There is no default password, so simply click "Login"​.
+10.
+What should I do if I lose connection between Mesh Rider radios?
+Check for power, antenna, and configuration issues. Ensure all radios are on the same mesh network and have unique IPs. Test the connection using a ping test and reconfigure networking settings if needed​​.
+11.
+I'm getting an SSH connection error? How do I fix this and connect?
+Some SSH clients will reject a connection to the radio due to the algorithm employed by the radio's SSH server. The message my look similar to this:
+To fix this on Linux or MacOS, place the following in
+/home/<user>/.ssh/config
+. It may be necessary to create this file if it does not already exist.
+Host *
+HostKeyAlgorithms +ssh-rsa
+PubkeyAcceptedAlgorithms +ssh-rsa
+For Windows, the file location is
+C:\ProgramData\ssh\ssh_config
+. Admin privileges is required to create or modify this file. (Run notepad.exe as Admin)
+Alternatively, you can pass the following command line options to allow the algorithm inline: `
+-o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa
+`
+Known Hosts Error
+After factory resetting, flashing, or upgrading the firmware, the following error may be presented when trying to log in via SSH:
+This is caused because new encryption keys are generated when resetting the radio. To fix this on Linux and MacOS, either run the
+ssh-keygen
+command as displayed by the error message, remove the offending line in known_hosts, or unless you have any particular reason to retain your known_hosts file, simply delete the file. After updating, it'll prompt you to accept the new key when attempting to log in again.
+In Windows, this file is located at
+C:\Users\<username>\.ssh\known_hosts
+.
+To prevent this check from ever occurring globally, add the `StrictHostKeyChecking no` option to your config or ssh_config (as described in the previous section):
+Host *
+HostKeyAlgorithms +ssh-rsa
+PubkeyAcceptedAlgorithms +ssh-rsa
+StrictHostKeyChecking no
+Alternatively, without modifying the configuration, you can choose to ignore the message inline with the `
+-o StrictHostKeyChecking=no
+" option:
+SFTP Not Found Error
+When using SCP to transfer a file to the radio, you may encounter the following error:
+This happens because many clients will try to use SFTP instead of the legacy SCP. To overcome this, add the `-O` command line option to the scp command to force using the legacy SCP protocol.
+Table of Contents

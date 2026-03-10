@@ -1,0 +1,120 @@
+Source: https://techlibrary.doodlelabs.com/wearable-configuration
+
+Software Guides
+Getting Started
+General Configuration
+Model Specific Configuration
+Multiband Radios
+Wearable/OEM Radios
+SENSE - Interference Avoidance Configuration
+Large Network Optimization
+Remote Management Guide
+Remote Management: CLI
+Remote Management: JSON RPC
+JSON RPC Reference
+GPS Guide
+Serial Interface Guide
+GPIO usage and LED Blinking
+Production Firmware Customization
+Mass Firmware Update
+Advanced Networking Guide
+Wearable/OEM Configuration
+Webpage to PDF
+The Wearable (and OEM) model variants have additional configuration options compared to the other form factors. This is mainly due to the extra functionality and interfaces such as a built-in Wi-Fi radio.
+Wi-Fi Radio (Wearable/OEM only)
+The updated Wireless Configuration view separates the Wi-Fi and Mesh Rider radios under tabs labeled “Wi-Fi” and “Mesh Rider” at the top of the Link Optimization page. Users can toggle between these tabs to configure each radio independently. “Wi-Fi” (Refer to figure 1)  represents the standard wireless interface, while “Mesh Rider”(refer to fig 2)allows configuration of the Mesh Rider radio settings including band, channel, bandwidth, and power options. This new layout streamlines radio-specific configuration in a more intuitive and organized manner.
+Fig. 1 Wifi Configuration Page
+Fig. 2 Mesh Rider Configuration Page
+AP Mode
+The Wi-Fi radio is set up as an AP by default and is bridged to the Mesh. You can adjust the default configuration directly from the
+Simple Configuration
+menu, or by navigating to
+Network
+Configuration -> Wireless
+in the
+Advanced Settings
+menu. By default, the built-in Wi-Fi radio starts up an
+Access Point (AP)
+with
+SSID DoodleLabsWiFi-<last 6 hex digits of MAC>
+and password
+DoodleSmartRadio
+.
+Client Mode
+To configure the Wi-Fi radio to connect as a client to a hotspot network, navigate to
+Utilities > EUD Wizard
+from the sidebar. Enable the
+Hotspot Wizard
+toggle and the system will scan for available networks. A list of nearby Wi-Fi networks will appear on the right side under
+Network Discovery
+. Select the desired network and click
+Connect
+.
+Once connected, the radio performs the following:
+Runs a DHCP server for the Mesh Rider network.
+Joins the hotspot as a DHCP client.
+Applies NAT between the Mesh Rider and hotspot networks.
+Keep in mind that NAT prevents direct access from the hotspot network to the Mesh Rider network unless port forwarding is configured. However, devices on the Mesh Rider network can access the internet through the hotspot, similar to how standard office Wi-Fi behaves.
+Fig. 3 Scanning for available Wi-Fi networks
+Additional Wearable Configuration and Information
+Turbo Mode
+By default, the Wearable Mesh Rider radio is in Turbo mode. When Turbo mode is disabled, the radio attempts to save power by applying a throughput cap (6 Mbps default), and switching to a SISO antenna configuration. Turbo mode can be toggled using the
+Turbo mode button
+, or through the GUI or CLI.
+Automatic Standby
+The Wearable Radio can also go into automatic standby, but this is disabled by default. When enabled, the radio will go into standby mode to save power when the network is idle. In addition, the Wi-Fi radio can automatically be disabled when the Mesh Rider radio is not associated. Standby mode can also be reached through the
+power button
+.
+GUI
+To access device-specific details such as battery voltage, temperature, and firmware information, navigate to
+Device Manager > System
+from the sidebar. This section displays the current
+hostname
+,
+model
+, and
+firmware version
+of the radio. You will also see real-time
+battery voltage
+,
+temperature
+,
+uptime
+, and
+system load average
+.
+The
+Local Time
+panel allows synchronization with the browser time. Unlike the older UI, advanced options such as external GPS selection, standby mode, or fan control are not shown here directly. These settings may now be located under
+Utilities
+or other submenus depending on the firmware version and device type.
+Fig. 4 Wearable Mesh Rider Radio Configuration
+CLI
+You can
+SSH
+into the radio to get to it's command prompt. The temperature and voltage can be accessed from the file
+/tmp/run/pancake.txt
+, which is in a json format.
+root@smartradio:/tmp/run# cat pancake.txt
+{ "Temperature": "33", "VIN VOLTAGE": "185" }
+The voltage is a direct ADC reading, and the corrected value is found dividing the result by 20.2. In the example above, the battery voltage is 185/20.2 = 9.16 V. The temperature is in degrees celcius.
+You can make Wearable-specific configuration changes using the wearable UCI file.
+root@smartradio:/usr/lib/lua/luci# uci show wearable
+wearable.main=wearable
+wearable.main.gps_enable='1'
+wearable.main.gps_antenna='1'
+wearable.main.mesh_rider_antennas='1'
+wearable.main.auto_temp_ctrl='1'
+wearable.main.power_button='1'
+wearable.main.auto_standby='0'
+wearable.main.wakeup_duration='2'
+wearable.main.sleep_duration='10'
+wearable.main.wifi_down_enable='0'
+wearable.main.turbo_mode='1'
+wearable.main.throughput_cap='6'
+Note that
+auto_temp_ctrl
+only enables the temperature sensor at this time.
+mesh_rider_antennas
+should not be modified.
+Table of Contents

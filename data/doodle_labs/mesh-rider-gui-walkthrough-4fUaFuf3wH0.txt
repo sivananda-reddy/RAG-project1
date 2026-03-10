@@ -1,0 +1,445 @@
+Source: https://www.youtube.com/watch?v=4fUaFuf3wH0
+Doodle Labs Technical Library (video transcript)
+
+hi good afternoon there I'm Sean Casey
+with Dole Labs I'm an application
+engineer and today we're going to start
+a video series about the graphic user
+interface quick walkthrough
+guide the guey quick walkthrough guide
+for basic settings goes over the
+following key features and parameters
+one connecting device to radio IP two
+accessing guey by IP and web browser
+three first time guey login four status
+overview which can be found in the basic
+settings and then status tab five mesh
+map which again can be found in the
+basic settings and then status tab six
+simple configuration which can be found
+in basic settings and then the simple
+configuration tab and also of note the
+general profile the UAV or unbanned
+aerial vehicle profile the GCS or Ground
+Control station profile and then seven
+would be the admin password which can be
+found in the basic settings and then
+admin tab
+so the first thing we'll do is show you
+how to connect your radio to the IP
+address of your computer this can be
+done by going to your Wi-Fi settings in
+Windows 11 I'll show you how this works
+this will be different for an operating
+system such as Apple iOS or for uh Linux
+OS as
+well we're going to go to more Wi-Fi
+settings network and
+internet then
+ethernet under ethernet we're going to
+configure IP the IP of my radio is
+10223
+19312 this will become the Gateway IP
+for your laptop or computer the subnet
+mask is
+255.255.0.0 in some operating systems
+you might simply just enter
+16 the IP address of my computer will be
+10223
+n312 or any IP address within the subnet
+of 255.0.0.0
+a domain name server 8.8.8.8 is generic
+if requested and then just simply hit
+save after this point simply just type
+in the IP address of the radio into any
+browser of you're choosing we tend to
+prefer Chrome because it has the best
+overall
+performance as you can see I typed in
+the IP address in my browser
+header now as graphic user interface
+loads you'll notice that your rendering
+time is actually dependent on your
+browser it might take longer on some
+browsers compared to others so to start
+with this is our mesh riter graphic user
+interface or guy splash page by default
+we have a username of root and a
+password that's blank you can configure
+these two things to whatever you would
+like for a password and username but
+most people tend to leave the password
+blank to have an easy and seamless
+experience to log in and debug quickly
+so now we'll just click log
+in now we start on the status overview
+page the system will have some necessary
+information for model tracking and name
+clarification of the model the host name
+will be Doodles smart radio 301 a505 d79
+the model variant is the MB 2025 2km xw
+submodel rm1 1675 5 2km xw or our
+wearable OEM our firmware version is
+located here and is a September 04
+release of 2023 it will also show you
+things like local time uptime and
+average
+load now on all dle Labs radios there
+will be two primary ethernet interfaces
+ethernet zero and ethernet 1 currently
+we have the ethernet uh zero in the down
+state and ethernet one is up but not
+available in a speed mode the Mac
+addresses of both are unique and are
+listed right here
+below so here we can see our current
+status of our wireless network by
+default we have a mesh Rider radio
+configured in a successful mesh in the
+background I have an additional radio
+operating currently now these are both
+operating on channel 51 which is 1.67 5
+GHz and at a bit rate of 58.5 megabits
+per second with a standard encryption of
+WP A3 SAE ccmp which is standard by
+default in our radios our Associated
+stations are other radios connected so
+by default that's this Mac address right
+here and because we have not declared a
+host it is an unknown status our signal
+is30 dbm and our noise is netive 94 dbm
+and again we can see our megabit per
+second transfer rate at a total of
+29.3 megabits per second at 10 mahz for
+bandwidth at an MC s of
+six now if we go to mesh map we do not
+actually have mesh map configured on
+both radios by default it is highly
+suggested to not run these unless you're
+doing a significant debug as they take
+up more overhead and actual CPU
+performance on our
+radios now we'll go to the simple
+configuration which is the bread and
+butter of how our radios easily connect
+in mesh configuration we'll give that a
+second to
+load so here we have our simple
+configuration and we can see our profile
+configuration right here so for the
+first time configuration choose your
+profile options below so what we're
+getting at is that we would like you to
+start off with just a simple
+configuration before you learn more
+advanced settings that might be
+difficult to understand now by default
+our general profile is what's first
+recommended we also have a UAV profile
+and a GCS profile which we'll walk
+through in a couple of seconds so by
+default our wireless configuration for
+our primary radio has an active
+frequency band of 1.67 5 GHz and we have
+a couple of scenario options by default
+we recommend mesh on radio zero as our
+default way moving forward for a first
+time setup but we also have several
+other configurations such as WDS access
+point on radio zero Gateway with WDS
+access point WDS client on radio zero
+Gateway with mesh mesh multi radio and
+dynamic mesh so our mesh ID by default
+is simple config our wireless password
+by default is just doodle smart radio
+our channel on this particular model is
+channel 51 or 1.67 5 mahz as you can see
+we have quite a number of options for
+this particular variant and you can see
+also this is a helix model which means
+that has the M1 through M6 government
+bands which is 1.67 5 GHz to 2.45
+GHz now if we go down here to bandwidth
+we can see by default we highly
+recommend you do 10 mahz this would also
+be for 950 and 2.4 radios as this is
+away from common Wi-Fi
+interference uh and a couple of notes on
+um bandwidth can be found in our
+Technical Library under the RX
+sensitivity and channel bandwidth guide
+now in general reducing the channel
+bandwidth affords you more range and
+better resilience to constant uh
+co-channel interference this would be
+particular to 2.4 and 5.8 Wi-Fi
+interference but this does come at the
+the cost of reduced bandwidth and poage
+links inter intermediate interference so
+we can see in our kind of crude models
+down here we have a narrow bandwidth and
+so we're talk we're attempting to talk
+over this noise the power of each data
+symbol is integrated over a longer
+duration and this Smooths out the noise
+now with a wide bandwidth we able to get
+in between the intermediate interference
+but the integration time for each data
+symbol is shorter so we are more
+susceptible to constant background
+noise now a really interesting tool
+we've come up with is called the
+throughput estimation
+calculator
+now we'll we'll plug in our actual
+features for our actual model we have
+here we have a 1.67 5 gz radio and we
+have a 10 mega uh 10 meaher bandwidth
+right here so now if we go in and plug
+in our values we'll see how we can
+modify and play with um the actual
+features of bandwidth and get real-time
+results so we have an actual 10 mahz
+channnel bandwidth and we have 1675 uh
+megaherz U actual primary frequency so
+now we'll Analyze That what this is
+showing us is that by default at a close
+range of about 400 m we should have an
+actual throughput of around 45 megabits
+per second now this will also show stuff
+like the Fresno Zone clearance in an
+expected range of approximately 6
+kilometers now we can also go to the
+wearable to make our system a little bit
+more accurate here and see if that
+changes the results as you can see not
+too much but we do see some slight
+number changes from model to model now
+as a curiosity let's see what we do
+maximum bandwidth at 40 MHz and see how
+this affects our data now we have a much
+higher throughput at around 140 megabits
+per second but we extrapolate that to
+around 400 MERS where the previous graph
+starts that's still around 130 we have
+an expected range of around 3 kilm now
+conversely what happens if we put the
+meaher bandwidth to three and we have
+the shortest or narrowest bandwidth
+possible let's analyze those results so
+now we see a maximum throughput
+estimation of around 14 megabits per
+second but an expected range of around
+1100 uh Kil or excuse me meters uh
+excuse me 11,000 meters which is 11
+kilometers now going back to the simple
+configuration page we are currently at
+bandwidth we're going to make an
+application note on operating Distance
+by default this is 4,000 meters a common
+misconception is that operating distance
+is actually proportional to TX power or
+transmit power or increasing the range
+by increasing power uh with the actual
+waveform of a radio this is an actual
+optimization for latency as we know a
+radio wave is a waveform and is affected
+by distance when we change this number
+it's optimizing the expected latency at
+4,000 M at 10,000 M it is also
+estimating the latency at 10,000 Metter
+and a th000 meters again it will
+estimate that latency to be shorter Now
+by default we have a number of device
+setting which optimizes for one to two
+nodes you can also do 3 to 5 6 to 10 or
+more than 10
+we also have a default actual pre-select
+for optimized for latency now if we go
+to our Technical Library and we look at
+latency throughput and robustness
+optimization in our technical lab we
+have the optimized for latency over
+throughput and it does what the name
+implies it results in improved latency
+but the maximum achievable throughput is
+generally reduced by about half or
+higher MCS
+rates now we're going to look at our
+configuration for the Wi-Fi radio which
+is indeep independent of the primary
+radio interface at 1.67 five gahz we
+only have one scenario selection for our
+Wi-Fi radio a default SSID or name which
+you can modify to whatever you might
+like and we have a wireless password
+which is Again by default doodle smart
+radio by default this is on channel 36
+or 5.18 GHz we do have options for other
+configurations on 2.4 and 5.18 as
+well and now we'll look at the network
+configuration by default ethernet 1 is
+added added to bridge Wan or Bridge wide
+area network we call this brw for the
+shorthand additional static IPS you can
+include on this too as well as netmask
+the DHCP on bran by default is client it
+it's important to note there's three
+options disabled server and client now
+two clients can can successfully connect
+in the mesh as well as a server and a
+client however two servers cannot
+successfully connect to each other by
+default enable automatic commanding
+control CU detection is available more
+documentation can be found in traffic
+priorization and Link optimization about
+what these kind of optimizations for
+cues might do in your settings but
+that's more reserved for the advanced uh
+graphic user interface walkthrough guide
+now we can look at the rate threshold
+which is by default 400 kilobits per
+second which is a size threshold of 400
+bytes by default we will not have this
+secondary feature available right here
+so we'll remove that as I was messing
+with my own
+settings
+Now by default we have a port assignment
+on 14550 which is common for MAV link or
+Q Ground Control or number of uas
+applications this is our primary command
+and control uh interface which is
+equivalent to a CS6
+prioritization what we can also do which
+was previously uh shown is that a
+secondary port to say break out a live
+stream to have its own independent port
+and less interference from the common
+port at
+14550 you can set this port to whatever
+you like and to change this you could
+hit video right here CS5 best effort and
+background are two other optimizations
+but for the most part we recommend only
+splitting out a live stream to CS5 or
+the actual command control backup queue
+now to save and apply this is important
+to note this will make a permanent
+change to the settings whereas save will
+not and reset will change all of the
+simple configuration settings to their
+default settings so now we'll hit save
+and apply and we'll give it a couple of
+minutes to load Now by default the
+simple config page will take about 1
+minute to save all the settings change
+just because it has multiple independent
+settings linked to this uh primary page
+to save us both the time I will pause it
+here and let it
+load now we're going to go back to our
+simple configuration page and look at
+other available profiles by default we
+were looking at our general profile but
+we also have a UAV or unman aerial
+vehicle profile as well as a GCS or
+Ground Control station profile for the
+UAV profile we're only going to
+highlight the differences between this
+and the Syle configuration and highlight
+the key actual application specific
+features so by default we have the
+enable GCS or Ground Control station
+finder which is uh advertising the IP
+address of the Drone this will make the
+Drone more discoverable to the Ground
+Control station and broadcast its IP
+address by default we have a b rate of
+57,600 which is common in most PX4 or
+maving Vehicles this can be configured
+to whatever you like
+but an important application note is
+that at B rates over 500,000 we're going
+to have to be model specific with our
+radios as the Nano mini and type 2J and
+wearable all have different B rate
+limitations whereas the type 2J has a b
+rate over a million as a configurable
+option so if you have a very high B rate
+over 500,000 you might want to actually
+look at our Legacy models or model
+specific features which can be found in
+our Technical Library under products so
+here we have the central configuration
+guide
+right here where we have enable Central
+config selection which we do not
+recommend to select by default and a
+primary note assignment it's important
+to note that primary node is essentially
+a server or client relationship by
+default on a UAV profile we most likely
+want to make it a primary node if we
+were a client this would point to the
+server side so we most likely want to
+have a client mode enabled On The Ground
+Control station and a server enabled on
+the UAV with enable Central ACS or
+automatic channel selection it's very
+important to note this is only for one
+toone relationships whereas if you have
+a UAV or multiple uavs rather connected
+to a ground control station or more than
+one you do not want to enable Central
+ACS by default this is only optimized
+for one drone in one Ground Control
+station everything else in Wireless
+configuration and the actual Wi-Fi radio
+is identical we can see below we have a
+primary Port again for our Telemetry at
+port
+14550 and for our live stream video or
+vdl we have a port of
+2,000 now if we go back up to the GCS
+profile we'll see it's very similar to
+the UAV or unman aerial vehicle profile
+whereas we do not have the GCS
+Advertiser as we are the GCS in this
+scenario so again if we more than likely
+want the UAV to be the primary node we
+would then put in the primary node IP
+address or basically putting in the IP
+address of the UAV radio right
+here everything else is very similar and
+identical to the profile setups we've
+discussed
+before our only other tab available in
+our basic uh guy for the wearable OEM is
+the admin and admin password page here
+is where you can set your password and
+confirm your password which was again
+your original login when you had uh uh
+the password and user by default it's
+root with no password this is not
+something that's necessarily required
+ired and by default most customers do
+not configure this to make easy setup
+and IP logging to get into their radios
+now a really interesting thing to see
+too would be to see our actual overview
+again and look again at our signal and
+noise it's important to note that in our
+guei these will change real time and
+that these values are environmental and
+not constant the Refresh on these is
+usually less than a second uh the
+terminal will by your latency and by
+default again we're now at -34 dbm and
+94
+noise I hope this was helpful in the
+basic uh graphic user interface
+walkthrough for the wearable
+[Music]
+OEM

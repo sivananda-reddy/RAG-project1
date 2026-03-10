@@ -1,0 +1,281 @@
+Source: https://techlibrary.doodlelabs.com/can-i-do-x-distance
+
+Quick-Start
+Mesh Rider Quick Start Guide
+Chapter 1:  What's in the Box?
+Chapter 2: Getting Started on the Bench
+Chapter 3: Basic Radio Configuration
+Chapter 4: Bench Testing
+Chapter 5: Advanced Radio Configuration
+Chapter 6: Basic Field Testing
+Chapter 7: Troubleshooting
+GUI Quick Walkthrough Guide (Video)
+Throughput Estimation Tool
+Optimizing the RF Link
+Supported Networking Modes
+Recommended Antenna Matrix
+Recommended Antenna Matrix
+Webpage to PDF
+Can I Do 'x' Distance w/ Mesh Rider Radios?
+A frequently asked question we encounter is, "What antennas should be use for 'x' kilometers range with Mesh Rider Radios?" This can be a complex, application specific and case-by-case answer due to the numerous variables involved. However, this quick "Self-Serve" guide will comprehensively outline 35+ antennas including Doodle Lab's antennas and our recommended & trusted third-party vendor's antennas expected performance as a robust starting point.
+UAV and UGV Application Note:
+In most cases, UAV telemetry ranges will be multiple-times further in km, than as compared to UGV. This phenomenon is due to UAV normally having more minimal RF link object obstructions in the air (ie maybe only when flying around skyscrapers, very large hills or mountains, etc.) , thus UAV have less concern with multipath pass loss and in-general a much higher Fresnel Zone clearance.
+Doodle Labs Recommended Antenna Matrix
+Antenna Matrix is Organized by Gain (dB) from high to low
+Commercial and Professional Grade Antennas
+Manufacturer
+Model
+Frequnecy (MHz/GHz)
+Gain (dB)
+Type
+Refrence Link
+KP Performance
+KPPA-900DPY17
+880-960 MHz
+17.5
+Yagi
+Antenna Link
+TrueRC
+TRURC Gatling
+2.4 GHz
+16
+Patch
+Antenna Link
+KP Performance
+KP-5HA-45-N
+4.9-6.4 GHz
+16
+Horn
+Antenna Link
+Southwest Antennas
+1055-011
+4.4 - 7.4 GHz
+15
+Patch
+Antenna Link
+Mars Antennas
+MA-WA22-DP14
+1700 - 2700 MHz
+14
+Patch
+Antenna Link
+Mars Antennas
+MA-WC90-DS13
+850 - 960 MHz
+13
+Sector
+Antenna Link
+Southwest Antennas
+1009-015
+1625 - 2500 MHz
+12
+Patch
+Antenna Link
+TrueRC
+X-AIR 2.4 MK. II
+2.4 GHz
+10
+Patch
+Antenna Link
+Mars Antennas
+MA-WO-56-DP10
+4.9-5.9 GHz
+10
+Omni
+Antenna Link
+Southwest Antennas
+1004-005
+4 - 6.4 GHz
+9
+Patch
+Antenna Link
+KP Performance
+KP-5DPFP-9-NF
+4.4-6.4 GHz
+9
+patch
+Antenna Link
+Mars Antennas
+MA-WA22-DP8
+1.7 - 2.7 GHz
+8
+Patch
+Antenna Link
+Mars Antennas
+MA-WA-27TB-DP8B
+698-960 MHz, 1.7-2.3, 2.3-2.7, 5.1-5.9 GHz
+7.5 to 10
+Patch
+Antenna Link
+KP Performance
+KP-24VOMNI-6
+2.4 - 2.5 GHz
+6
+Omni
+Antenna Link
+KP Performance
+KP-58-SPOMA-6-NF
+5.1 - 5.9 GHz
+6
+Omni
+Antenna Link
+TrueRC
+TRUE-MOX 2.4
+2.4 GHz
+5.9
+Patch
+Antenna Link
+Pasternack
+PE51078
+2.4 GHz
+5.5
+Omni
+Antenna Link
+Southwest Antennas
+2001-111
+5.2 -5.9 GHz
+3.8
+Omni
+Antenna Link
+TE Connectivity
+L9000020-01
+2.4 GHz
+3.2
+Omni
+Antenna Link
+Doodle
+ANT-915-3-O
+915 MHz
+3
+Omni
+Multipolarized Antennas
+Doodle
+ANT-1370-3-O
+1.3 GHz
+3
+Omni
+Multipolarized Antennas
+Doodle
+ANT-1700-3-O
+694-960 & 1710-2750
+3
+Omni
+Multipolarized Antennas
+Doodle
+ANT-2025-3-O
+1625-2500 MHz
+3
+Omni
+Multipolarized Antennas
+Doodle
+ANT-2450-3-O
+2.4 GHz
+3
+Omni
+Multipolarized Antennas
+MP Antenna
+MPSL900+2400
+915 MHz + 2.4 GHz
+3
+Omni
+Antenna Link
+MP Antenna
+08-ANT-1019
+915 MHz
+3
+Omni
+Antenna Link
+Southwest Antennas
+1001-126
+4.4 - 6 GHz
+2.3
+Omni
+Antenna Link
+Southwest Antennas
+1001-251
+4 - 8 GHz
+2.15
+Omni
+Antenna Link
+Pasternack
+PE51RD1020
+2.4 GHz
+2
+Omni
+Antenna Link
+TrueRC
+Singularity 2.4 V2
+2.4 GHz
+1.9
+Omni
+Antenna Link
+Fig. 1 Doodle Labs Recommended Commercial Grade Antennas
+Military Spec and DoD Grade Antennas
+Manufacturer
+Model
+Frequnecy (MHz/GHz)
+Gain (db)
+Type
+Refrence Link
+Optimum Solutions
+OS-PT-25-L/S-48
+4 - 6 GHz
+33
+Dish
+Antenna Link
+Optimum Solutions
+OS-PT-25-L/S-30
+4 - 6 GHz
+31
+Dish
+Antenna Link
+Optimum Solutions
+OS-PT-10-C
+4 - 6 GHz
+29
+Dish
+Antenna Link
+Optimum Solutions
+OS-PT-25-L/S-48
+1.7-2.5 GHz
+26
+Dish
+Antenna Link
+Optimum Solutions
+OS-PT-25-L/S-30
+1.7-2.5 GHz
+24
+Dish
+Antenna Link
+Optimum Solutions
+OS-PT-10-L/S
+1.7-2.5 GHz
+22
+Dish
+Antenna Link
+Hascall-Denke
+FXSP1.35-2.7.14-D
+1350 - 2700 MHz
+15
+Patch
+Antenna Link
+Hascall-Denke
+MPDP1.25-2.7-5
+1250 - 2700 MHz
+5
+Omni
+Antenna Link
+Hascall-Denke
+MPDP2.1-2.5/4.4-5.9
+3 dBi @2.1-2.5 GHz 4.5 dBi @4.4-6 GHz
+3 to 4.5
+Omni
+Antenna Link
+Fig. 2 Doodle Labs Recommended DoD Grade Antennas
+Link-Budget Calculation and Our Throughput Estimation Tool
+Throughput Estimation Tool
+Antenna Gain and Expected Distances
+Choosing an appropriate antenna gain requires a link-budget calculation. Based on the network capacity and link distance required, you can calculate the required antenna gain. Also note that there are many factors which can affect RF propagation loss such as reflections off large objects, and Fresnel Zone clearance. Have a look the Application Note,
+Optimizing the RF Link
+in our Technical Library.
+Table of Contents

@@ -1,0 +1,67 @@
+Source: https://techlibrary.doodlelabs.com/radio-access-issues
+
+Troubleshooting
+Link Status Log Walkthrough Guide (Video)
+Link Quality issues
+Radio Access issues
+UART and USB Issues
+Backup Reset and Upgrade
+Crashes, Reboots etc
+Radio Access Issues
+Webpage to PDF
+This section deals with problems accessing the radios. As explained in the System Overview section, in order to access the radios themselves, host machines do need to be on the same subnet as the Mesh Rider Radios.
+"I have never been able to access the radios"
+If you have never been able to access the radios, then the likely causes are:
+1. Most likely there is an IP conflict on your host machine.
+2. There may be problem with the physical connection between the host machine and      the Mesh Rider Radio.
+IP Conflict Issues
+1. Turn off any other networking interfaces on your host machine, for example WiFi.          Although this is not strictly necessary, it could be that your other network uses the            same  IP subnet as the Mesh Rider Radios.
+2. Make sure that your host machine has an IP address in the 10.223.0.0/16 subnet.
+a. If you are using a Windows 10 machine, open up a cmd prompt and type ipconfig      to see the IP address of your host machine.
+b. In Linux, open up a terminal and type ifconfigto see the IP address of your host            machine.
+3.Disable the firewall on your host machine.
+Problems with the Physical Connection
+1. If your host machine is a Linux machine, type dmesg | tail after plugging in the             Ethernet port and see if there is a message indicating that an Ethernet device was             plugged in.
+2. If your host machine is a Windows 10 machine, check your network adapter                 settings to see that an Ethernet adapter is enabled and connected.
+"I can no longer access the Mesh Rider Radio"
+If you previously were able to access the Mesh Rider Radio and can no longer do so, first do a sanity check on the items in the section above. Assuming your IP configuration is fine and the devices are connected, you can proceed with the recommendations below.
+1. Try the 192.168.153.1 fallback IP address.
+2. Try IPV6 instead.
+3. Factory reset the Mesh Rider Radio.
+Using the fallback IP address
+Make sure to power down any other Mesh Rider Radios in the network and only have the local Mesh Rider Radio powered. Change the IP configuration of your host machine and add a new IP address in the 192.168.153.0/24 subnet. Attempt to access the Mesh Rider Radio at 192.168.153.1.
+IPV6 Login
+1. First bring down any unnecessary interfaces like WiFi.
+2. Power down the other Mesh Rider Radios in the network to that you are sure you are accessing the correct radio.
+3. First find out the index number of the interface connected to the Mesh Rider Radio. Open up a cmd prompt and type (ignore the $ sign)
+$ netsh interface ipv6 show interfaces
+Idx     Met         MTU          State                Name
+---  ----------  ----------  ------------  ---------------------------
+1          75  4294967295  connected     Loopback Pseudo-Interface 1
+16          35        1500  connected     Ethernet
+4. In this case, the index is 16. Next, run
+$ ping -6 fe80::%16
+Pinging fe80::%16 with 32 bytes of data:
+Reply from fe80::%16: time=413ms
+Reply from fe80::%16: time<1ms
+Reply from fe80::%16: time=2ms
+Reply from fe80::%16: time=1ms
+5. Assuming the ping worked, we can check the ipv6 address of the Mesh Rider Radio with
+$ netsh interface ipv6 show neighbors
+Interface 16: Ethernet
+Internet Address                              Physical Address   Type
+--------------------------------------------  -----------------  -----------
+e80::230:1aff:fe4e:aabc                      00-30-1a-4e-aa-bc  Stale (Router)
+a. From here, we can see the ipv6 address (in bold). Note that the corresponding physical address is starts with 00-30-1a which is true for all Doodle Labs products. So you can try logging in with
+ssh root@fe80::230:1aff:fe4e:aabc%16
+6. Once you are logged into the CLI, you can check the ipv4 address of the br-wan interface
+root@smartradio:~# ip a show dev br-wan
+6: br-wan: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+link/ether 00:30:1a:4e:aa:26 brd ff:ff:ff:ff:ff:ff
+inet 10.223.187.38/16 brd 10.223.255.255 scope global br-wan
+valid_lft forever preferred_lft forever
+inet 192.168.153.1/24 brd 192.168.153.255 scope global br-wan
+valid_lft forever preferred_lft forever
+inet6 fe80::230:1aff:fe4e:aa26/64 scope link
+valid_lft forever preferred_lft forever
+Table of Contents

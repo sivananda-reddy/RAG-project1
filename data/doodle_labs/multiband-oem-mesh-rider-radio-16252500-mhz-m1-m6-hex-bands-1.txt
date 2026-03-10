@@ -1,0 +1,68 @@
+Source: https://techlibrary.doodlelabs.com/multiband-oem-mesh-rider-radio-16252500-mhz-m1-m6-hex-bands-1
+
+Products
+Product Index
+Mesh Rider Radios
+Industrial Wi-Fi Transceivers
+Legacy Products
+Multiband OEM Mesh Rider Radio – 1625~2500 MHz (M1-M6 Hex bands)
+Webpage to PDF
+RM-2025-62O3
+OEM V2 Update:
+The OEM V2 Mesh Rider radio delivers significant improvements in performance and flexibility. With enhanced multiband capabilities, the OEM V2 supports a broader frequency range, ensuring reliable communication across various environments. This upgrade also introduces greater ruggedness, making it better suited for harsh conditions and critical applications.
+Accordion Example
+Datasheet
+Multiband OEM Mesh Rider Radio – 1625~2500 MHz (M1-M6 Hex bands)
+Getting Started w/ the OEM
+General Hardware Integration Guides:
+Hardware Integration Guidelines
+Mesh Rider Radio Hardware Interfaces
+Model-Specific Hardware Integration Guides:
+Multi-Band OEM User Guide
+OEM Configuration
+Mesh Rider GPS Guide
+General Software Setup Guides:
+Getting Started
+Flashing new firmware
+Hardware Information (V2)
+Radio Integration Information
+2D Diagrams
+3D Diagrams
+Heat Map
+Pin Diagrams
+HID Board Information
+2D Diagrams
+3D Diagrams
+Pin Diagrams
+Schematic
+Cables
+Evaluation Board Information
+2D Diagrams
+3D Diagrams
+Schematic
+Layout
+Pin Diagrams
+Cables
+Software Information
+Mesh Rider Firmware Downloads
+Latest Firmware
+June 2025 Release
+Older Firmware
+Older firmware (not recommended)
+Long-Term-Stable Firmware
+May 2023 Long-Term-Stable Release
+Dynamic Mesh (DM) Firmware Downloads
+Please contact Sale Representative for Dual Radio Firmware
+***Note:
+Dual-Radio Dynamic mesh is only to be used for dual radio setups and requires Dynamic Mesh licenses. Use with single radios could lead to unusable interfaces.
+Antennas + Accessories
+Accessories
+Heat Sink
+Antenna Information
+Evaluation Kit Antenna Datasheet (2024)
+Evaluation Kit Antenna Datasheet (Legacy)
+GPS Antenna
+Wi-Fi Antenna
+Regulatory Information
+CE (Europe)
+Table of Contents

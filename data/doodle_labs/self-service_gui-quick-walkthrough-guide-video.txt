@@ -1,0 +1,21 @@
+Source: https://techlibrary.doodlelabs.com/self-service/gui-quick-walkthrough-guide-video
+
+Quick-Start
+Mesh Rider Quick Start Guide
+Chapter 1:  What's in the Box?
+Chapter 2: Getting Started on the Bench
+Chapter 3: Basic Radio Configuration
+Chapter 4: Bench Testing
+Chapter 5: Advanced Radio Configuration
+Chapter 6: Basic Field Testing
+Chapter 7: Troubleshooting
+GUI Quick Walkthrough Guide (Video)
+Throughput Estimation Tool
+Optimizing the RF Link
+Supported Networking Modes
+Recommended Antenna Matrix
+GUI Quick Walkthrough Guide (Video)
+Webpage to PDF
+First Time Simple Configuration Mesh Network Setup
+The Graphic User Interface (GUI) Quick Walkthrough Guide, shows the initial configuration through the Web GUI, and takes you step-by-step through the Simple Configuration or 'simpleconfig' Mesh Mode setup. This shows 3x primary profiles in 'simpleconfig' including 'General Profile', 'UAV Profile' and 'GCS Profile'
+Table of Contents

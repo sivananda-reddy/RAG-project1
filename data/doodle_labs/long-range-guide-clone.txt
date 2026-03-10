@@ -1,0 +1,204 @@
+Source: https://techlibrary.doodlelabs.com/long-range-guide-clone
+
+Application Notes
+UXV Use-Cases
+Mesh Rider Radio Integration
+Low Latency C&C and Video Streaming
+Platform Integration Guide(VOXL and Skynode)
+Guidelines for RF Performance(UAV/UGV)
+Drone Performances & Use Cases
+Wearable Use-Cases
+Wearable Mesh Rider Radio Testing Results
+Starlink SATCOM Integration Guide
+GCS Profile and EUD Wizard Guide
+GCS Profile and EUD Wizard Livestreaming to YouTube Guide
+Long Range Guide
+Webpage to PDF
+Overview
+This guide provides recommendations on
+what configuration to choose for different communication ranges
+, focusing on when to use tracking antennas and Bi-Directional Amplifiers (BDAs) for optimal link stability and performance.
+For short-range communication (typically under 20–30 km), the use of antenna trackers and BDAs may not be necessary, as omni or low-gain directional antennas can often provide sufficient link quality. However, as the range increases especially beyond 50 km maintaining signal strength and link stability becomes more challenging due to factors like Free-Space Path Loss (FSPL), antenna alignment, and limited transmit power from the Uncrewed Aerial Vehicle (UAV).
+In such scenarios, both antenna tracking systems and BDAs play a critical role in extending range and ensuring reliable connectivity. The following sections provide guidance on selecting the right hardware, radio settings, and deployment methods for each range category.
+Hardware Requirement Summary by Range
+Drone Class
+Range
+Tracking Antenna
+BDA (Ground  + Air Side)
+Small
+<10 km
+❌
+Not Required
+Medium
+10–50 km
+⚠️Either a tracking antenna or BDAs may be required
+Large
+50–100 km
+⚠️Either a tracking antenna or BDAs or both is recommended
+Very Large
+>100 km
+✅
+Both recommended
+Note
+: For all long-range missions (50+ km) it is possible to achieve with a tracking antenna alone, depending on antenna gain, link conditions, and bandwidth. BDAs should be considered when additional link margin, higher throughput, or anti-jamming capability is required..
+Tracking Antennas for Long-Range Stability
+Why It Matters:
+When the communication range exceeds 50 km, maintaining precise antenna alignment becomes critical to preserve Signal-to-Noise Ratio (SNR) and prevent link degradation. A misaligned antenna can lead to severe packet loss, lower throughput, and even complete link drops—especially when using narrow beam, high-gain antennas.
+Key Considerations:
+- Directional Antennas Only: Tracking is necessary when using panel or dish                       antennas with narrow beamwidths (<10°).
+- Global Positioning System (GPS) Signal Feedback Required: Most tracking systems           require GPS location data from the UAV for real-time pointing.
+- Telemetry or Inertial Backup: In GPS-denied environments, tracking can fall back to           inertial navigation or RF-based telemetry correction.
+- Beamwidth-to-Accuracy Ratio: Narrower beams require more accuracy.
+10° beamwidth → ~±5° tolerance
+3° beamwidth → ~±1.5° tolerance
+- Dual-Polarization or Multiple Input Multiple Output (MIMO) Support: Improves                 performance under dynamic flight conditions.
+- Physical Stability: Gimbal mounts must resist vibration.
+- Environmental Protection: IP-rated enclosures and weather protection are essential.
+Example: Link Budget and Throughput at 50 km
+Radio Configuration Guidelines
+Parameters
+Value
+Radio Model
+RM-2100-42W3
+TX Power
+32 dBm
+TX Antenna
+Optimum Solution Tracking System – OS-PT-100 (24 dBi)
+RX Antenna
+Doodle Labs 2.4 GHz Antenna (ANT-2450-3-O)
+(3 dBi)
+Total Antenna Gain (TX+RX)
+27 dBi
+Path Loss (FSPL @ 2.4 GHz)
+~134 dB
+Cable + Connector Loss
+3 dB
+Receiver Sensitivity Target
+-91 dBm
+Channel Bandwidth
+10 MHz (MCS 4–5)
+Expected Throughput
+~5 Mbps
+Note
+: For all long-range missions (50+ km) it is possible to achieve with a tracking
+Bi-Directional Amplifiers (BDAs)
+Function:
+BDAs extend the communication range by amplifying transmit (TX) power.
+BDA Use Cases:
+- Range Extension
+– BDA on both ends required for maximum distance.
+- Anti-Jamming
+– BDA on GCS to overcome the noise at the UAV.
+- Improved Downlink
+– BDA on UAV for higher throughput.
+(
+Note
+: BDAs are required on both ends GCS as well as UAV).
+Integration Guidelines:
+- TX Gain
+: TX Gain when added to the output power of the Doodle Labs radio                  should not exceed the output power of the BDA to avoid compression. Most                    Doodle Labs Mesh Rider radios have a minimum output power of around 20 dBm.
+- RX Gain
+: RX Gain should be between 5 and 10 dB for best performance.
+- Auto-Switching
+: Use Time-Division Duplex (TDD)-compatible BDAs capable of                switching within 1 microsecond.
+- Cable Loss
+: Minimize connector and coax losses.
+- Heat Extraction
+: Ensure BDAs operate within their rated temperature range.
+- Coaxial Cabling
+: Use low-loss shielded cables (e.g., LMR-400).
+Validated Vendors:
+- Triad RF Systems (10–25 W)
+- NuWaves Engineering (20–25 W)
+Note:
+In some cases, BDAs will require
+in-line attenuators
+between the radio and the BDA. We recommend reaching out to our
+sales team (sales@doodlelabs.com)
+for BDAs that have been validated with our radios.
+Radio Configuration Guidelines
+Parameters
+Configuration
+Operating Mode
+WDS Bridge (UAV ↔ GCS)
+Channel Bandwidth
+20 MHz → up to ~50 km
+10 MHz → up to ~100 km
+5 MHz → up to ~200 km
+3 MHz → beyond 200 km
+SENSE
+Use only in mesh or high-interference scenarios (
+Note
+: Sense is designed for interference and jamming avoidance and requires additional fade margin (e.g., ~10 dB) to operate properly)
+TX Power
+Max allowed (BDAs add gain)
+Polarization
+Vertical/Vertical or matched MIMO
+Distance Setting
+Match expected range
+Note:
+There’s also a hard limit - 20 MHz works up to ~50 km, 10 MHz works up to ~100 km, and   5 MHz works up to ~200 km.
+Range-Based Deployment Examples
+50–100 km
+Parameters
+Configuration
+Radio Used
+RM-2450-12M3
+Antennas
+Optimum Solution Tracking System – OS-PT-100 (24 dBi)
+Antennas
+Doodle Labs 2.4 GHz Antenna (ANT-2450-3-O)
+(3 dBi)
+Antennas / BDA
+Tracking antenna or BDA (TTRM1210 – 30–2700 MHz, 8 W Bi-Directional Amplifier)
+BDA
+Both Ground + Air sides (8 Watts)
+Tracking
+Recommended
+Channel Bandwidth
+3 MHz
+Distance Setting
+50–100 km
+100+ km
+Parameters
+Configuration
+Radio Used
+RM-2450-12M3
+Antennas
+Optimum Solution Tracking System – OS-PT-100 (24 dBi)
+Antennas
+Doodle Labs 2.4 GHz Antenna (ANT-2450-3-O)
+(3 dBi)
+Antennas / BDA
+Tracking antenna and BDA (TTRM1210 – 30–2700 MHz, 8 W Bi-Directional Amplifier)
+BDA
+Both Ground + Air sides (8 Watts)
+Tracking
+Must
+Channel Bandwidth
+3 MHz
+Distance Setting
+100 – 200 Km
+200+ km
+Parameters
+Configuration
+Radio Used
+RM-2450-12M3
+Ground Station Antenna
+Optimum Solution PT-100 Tracking System
+(24 dBi)
+Airborne Antenna
+Doodle Labs 2.4 GHz Antenna (ANT-2450-3-O)
+(3 dBi)
+BDA
+Tracking antenna with NuWaves NW-BA-DUAL-LS-20-S01-D30 (Dual-channel, 25 W amplifier) on both Ground + Air sides
+Tracking
+Must
+Channel Bandwidth
+3 MHz
+Distance Setting
+200+ km
+Final Notes
+For more information, reach out to us at 📩
+technical_support@doodlelabs.com
+Table of Contents

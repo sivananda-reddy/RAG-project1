@@ -1,0 +1,89 @@
+Source: https://techlibrary.doodlelabs.com/advanced-networking-guide
+
+Software Guides
+Getting Started
+General Configuration
+Model Specific Configuration
+Multiband Radios
+Wearable/OEM Radios
+SENSE - Interference Avoidance Configuration
+Large Network Optimization
+Remote Management Guide
+Remote Management: CLI
+Remote Management: JSON RPC
+JSON RPC Reference
+GPS Guide
+Serial Interface Guide
+GPIO usage and LED Blinking
+Production Firmware Customization
+Mass Firmware Update
+Advanced Networking Guide
+Advanced Networking Guide
+Webpage to PDF
+Introduction
+The purpose of this guide is to help users with frequently asked advanced networking topics. For topics not covered in this guide, note that the radio runs a customized version of OpenWrt and as such it follows much of the online documentation on OpenWrt will also apply to the Mesh Rider radio.
+Adding an additional WAN Network Interface
+Creating a new network interface might be needed when integrating with a network device such as an IP camera that can only be accessed through a particular subnet. By default, the radio has 3 WAN interfaces. These are the default behaviours of each
+WAN
+- This is configured to be a DHCP client. A dynamic IP address is automatically assigned when there is a DHCP server on the network.
+WAN2
+- This is the radio's unique static IP address on the 10.223.0.0/16 subnet. The IP address that is printed on each radio. The IP address can be derived from the MAC address. If the IP address is 10.223.x.y and the MAC address is 00:30:1A:4E:A4:3E, the x is equal to the decimal value of 0xA4, or 164, and y is equal to the decimal value of 0x3E, or 62. The full IP address is therefore 10.223.164.62/16.
+WAN3
+- This is a static IP address at 192.168.153.1/24. This is a fixed IP address which is the same for all radios. This IP address is designed to be used during initial configuration only and should never be used when more than one radio is on the network.
+We do not recommend changing the above interfaces and highly recommend creating a new interface which is detailed below.
+GUI Method using Simple Configuration (New GUI)
+As of the 2025.6.x release, there is no Network Configuration menu like for the LUCI GUI (old GUI) for setting up another network interface. As such we recommend using either the Simple Configuration page or the CLI method.
+Please note that Simple Configuration is usually intended to only be run for initial setup and as such can reset other settings like Link Status logs, Traffic Prioritization etc.
+1. Go to the Simple Configuration Page
+2. Set your desired IPv4 address and IPv4 netmask
+In this example this radio will have  an ip address of 192.168.10.5/24
+Additional Static IPv4 on BR-WAN:
+192.168.10.5
+Additional Static IPv4 Netmask:
+255.255.255.0
+3. Set the DHCP to however you want the radio to behave. If unsure just leave it as Client Enabled.
+Client Enabled
+(Default) - Can be assigned a dynamic IP address when there is a DHCP server.
+Server Enabled :
+The radio will run a DHCP server. This can cause conflicts if there are multiple DHCP servers on the same network.
+Disabled
+- No DHCP,only use static addresses
+4. Check that the other settings inside of Simple Configuration are what you intended then click
+Save Configuration
+. Please note that Simple Configuration is usually intended to only be run for initial setup and as such can reset other settings like Link Status logs, Traffic Prioritization etc.
+GUI Method using Network Configuration (LUCI version)
+1. Go to Advanced Settings -> Network Configuration -> Interfaces
+2. Click
+ADD NEW INTERFACE
+3. Fill in the following.
+Name:
+wan4 (this presumes wan4 did not already exist. wan5 or a similar will work)
+Protocol:
+Static Address
+Interface:
+br-wan
+Press
+CREATE INTERFACE
+4. Set your desired IPv4 address and IPv4 netmask
+In this example this radio will have an ip address of 192.168.10.5/24
+IPv4 address:
+192.168.10.5
+IPv4 netmask:
+255.255.255.0
+Press
+SAVE
+5. WAN4 now appears on the page but it has not been saved or applied yet.
+6. Click
+SAVE & APPLY
+CLI Method
+In the example below this radio is being assigned an IP address of 192.168.10.5/24.
+uci set network.wan4=interface
+uci set network.wan4.ifname='br-wan'
+uci set network.wan4.proto='static'
+uci set network.wan4.ipaddr='192.168.10.5'
+uci set network.wan4.netmask='255.255.255.0'
+uci commit
+/etc/init.d/network restart
+The above presumes wan4 did not already exist. If there is an existing wan4, changing the name to wan5 or any variation will work. You can use the following command to see what network interfaces already exist.
+uci show network
+Table of Contents

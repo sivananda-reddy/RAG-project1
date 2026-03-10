@@ -1,0 +1,223 @@
+Source: https://techlibrary.doodlelabs.com/whats-in-the-box-w/quick-start-guide-ch2
+
+Quick-Start
+Mesh Rider Quick Start Guide
+Chapter 1:  What's in the Box?
+Chapter 2: Getting Started on the Bench
+Chapter 3: Basic Radio Configuration
+Chapter 4: Bench Testing
+Chapter 5: Advanced Radio Configuration
+Chapter 6: Basic Field Testing
+Chapter 7: Troubleshooting
+GUI Quick Walkthrough Guide (Video)
+Throughput Estimation Tool
+Optimizing the RF Link
+Supported Networking Modes
+Recommended Antenna Matrix
+Chapter 2: Getting Started on the Bench
+Webpage to PDF
+This chapter provides detailed instructions for setting up and connecting to Doodle Labs Mesh Rider Radios. While the connectivity options and design differ between radio models—such as the Wearable, Mini-OEM, Nano OEM, and OEM models—the core configuration and interface options are consistent. Once connected, you can access the radio’s Web GUI for easy configuration and monitoring.
+Mesh Rider Radio Variants Overview
+Wearable:
+Compact, battery-compatible unit ideal for portable or mobile deployments.
+Mini & Nano OEM:
+Small, embedded radios designed for space-constrained applications with optional evaluation board connections.
+OEM:
+A robust, multiband radio suited for industrial applications, with multiple connection options and external antenna compatibility.
+Wearable Setup
+The Wearable Mesh Rider Radio offers flexible power and connectivity options for mobile and stationary configurations. This guide outlines the options available, supported USB Power Delivery (PD) profiles, and step-by-step setup instructions.
+Power Options
+Battery Power
+Ideal for Mobile Use:
+The Wearable Mesh Rider Radio can be powered by its rechargeable battery, which attaches securely to the radio.
+Battery Charging:
+Before first use, fully charge the battery with a 20W (or higher) USB-PD compliant power source.
+External USB-C Power Delivery (PD)
+For Stationary Setups:
+Connect a USB-PD power source to the
+PWR-IN USB-D
+port on the radio for stable external power.
+PD Profiles Supported:
+Ensure the USB-PD power source meets the recommended profiles below to ensure reliable operation.
+1. Locking mechanism
+2. Alignment leg
+3. Alignment hole
+4. Battery electrical contact
+5. Radio power electrical contact
+Supported USB Power Delivery (PD) Profiles
+The Wearable Mesh Rider Radio supports multiple PD profiles for flexible power sourcing:
+Non-C Band Radio Models
+PD1 (Highest Priority):
+12V / 2A
+PD2 (Medium Priority):
+9V / 2A
+PD3 (Lowest Priority):
+5V / 1.5A
+(Avoid using 5V profile for reliable operation)
+C Band Radio Models
+PD1 (Highest Priority):
+12V / 2.5A
+PD2 (Medium Priority):
+9V / 3A
+PD3 (Lowest Priority):
+5V / 1.5A
+(Avoid using 5V profile)
+Battery Pack (for Standalone Charging)
+PD1 (Highest Priority):
+15V / 3A
+PD2 (Medium Priority):
+12V / 2.5A
+PD3 (Lowest Priority):
+5V / 3A
+(Only use 5V for standalone charging with short, high-quality cables)
+Connectivity Options
+USB-C Splitter Cable (Data + Power)
+Provides both data and power through the
+PWR-IN USB-D
+port using a USB-PD splitter cable. Ensure an adequate USB-PD power supply to avoid performance issues.
+Ethernet over USB-C
+Uses an RJ-45 adapter (USB-W04-A) for stable Ethernet data connection via the
+ETH USB-H
+port, while power is supplied through the
+PWR-IN USB-D
+port.
+Wi-Fi Hotspot (Wireless Connection)
+Enables wireless access by creating a Wi-Fi access point on the radio without requiring data cables.
+Physical Setup Instructions
+1. Power In / USB Device Port
+2. Battery USB C Charging Port
+3. Ethernet / USB Host Port
+4. Battery Power Button
+5. Charging and Status Indicator
+Prepare the Device
+Remove Protective Sticker
+Before the first use, remove the sticker covering the ports at the bottom of the Wearable Mesh Rider Radio to access the
+PWR-IN USB-D
+and
+ETH USB-H
+ports. This may require some force due to the adhesive.
+Choose a Power Source
+Option A: Battery Power (Mobile Use)
+Fully charge the battery with a USB-PD power source before first use.
+Attach the battery to the radio by aligning it with the slots and rotating the locking mechanism.
+Press the On/Off button on the battery for 5 seconds to power on the device.
+(Optional)
+For data transfer, connect a USB-C cable from
+USB-D
+to a computer (see Data Options below).
+Option B: External USB-C PD Power (Stationary Use)
+Connect a USB-PD compliant power source to the
+PWR-IN USB-D
+port.
+Confirm the USB-PD source supports one of the recommended profiles (avoid 5V profiles)
+Choose a Data Connection Method
+Option 1: USB-C Splitter Cable (Data + Power):
+Connect the USB-W03-A cable (or USB-W01-A if using only for data or power) to the
+PWR-IN USB-D
+port.
+Plug the other end of the USB-C splitter cable into a computer to create a virtual network interface for data transfer.
+Ensure the USB-PD power source is adequate to prevent performance issues.
+Option 2: Ethernet over USB-C
+Connect a USB-PD power source to the
+PWR-IN USB-D
+port.
+Attach the USB-W04-A cable (with RJ-45 connector) to the
+ETH USB-H
+port on the radio.
+Plug an Ethernet cable into the RJ-45 jack on the USB-W04-A and connect it to the Ethernet port on your host device.
+Option 3: Wi-Fi Hotspot (Wireless Connection)
+With a USB-PD power source connected to
+PWR-IN USB-D
+, the radio will automatically start a Wi-Fi access point upon boot-up.
+Connect to the Wi-Fi network using SSID
+DoodleLabsWiFi-<last 6 hex digits of MAC>
+and password
+DoodleSmartRadio
+.
+Option 4: Battery Power with USB-D Data Connection
+Use the battery as the power source (see Step 1, Battery Power).
+Connect a USB-C cable from the
+USB-D
+port to a computer or laptop to enable a virtual network interface for data transfer.
+This option allows the radio to operate in mobile scenarios with battery power while maintaining a data connection through the computer.
+Connect Antennas
+Connect Antennas to the TNC ports at the top of the radio.
+Important Setup Notes
+Port Matching:
+Verify the correct USB-C ports for each cable to prevent potential damage.
+Adequate Power Supply:
+Ensure the USB-PD power source meets power requirements, especially when using data options.
+Battery Preparation:
+Fully charge the battery before initial setup for optimal performance and longevity.
+Skip to
+Connecting to the Radio
+Mini & Nano OEM Setup
+Note: A 5V barrel jack (5.5mm x 2.5mm with positive center) rated for 3A is required to power on the Mini/Nano OEM.
+Step 1.
+Using the provided cables in the evaluation kit, connect the evaluation board with the Mini-OEM/Nano-OEM as shown below. The cables and ports for the Nano and Mini are the same except for the Mini having an extra antenna port.
+mini-OEM
+nano-OEM
+Cable Number
+Description
+Cable1
+(SN: SR700-400W-7145)
+20cm, 4-position JST-GH to JST-GH cable
+Cable2
+(SN: SR700-400W-7117)
+10cm, 6-position JST-GH to JST-GH cable
+Cable3, Cable4 Cable5
+(SN: SR700-400W-7133)
+10cm, 4-position JST-GH to JST-GH cable
+Cable6
+10cm, 4-position JST-GH to USB-A Socket. USB-Host connector
+Step 2:
+Connect the antennas to the radio using the MMCX-SMA cables.
+Step 3.
+Use a 5V barrel jack  (5.5mm x 2.5mm with positive center) rated for 3A or higher to connect to the power jack of the evaluation board.
+Step 4.
+It's normal not to see any lights activate.
+There are no visual indicators for the nano or mini that it is on. The LED on the evaluation board is, however, programmable.
+Skip to
+Connecting to the Radio
+OEM Setup
+Step 1:
+Using the provided cables in the evaluation kit, connect the evaluation board with the OEM radio as shown below.
+Step 2:
+Connect the HID board to the OEM radio as shown below.
+Step 3.
+Connect the antennas to their respective ports using the included MMCX-SMA cables.
+Antennas
+Respective Ports
+CH0 and CH1 of the Mesh Rider Radio
+WiFi Hotspot
+GPS
+Step 4.
+Use a barrel jack (5.5mm x 2.5mm with positive center) to connect to the power jack of the evaluation board. Ensure the power supply can deliver at least 15 Watts, this particular radio can take an input voltage of 6 to 24 Volts.
+Step 5.
+As soon as power is applied to the radios, all of the LEDs will blink once. After powering the radio, hold down the Power button for 2 seconds to turn the unit on. The Power LED will blink until the unit has fully booted, at which point it will be steady.
+Note about attenuators
+: The following photo is of the attenuators included in the mini-OEM, nano-OEM, and OEM evaluation kit. They are used to reduce the signal strength of the radio. Be careful not to have them installed when trying to optimize for range.
+Connecting to the Radio
+There are multiple ways to connect to the Mesh Rider Radios: WIFI (Wearable and OEM only), Ethernet , USB Device, USB Host. We will only cover WIFI and Ethernet as these are the most interoperable across different operating systems.
+Wi-Fi Connection (only for wearable and OEM)
+You can connect to the radio over its built-in Wi-Fi radio. By default, the built-in Wi-Fi radio starts up an Access Point with SSID DoodleLabsWiFi-<last 6 hex digits of MAC> and password DoodleSmartRadio. No cables are required for this connection method.
+Ethernet Connection
+Wearable:
+Connect an ethernet cable to connect from the RJ45 connector of the  USB-W04-A dongle to your host machine.
+mini-OEM/nano-OEM/OEM:
+Connect an ethernet cable from the RJ45 connector of the evaluation board to your host machine.
+Please refer to the Wearable User Guide if you wish to use USB.
+https://techlib.doodlelabs.com/multiband-wearable-user-guide-wearable-form-factor
+Network setup
+After establishing a connection through either WiFi or Ethernet, you must set a static IP address for your host machine within the 10.223.0.0/16 subnet to access the radios. The method for assigning an IP address differs between operating systems (Windows, macOS, Linux, etc.).
+For a Windows 10 or later system, navigate to the Network Connections folder in the Control Panel. Right-click on the Wi-Fi or Ethernet adapter your host is using and select Properties. In the properties window, choose Internet Protocol Version 4 and then click Properties. Set the IP address to the 10.223.0.0/16 subnet. Since these addresses are statically assigned, make sure not to use the same IP address for another device on the network. Refer to the figure below for guidance on manually setting the IP address. The process is generally similar for macOS and Linux.
+After setting a static IP address, open a web browser and navigate to the IP address printed on the label of the radio.
+When first visiting the page, you may see a warning about the authentication certificate. This can be disregarded since the Mesh Rider Radio employs a self-signed certificate. You will need to acknowledge this warning and click proceed to continue. This process varies between browsers, but will likely look similar to the below screenshot.
+Upon reaching the login page, you’ll be prompted to enter a password.
+If no password has been set previously, simply click
+Login
+without entering anything. Once logged in, the
+Dashboard
+page will appear by default.
+The default configuration of the Mesh Rider radios allows Mesh Rider radios of identical band models to automatically form a mesh on first boot-up without any configuration changes. You can immediately run IP-based connections over the Mesh Rider network.
+Table of Contents

@@ -1,0 +1,9 @@
+Source: https://techlibrary.doodlelabs.com/white-papers
+
+White Papers
+Webpage to PDF
+Below, you'll find Doodle Labs' comprehensive collection of white papers, which provide in-depth details on a variety of tests and performance data. These documents offer valuable insights into the methodologies employed, the results obtained, and the implications of these findings for the industry.
+PDF Downloads
+Long-Range Testing on L- and S- Band (47km)
+Ultra Long-Range Air-to-Ground S-Band (328km)
+Table of Contents

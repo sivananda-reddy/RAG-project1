@@ -1,0 +1,110 @@
+Source: https://techlibrary.doodlelabs.com/quick-start-guide-ch5
+
+Quick-Start
+Mesh Rider Quick Start Guide
+Chapter 1:  What's in the Box?
+Chapter 2: Getting Started on the Bench
+Chapter 3: Basic Radio Configuration
+Chapter 4: Bench Testing
+Chapter 5: Advanced Radio Configuration
+Chapter 6: Basic Field Testing
+Chapter 7: Troubleshooting
+GUI Quick Walkthrough Guide (Video)
+Throughput Estimation Tool
+Optimizing the RF Link
+Supported Networking Modes
+Recommended Antenna Matrix
+Chapter 5: Advanced Radio Configuration
+Webpage to PDF
+This guide details Advanced settings within the Mesh Rider radio.
+Advanced Menu
+In the Mesh Rider Web GUI, advanced menu options can be displayed by pressing Advanced Settings in the lower left menu.
+Services
+GCS Finder
+If you are using a MAVLink-based Ground Control Station (GCS) such as QGroundControl or Mission Planner, you can use our built-in GCS-Finder utility to easily connect to the ground station. The connection diagram is assumed to be like this:
+The GCS-Finder uses broadcast packets to search for MAVLink-based GCS which are listening for UDP packets on port 14550. The default behavior can be modified by navigating to
+services -> GCS finder
+in the web GUI.  After enabling GCS Finder,
+socat
+will be disabled automatically.
+EUD Hotspot Wizard (Wearable and OEM models only)
+The EUD (End User Device) Hotspot Wizard feature is designed to make it easy to connect to an AP (Access Point) such as a hotspot provided from a mobile device or common router. This will put the Hotspot interface into Client mode instead of its default mode of providing an AP for other devices to connect to.
+After navigating to Services->EUD Hotspot Wizard, if your AP is broadcasting, click the Scan For Hotspot
+button. This will scan for available networks. To connect to your desired network, click Hotspot Assistant next to the network and fill in the network passphrase, if relevant.
+Once returning to the primary EUD Hotspot Wizard configuration page, ensure Enable Hotspot Wizard is checked at the top and populate the rest of the fields according to your needs. You may assign a static IP to this network by checking the Use Static IP for Wi-fi client and populating the desired network information.
+Link Status Logs
+The Link Status Log service is the #1 tool for troubleshooting, monitoring, and optimizing the RF link between Doodle Radios. This is a service that, once enabled, runs in the background and collects link metrics every 2-3 seconds and stores them in a log for later review.
+By default the Link Status Logs are not stored to persistent memory. This is to prevent memory from filling up on the radio and reduce read/write cycles. Because of this, it is important to download the logs before powering off the radio. This archive that is downloaded also includes more valuable information such as current configuration and system messages that are useful for debugging issues.
+There is a video that can be viewed that details the Link Status Log and how to analyze available here:
+Link Status Log Walkthrough Video
+.
+Additionally, we have a Link Status Log analysis tool available here:
+Link Status Log Viewer
+Messaging System
+As of firmware version 06.1, we've introduced a new internal messaging system designed to facilitate messaging for our Sense Anti-Jamming feature. This must be turned on in order to use Sense.
+As of <firmwarexxx>, turning this off will remove the internal vlan used for messaging and Sense will not work.
+RPC JSON
+As stated in our <remote management guide>, we provide an RPC JSON interface to the radio. This is a valuable service to use when designing custom software and interfacing with the radio.
+Custom users and permission levels can be customized on this page.
+As of the June 06.1 update, the default username and password is user:DoodleSmartRadio.
+Sense
+Sense is our licensed Anti-Jamming and Interference Avoidance feature. This section provides setup and configuration options. We have a dedicated guide available, along with a setup video and demonstration available at the following page: <
+SENSE
+>
+Serial Configuration
+This configuration section is where you can configure serial peripherals devices and enable connection to the devices over the Doodle network. There are several roles to choose from depending on your needs. More detailed information is available on our dedicated
+Serial Interface Guide
+.
+Network Configuration
+Interfaces
+Interfaces display configuration options for the many interfaces present on the radio. By default, the primary interfaces (USB-D, USB-H, USB>RJ45, WIFI AP, and Doodle Mesh) are bridged together. It is generally not recommended to adjust any settings here. However, default and additional IP addresses may be adjusted under the edit menu for the respective interface.
+Misconfiguring these interfaces may result in the inability to access the radio.
+Wireless
+The Wireless page will provide the current overview of the wireless network and ability to adjust Wireless settings.
+A spectrum scan can be performed to determine an ideal channel selection. It is important to turn other nearby Doodle Radios off during this scan and to stop the scan before navigating away from the page, as the tool is very resource intensive.
+Clicking on Edit for the interface you wish to configure will present you with Advanced Device Configuration options. Here, you can select and configure various options such as channel, bandwidth, and power. Additionally, you the mesh ID, passphrase, and security options are available at the bottom.
+Mesh Configuration
+Mesh Configuration options do not often need adjusted, but may be applicable in some scenarios. OGM message interval defines how often each node in the network beacons out to the rest of the network. This is used by the mesh algorithm to determine the best route for traffic to take. In large node or static infrastructure applications, increasing the OGM interval will reduce the amount of network overhead.
+Additionally, there are several options that may be applicable to enable or disable for your application.
+Mesh Map
+The mesh map is a tool to visualize the current network and RSSI strength between nodes. The service must be enabled on each radio to display properly. It is not recommended to leave this service running, as it creates additional network overhead and consumes resources. Checking the associated stations list is often a more practical and easy way to check simple connectivity.
+Routing
+The routing menu provides options for creating static routes if needed for your network setup.
+DHCP & DNS
+Advanced DHCP & DNS options are available to configure if necessary. If is often easier to simply turn on and off the DHCP server from the Simple Configuration menu. However, many advanced configuration options exist in this menu for fine tuning.
+Diagnostics
+Diagnostics provide basic networking tools including ping, traceroute, and nslookup.
+Traffic Prioritization
+Traffic Prioritization has important options that can have significant impact on network performance.
+Differentiated Services is a QoS (Quality of Service) feature that helps control traffic behavior. Two important settings on the page, Optimize for Robustness and Optimize for Latency over Throughput, will have decrease throughput significantly in trade for link reliability and latency. Optimize for Robustness enables diversity MCS rates only.
+The Mesh Rider Radio includes protocol optimizations for URLLC applications as well as video optimizations. URLLC applications typically include command and control (C&C) data but can be extended to any application requiring a reliable low latency. Let's assume that we have a C&C application which uses network port 7000 over UDP. In the screenshot below, first click
+Optimize Command & Control for URLLC
+. Next click
+Add
+, and then change the new classification rule to use
+Port 7000
+and set the
+DSCP
+value to
+CS6
+. The comment section can be filled in if desired. Finally click
+Save & Apply
+and wait for the page to refresh.
+Note that if the application uses a large number of telemetry streams, or if the data-rate going over the URLLC channel is too large, then enabling URLLC may actually be detrimental to the performance.
+If
+Optimize Video Streaming
+is enabled, the radio will
+Apply radio PHY settings which are optimized for video transmission
+If the RSSI to a particular station is below the
+Video bad link threshold
+, then the radio will drop
+Video bad link (percentage)
+packets. This is an optional feature, and you should adjust the RSSI to a reasonable value for your application.
+The RSSI bad-link threshold is an additional protection against network overload when the link quality is bad, but even without setting the RSSI bad-link threshold, the C&C queue is prioritized over the VI queue.
+Firewall
+In the firewall section, you may turn off and on firewall settings. By default, all traffic is passed from end devices connected to the radio. The firewall is controlling traffic to the radio system itself. Many common defaults are already present in the firewall rules. However, you may wish for some rules to be enabled or disabled, depending on your needs.
+For example, if you wish to enable access to gpsd to obtain location information present with the Wearable or OEM, you need to enable the pre-defined gpsd access rule located under the Traffic Rules tab.
+Dynamic Mesh
+Dynamic Mesh is a licensed state-of-the-art network protocol based on establishing multiple redundant paths in a mesh network. Dynamic Mesh has ZERO packet re-routing or failover time. Dynamic Mesh also supports dual radio failover where two back-to-back radios on the same or different frequency bands route packets redundantly between nodes. This makes Dynamic Mesh best-in-class in terms of latency and resiliency in highly dynamically changing environments.
+The Dynamic Mesh page is where the license can be applied, along with configuration and status page.
+Table of Contents

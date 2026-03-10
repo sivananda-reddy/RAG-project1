@@ -1,0 +1,32 @@
+Source: https://techlibrary.doodlelabs.com/1x1-multiband-mesh-rider-radio-hardware-integration-guide
+
+nano-OEM: Hardware Integration Guides
+Hardware Integration Guidelines
+Hardware Interfaces
+nano-OEM (2023 update)
+nano-OEM: Pin Diagrams
+nano-OEM Radio (2023 update)
+nano-OEM Eval Kit (2023 update)
+nano-OEM (2023 Update) - 1x1 Multiband Mesh Rider Radio - Hardware Integration Guide
+Webpage to PDF
+This Hardware Integration Guide provides the information to facilitate smooth integration and use of the nano-OEM Mesh Rider Radio.
+The nano-OEM Mesh Rider Radio is a small mesh radio, capable of switching between 6 operating bands for deploying Private Wireless Networks. It is available in many frequency bands between 900 MHz and 6 GHz. The nano-OEM radio integrates Doodle Labs' Mesh Rider technology.
+Hardware Description
+The nano-OEM has a primary connector which includes power, Ethernet, USB and UART ports. The interfaces are shown in Fig. 1.
+Fig. 1 Wearable Mesh Rider Radio Overview
+Port1. USB-Device port
+Port2. Ethernet (ETH1) port
+Port3. UART + RESET port
+Port4. 5-V Power port
+Port5. USB-Host port
+Port6. 3x GPIO Port
+ANT0. Meshrider Antenna port
+Hardware Integration Notes
+Power Supply Integration
+Note that the nano-OEM Mesh Rider Radio requires a 5-V supply. See the datasheet for voltage tolerance. Exceeding the rated supply voltage can cause damage to the Mesh Rider Radio.
+Additional Guidelines
+The nano-OEM Mesh Rider Radio does not include galvanic isolation.
+Additional hardware Integration Guidelines can be be found on our
+Hardware Integration Guidelines
+page.
+Table of Contents

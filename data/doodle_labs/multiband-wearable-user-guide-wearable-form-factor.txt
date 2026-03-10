@@ -1,0 +1,371 @@
+Source: https://techlibrary.doodlelabs.com/multiband-wearable-user-guide-wearable-form-factor
+
+Wearable: Hardware Integration Guides
+Hardware Integration Guidelines
+Hardware Interfaces
+Multi-Band Wearable User Guide
+Wearable/OEM Wi-Fi and GPS Setup
+Wearable Configuration
+Mesh Rider GPS Guide
+Multiband-Wearable User Guide (Wearable Form Factor)
+Webpage to PDF
+Overview
+The Multiband-Wearable Mesh Rider radio is a small, rugged, light-weight IP-based tactical radio designed for military, law-enforcement, and emergency services personnel. With cutting-edge technology and rugged durability, this radio is designed to deliver reliable, secure, and uninterrupted communication in the most challenging environments.
+The Multiband-Wearable radio employs Doodle Labs' patented Mesh Rider® technology with state-of-the-art RF and networking capabilities that enable communication further, faster, and more reliably than any comparable solution on the market. Smart Devices can conveniently connect to the Mesh Rider network over either the built-in Wi-Fi radio, or the USB interface. The battery pack supports many hours of continuous operation, and is fully USB-PD compliant, allowing it to be charged by a wide variety of chargers for cell phones, laptops and even the USB port of a vehicle.
+For fixed installations, the radio is also available in an External form-factor with additional interfaces (Ethernet, USB-Host, UART).
+This user guide details the main features of the radio, and walks you through the setup and usage of the radio.
+Wearable Version Updates
+Version
+Picture
+Changes
+Version V1
+(June-2023)
+Introduced the New Wearable version V1 of the product.
+Version A1XXX
+(Oct-2023)
+- The straight antenna port was changed to an inverted outward port to improve antenna separation.
+- Enclosure thickness increased to 21.5 mm to support 18 mm antenna and enhance heat dissipation.
+- Added USB-C locking mechanism.
+- Deeper screw head recess for secure fastening.
+Version B1XXX
+(Mar-2025)
+The
+Turbo
+and
+ON
+buttons have been replaced with
+Button 1
+and
+Button 2
+. Both buttons are fully programmable, allowing for customized functionality. Additionally, their current status can be monitored via the API.
+Hardware Introduction Version A1XXX
+Interfaces (A1XXX)
+Fig. 1 lists the Multiband Wearable's external interfaces.
+Fig. 1 Hardware Interfaces
+1. Power button
+2. Power LED
+3. Mesh Rider indicator
+4. Battery level indicator
+5. Wi-Fi indicator
+6. Turbo LED
+7. Turbo Button
+8. Mesh Rider Antenna 0 (TNC-Female)
+9. Mesh Rider Antenna 1 (TNC-Female)
+10. GPS Antenna (SMA Female)
+11. (on battery casing) USB-C charging port
+12. (on radio front panel) USB-C device data and power port
+13. (on radio front panel) USB-C auxiliary port
+Battery(A1XXX)
+The Multiband Wearable form factor is designed to be used with the Doodle Labs battery pack. It can be charged using a USB-PD compliant power source conforming to specifications in the radio's datasheet.
+The battery is attached to the radio using a simple locking mechanism. Align the legs of the battery with the corresponding holes in the radio casing, slide the battery in place, and then rotate the locking mechanism. Fig. 2 shows the disassembled battery and radio unit.
+Fig. 2 Hardware Interfaces
+1. Locking mechanism
+2. Alignment leg
+3. Alignment hole
+4. Battery electrical contact
+5. Radio power electrical contact
+Buttons and indicators(A1XXX)
+Table 1 list summarizes the Buttons and indicators, and their functions.
+Table 1 Buttons and Indicators summary
+Button/Indicator
+Function
+Power Button (ON)
+Switch the radio between different power states (see table 2)
+Turbo Button
+Manually toggle between 1x1 and 2x2 MIMO operation for power savings
+Power LED
+Indicate the power mode
+Turbo LED
+Indicate whether the radio is in 1x1 or 2x2 MIMO mode
+Mesh Rider Indicator
+Indicate the RSSI on the Mesh Rider interface
+Battery indicator
+Indicate the battery status
+Wi-Fi indicator
+Indicate the Wi-Fi signal strength
+Battery Power Button
+Switch ON/OFF the battery. Press and hold for 5 seconds
+The radio's power states are described in table 2.
+Table 2 Power States
+Mode
+Description
+Power LED Status
+On
+The radio is fully on
+On
+Off
+The radio is in extreme low-power mode. Only essential components remain on
+Off
+The radio's power button functionality is described in table 3.
+Table 3 Power Button Usage
+Power Button Action
+Operation
+4-second press
+On -> Off
+Off -> On
+Table 4 shows LED behavior for different operating states of the radio.
+Table 4 LED Behavior for different Operating States
+Condition
+Power LED
+Wi-Fi Indicator
+Mesh Rider Indicator
+Radio booting up
+slow blinking (1200ms period)
+slow blinking (1200ms period)
+slow blinking (1200ms period)
+ON
+Steady
+See table 5
+See table 5
+Both Power button and Turbo button held and preparing to factory reset on release
+fast blinking (600ms period)
+fast blinking (600ms period)
+fast blinking (600ms period)
+Table 5 shows the Turbo button and LED behavior.
+Table 5 Turbo button and LED behavior
+Turbo button action
+Mode
+LED behavior
+2-second or longer press
+1x1 SISO -> 2x2 MIMO
+Blinking (1200ms period) until link re-established -> Steady
+2-second or longer press
+2x2 MIMO -> 1x1 SISO
+Blinking (1200ms period) until link re-established -> Off
+Hardware Introduction Version B1XXX
+Interfaces(B1XXX)
+Fig. 3 lists the Multiband Wearable's external interfaces.
+Fig. 3 Hardware Interfaces
+1. Button 2 (Programmable)
+2. Button 2 LED
+3. Mesh Rider indicator
+4. Battery level indicator
+5. Wi-Fi indicator
+6. Button 1 LED
+7. Button 1 (Programmable)
+8. Mesh Rider Antenna 0 (TNC-Female)
+9. Mesh Rider Antenna 1 (TNC-Female)
+10. GPS Antenna (SMA Female)
+11. (on battery casing) USB-C charging port
+12. (on radio front panel) USB-C device data and power port
+13. (on radio front panel) USB-C auxiliary port
+Battery(B1XXX)
+The Multiband Wearable form factor is designed to be used with the Doodle Labs battery pack. It can be charged using a USB-PD compliant power source conforming to specifications in the radio's datasheet.
+The battery is attached to the radio using a simple locking mechanism. Align the legs of the battery with the corresponding holes in the radio casing, slide the battery in place, and then rotate the locking mechanism. Fig. 4 shows the disassembled battery and radio unit.
+Fig. 4 Hardware Interfaces
+1. Locking mechanism
+2. Alignment leg
+3. Alignment hole
+4. Battery electrical contact
+5. Radio power electrical contact
+Buttons and Indicators(B1XXX)
+Table 1 list summarizes the Buttons and indicators, and their functions.
+Table 1 Buttons and Indicators summary
+Button/Indicator
+Function
+Button 1
+The button is fully programmable. Please refer to
+Note 1
+below for its current implementation, which includes logic to detect press duration.
+Button 2
+The button is fully programmable. Please refer to
+Note 1
+below for its current implementation, which includes logic to detect press duration.
+Button 1 LED
+Will depend on Button 1 feature
+Button 2 LED
+Will depend on Button 2 feature
+Mesh Rider Indicator
+Indicate the RSSI on the Mesh Rider interface
+Battery indicator
+Indicate the battery status
+Wi-Fi indicator
+Indicate the Wi-Fi signal strength
+Battery Power Button
+switch ON/OFF the battery. Press and hold for 5 seconds
+Note 1: Detecting Button Press Duration
+To detect how long Button 1 or Button 2 is pressed, use the following script:
+#recommended polling every 1 seconds
+while (sleep 1); do
+input=$(sr-ctrl-usb 0 7)
+# For Button 1 (bits 16–19)
+seconds_btn1=$(( (input & 0xF0000) >> 16 ))
+echo "Button 1 pressed for $seconds_btn1 seconds"
+# Insert your script activation command here
+# For Button 2 (bits 24–27)
+seconds_btn2=$(( (input & 0xF000000) >> 24 ))
+echo "Button 2 pressed for $seconds_btn2 seconds"
+# Insert your script activation command here
+echo "---------------------------"  #
+Insert the rest of the script here
+done
+The radio's power states are described in table 2.
+Table 2 Power States
+Mode
+Description
+Power LED Status
+On
+The radio is fully on
+On
+Off
+The radio is in extreme low-power mode. Only essential components remain on
+Off
+The radio's power button functionality is described in table 3.
+Table 3 Button 1 Usage
+Power Button Action
+Operation
+Programmable (Not Defined yet)
+NA
+Table 4 shows the Button 2 and LED behavior.
+Table 4  Button 2 and LED behavior
+Button Action
+Operation
+Programmable (Not Defined yet)
+NA
+Common Hardware Functionality (A1XXX & B1XXX)
+USB-C Interfaces
+Fig. 5 shows the front panel of the Multiband Wearable radio with the battery attached after removing the front-panel stickers.
+Fig. 5 USB-C Interfaces
+1. PWR + USB-D
+When the battery is disconnected, power can be supplied using a standard USB-PD power source.
+When the battery is connected, only USB device port is available. Supports Ethernet over USB oinly.
+2. Battery charging port.
+Use a standard USB-PD compliant power source (see datasheet for requirements).
+3. ETH + USB-H (Auxilliary Port)
+USB-C connector with non-standard wiring.
+Use Doodle Labs supplied dongles for USB host port, UART, and Ethernet.
+4. On/Off switch
+Hold down for 5 seconds turn switch ON/OFF.
+See the
+battery datasheet
+for details.
+5. Battery charging indicator.
+See the
+battery datasheet
+for details.
+Table 1 shows the behavior of the Mesh Rider and Wi-Fi indicators.
+Table 1 Mesh Rider and Wi-Fi indicators
+Status
+Mesh Rider indicator
+Wi-Fi indicator
+Not associated
+OFF
+OFF
+Associated but link lost
+Slow blink (1800ms period)
+Steady
+Connected
+Steady, number of bars illuminated dependent on RSSI
+Steady
+Table 2 shows LED behavior for different operating states of the radio.
+Table 2 LED Behavior for different Operating States
+Condition
+Power LED
+Wi-Fi Indicator
+Mesh Rider Indicator
+Radio booting up
+slow blinking (1200ms period)
+slow blinking (1200ms period)
+slow blinking (1200ms period)
+ON
+Steady
+See table 5
+See table 5
+Both button 1 and  button 2 held and preparing to factory reset on release
+fast blinking (600ms period)
+fast blinking (600ms period)
+fast blinking (600ms period)
+Table 3 shows the behavior of the Mesh Rider and Wi-Fi indicators.
+Table 3 Mesh Rider and Wi-Fi indicators
+Status
+Mesh Rider indicator
+Wi-Fi indicator
+Not associated
+OFF
+OFF
+Associated but link lost
+Slow blink (1800ms period)
+Steady
+Connected
+Steady, number of bars illuminated dependent on RSSI
+Steady
+Table 4 shows the battery level indicator behavior.
+Table 4 Battery level indicator behavior
+Battery voltage
+LED behavior
+> 7.84 V
+Steady, Green
+7.39 - 7.84 V
+Steady, Yellow
+6.5 - 7.39 V
+Steady, Red
+< 6.5 V
+blinking (1200ms period), Red
+Factory Reset
+To factory reset, hold down both the Turbo button and the Power button until the indicators all start flashing. After that, release the two buttons and wait for the device to reboot. A factory reset may take up to 5 minutes. Do not power down the unit during the factory reset.
+Initial Setup
+Hardware setup
+Attach the battery to the Multiband Wearable radio following the guidelines above, and the antennas provided in your evaluation kit to the TNC-Female connectors.
+As soon as power is applied to the radios, all of the LEDs will blink once.
+After powering the radio, hold down the Power button for 2 seconds to turn the unit on. The Power LED will blink until the unit has fully booted, at which point it will be steady.
+While booting up, both the Wi-Fi and Mesh Rider indicators will blink. They will switch to a slow blink after boot-up while waiting for a connection. If you have turned on any other radio, the Mesh Rider indicator will eventually hold steady once the radios are connected.
+If you connect to the radio over it's Wi-Fi interface, then the Wi-Fi indicator will hold steady.
+Connecting to the Wearable
+The Auxiliary USB-C port uses non-standard wiring to support Ethernet, USB-Host, and UART interfaces. The USB-Host interface uses standard USB2.0 wiring on the USB-C port, so it will work with USB dongles which are limited to USB2.0. USB2.0 USB to Ethernet bridges will be automatically bridged to the Mesh Rider network.
+Fig. 6 shows how the USB dongles, USB-W03-A (Locking USB-C to USB-C Power and USB-Data) and USB-W04-A (Locking USB-C to RJ45 Female) can be connected to the Wearable Mesh Rider Radio. See the
+Products
+page of your Mesh Rider radio for more information.
+Fig. 6 Wearable Mesh Rider Radio with USB-C dongles attached
+Wi-Fi Connection
+You can connect to the radio over it's built-in Wi-Fi radio. By default, the built-in Wi-Fi radio starts up an Access Point with SSID DoodleLabsWiFi-<last 6 hex digits of MAC> and password DoodleSmartRadio. No cables are required for this connection method.
+See the
+Software Setup
+section for details on IP addressing.
+USB Connection (Wearable as USB Device)
+Alternatively, you can connect to the radio over the USB port on the front panel. This will require you to peel off the outer sticker on the front panel. You can connect to the radio's USB port from a PC or a smart device (e.g. tablet or phone) which supports USB reverse tethering. In this mode, the Wearable is a USB Device, and the PC/tablet/phone is a USB Host.
+If you are powering the Wearable radio externally (not using the battery), then you can use Doodle Labs' power/data cable splitter (USB-W03-A) to split the data and USB ports.
+See the
+Software Setup
+section for details on IP addressing.
+Ethernet Connection
+You could also use the USB-W04-A dongle to break out the RJ45 Female connector.
+See the
+Software Setup
+section for details on IP addressing.
+USB Connection (Wearable as USB Host)
+As a final alternative, you can use the Wearable Mesh Rider Radio's built-in USB-Host port to connect to a USB Device such as an Android Smart Phone with a USB OTG port. Doodle Labs does not provide a USB dongle for this purpose, however, you can use any off-the-shelf USB-C to USB-A dongle as long as it is limited to USB 2.0. USB 3.0 is not supported, and the USB 3.0 wires should not be connected to the Wearable Mesh Rider radio.
+Software setup
+The Multiband Wearable Mesh Rider radio uses the same
+IP addressing
+scheme as all Mesh Rider radios. Therefore, you will need to assign a static IP address to your host machine in the 10.223.0.0/16 subnet in order to access the radios. This is true for both the USB connection and the Wi-Fi connection. Details on how to configure a static IP address differ depending on your operating system, and guidelines for a Windows 10 PC are shown
+here
+.
+If you are connecting to the radio over the USB port, then your system will need to have the driver for the LAN9500A chipset installed. It should be available by default in Windows machines, most Linux distributions (smsc95xx driver), and Android devices which support USB reverse tethering. Fig. 7 shows the Ethernet 2 adapter (LAN9500A USB to Ethernet) appearing after plugging in the Wearable Mesh Rider radio in a Windows 10 machine.
+Fig. 7 LAN9500A USB to Ethernet adapter in Windows 10
+The default configuration of the Mesh Rider radios allows them to automatically form a mesh on first boot-up without any configuration changes. You can immediately run IP-based connections over the Mesh Rider network.
+Open a web browser and enter the IP address of the radio to access the login page. Once logged in, you will be directed to the
+Dashboard
+, which displays the basic configuration status. From there, use the side menu to navigate to
+Simple Configuration
+and begin setup.
+Fig. 8 Simple Configuration page
+This page allows you to modify the most common settings on the radio in one step. Aside from the changes mentioned above, you can optionally
+Disable the DHCP client if it isn't required. This will leave only the default 10.223.0.0/16 IP address.
+Change the default channel and bandwidth of the Mesh Rider radio.
+Change the default channel of the Wi-Fi radio.
+Make sure to make similar changes on all other radios to maintain connectivity. We encourage you to read through our guides in the Technical Library for additional tips on working with Mesh Rider radios.
+Networking Information
+As with all Mesh Rider radios, the default configuration behaves like a wireless ditributed layer-2 switch. Connecting devices to Mesh Rider radios is similar to connecting the same devices to an Ethernet switch. The Mesh Rider network passes traffic over the mesh transparently, and devices which need to communicate with one another need to be on the same IP subnet. Details on the Mesh Rider's networking modes are available
+here
+.
+General Usage
+A simple use case for the Wearable Mesh Rider radio is shown in Fig. 9. In this case, we have three connected workers in a mesh network. Each worker's tablet is connected to a Wearable Mesh Rider radio over Wi-Fi, and is assigned a static IP address. The workers can use applications for team collaboration to enable voice chat, video streaming, file sharing, and locating one another among other things. You can test the latency over the network using the ping utility, and you can test the throughput using
+iperf
+.
+Fig. 9 Simple connected worker use case
+We can add internet access to the simple use case above by connecting one of the Wearable Mesh Rider radios to the LAN interface of a modem/router (this works with any Mesh Rider radio). Since the router typically runs a DHCP server, the tablets should also use DHCP client mode (i.e. automatic IP assignment). The Mesh Rider radio will automatically get an IP address from the DHCP server to go along with the default static one. At this point, the connected workers can still use the same applications to communicate with one another as before, and in addition, they have access to the internet.
+Fig. 10 Connected worker with internet access use case
+In the example above, the Wearable Mesh Rider radio could also act as a gateway to the internet. There are also other advanced features that were not discussed in this guide. For more information, please look through the rest of the
+Doodle Labs Technical Library
+.
+Table of Contents

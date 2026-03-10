@@ -1,0 +1,284 @@
+Source: https://techlibrary.doodlelabs.com/starlink-satcom-integration-guide
+
+Application Notes
+UXV Use-Cases
+Mesh Rider Radio Integration
+Low Latency C&C and Video Streaming
+Platform Integration Guide(VOXL and Skynode)
+Guidelines for RF Performance(UAV/UGV)
+Drone Performances & Use Cases
+Wearable Use-Cases
+Wearable Mesh Rider Radio Testing Results
+Starlink SATCOM Integration Guide
+GCS Profile and EUD Wizard Guide
+GCS Profile and EUD Wizard Livestreaming to YouTube Guide
+Starlink SATCOM Integration Guide
+Webpage to PDF
+Introduction
+Starlink, a satellite internet constellation operated by SpaceX, aims to provide high-speed internet access across the globe, especially in remote and underserved areas. Utilizing a vast network of low Earth orbit (LEO) satellites, Starlink endeavors to bridge the digital divide, offering users seamless connectivity that rivals traditional broadband services.
+On the other hand, Doodle Labs' Mesh Rider radios represent a significant advancement in wireless communication technology. Designed for robust performance in challenging environments, Mesh Rider radios utilize a mesh networking approach to ensure reliable, secure, and scalable communication solutions. These radios are particularly valuable in industrial, defense, and unmanned system applications, where traditional communication methods fall short.
+Fig. 1 Starlink + Mesh Rider Integration Diagram
+Together, Starlink and Doodle Labs' Mesh Rider radios exemplify the forefront of innovative technologies aimed at enhancing connectivity and communication across various sectors and geographical landscapes. Mesh Rider Radios can extend Starlink SATCOM connections to base stations in up to a 20km radius, for applications in disaster emergency communications, denied environments or rural environments.
+Starlink Initial Setup
+1.    Purchase your official Starlink here
+https://www.starlink.com/
+2.    Download the Starlink Mobile Application (Android and Apple iOS)
+a.    Android OS:
+Starlink Google Play Store
+b.    Apple iOS:
+Starlink Apple App Store
+3.    Setup Starlink w/ Mobile Device, Reference Link:
+Starlink Standard Setup Guide
+a.    Install the cables for the Starlink ‘Dishy’ + Router
+b.    Ensure a clear line of sight in the Starlink App
+c.    Connect and align the Starlink “Dishy”
+d.    Connect to Starlink over Wi-Fi
+Fig. 2 Successful Connection in the Starlink Mobile App
+Mesh Rider to Starlink Setup ➡️ Ethernet to Router
+The easiest way to integrate Mesh Rider radios with Starlink is by directly connecting via ethernet to the Starlink router’s RJ45 ethernet ports. This can be done on the nano, mini and OEM by utilizing the eval kit’s RJ45 connector or conversely just using the USB-C to RJ45 dongle on the Wearable radio.
+For connecting a Mesh Rider Radio (regardless of if Wearable, OEM, mini or nano, etc.) to the Starlink Gen03 Router the setup will be the same. Note the Wearable radio does not require an eval-kit for the RJ-45.
+The Starlink Dishy will connect to the far left RJ-45 Power over Ethernet (POE), the second and third middle RJ-45 ports will be used to connect to a radio over ethernet and the far-right port will be utilized to supply power to the Starlink Gen 03 Router (57V 3.42A) with the Starlink charging block.
+Fig. 3 Connecting a Radio to the Starlink Router
+Wearable Mesh Rider Radio Setup:
+After the Wearable radio is setup with the Starlink Router, the next step is to setup your remote node which will be external to the router setup. The Wearable radio can be connected to an End User Device (EUD) such as a Tablet, PC, Laptop, etc. This connection can occur through ETH over the
+ETH +USB_H
+port or through USB via the
+PWR+USB_D
+port, as in Fig. 4 below.
+The power supply for the Wearable radio can be the a) Battery Power Supply or b) 6-24V DC through the
+PWR+USB_D
+port.
+Fig. 4 Wearable Radio + Starlink Hardware Integration
+OEM, Mini-OEM and Nano-OEM Setup:
+As opposed to the Wearable Radio, the OEM, Mini-OEM and Nano-OEM will require an eval-kit board to adapt the JST connectors to RJ-45 connectors necessary for connecting to the Starlink Router. First, connect the radio to the eval-kit, such as for the mini-OEM (
+Mini-OEM and Helix Mesh Rider Radio – Eval Kit Connector Descriptions
+).
+Reference Eval Kit Connector Descriptions:
+•  Mini-OEM :
+Mini-OEM and Helix Mesh Rider Radio – Eval Kit Connector Descriptions
+•  Nano-OEM :
+nano-OEM and Helix Mesh Rider Radio – Eval Kit Connector Descriptions
+•    OEM :
+Multiband-OEM User Guide (OEM Form Factor)
+On the Starlink Router side simply connect the ethernet RJ-45 port of the Starlink router => Eval Kit RJ-45 Ethernet port.
+The power supply for the OEM, Mini-OEM or Nano-OEM is 5V DC through the eval-kit DC Barrel Jack.
+The OEM, Mini-OEM and/or Nano-OEM radio can be connected to an End User Device (EUD) such as a Tablet, PC, Laptop, etc. This connection can occur through ETH over the
+RJ-45 Ethernet
+port and through USB via the
+USB-C Device
+port (top-left eval-kit) or the
+USB-A Device
+port (bottom-right Mini-OEM), as in Fig. 5 below.
+Fig. 5 Mini-OEM Radio + Starlink Hardware Integration
+Networking + IP Addressing
+By default, the Starlink Router starts a DHCP server on the
+192.168.1.x
+subnet, generally where
+192.168.1.23
+is the first radio connected and
+192.168.1.24
+is the second radio connected. These addresses will depend on the number of, and order of devices connected.
+Fig. 6 Example Networking and IP Addressing for a Mesh Rider + Starlink Integration
+To quickly view the IP addresses of radios connected to the Starlink Network, open the Starlink Mobile App => Network =>  Main Router (and select device)
+Fig. 7 Starlink App  Network  Main Router
+Local Node:
+The radio directly connected via RJ-45 ethernet to the Starlink Router. In this example if we click on
+“smartradio-301a505d95”
+, we can view the IP of this radio is now
+192.168.1.23
+on the Starlink DHCP server as noted in Fig. 8 below.
+Note if you are confused on the Local Node, you can power off the Remote Node and the single radio connected to the Starlink Router (and it’s IP Address) will be the Local Node.
+Fig. 8 Clicking on “smartradio-xxx” Interface to Find Local Node IP
+Remote Node:
+The radio remotely connecting over Mesh Rider (RF) to the Local Node radio wirelessly. Where the Local Node connects via RJ-45 ethernet to the Starlink Router. In this example, if we click on
+“smartradio-301a3a12c5”
+in the Starlink App, we can see the IP of this radio is now
+192.168.1.24
+on the Starlink DHCP server. See Fig.9 below.
+Fig. 9 Clicking on “smartradio-xxx” Interface to Find Remote Node IP
+End User Device (EUD):
+The End User Device or EUD, ideally must be routed to accept the Local Node IP address as its gateway and still populate the
+192.168.1.x /24
+subnet. It is further optimal to set the EUD Gateway IP Address to that of the Local Node static IP Address. When wanting to use the Starlink based Internet Service Provider (ISP) access to internet it, on the EUD configure the network infrastructure to use Google Public DNS addresses, such as
+8.8.8.8
+, for their clients.
+Example EUD IP Routing:
+•    Static IP: 192.168.1.50
+•    Subnet Mask: 255.255.255.0
+•    Gateway IP: 192.168.1.23
+•    DNS : 8.8.8.8
+Fig. 10 Example EUD Network Setup (Windows 11)
+Network Testing:
+Open a terminal on the EUD and first test if ‘google.com’ is reachable by pinging it within the terminal. In this test we can see a 24~44ms latency to ping google, shown in Fig. 11.
+sean@doodle: ping google.com
+Fig. 12 Ping Testing Google from the EUD
+Further analysis of internet speed testing can be achieved with the utility ‘speedtest’ on the EUD, to download this and run testing us the following commands directly below. Here we can see by default the mesh rider configuration is not optimized for high-throughput ISP internet access. In Fig. 12 below, we can see 4.25 Mbps Download and 5.76 Mbps Upload speeds for reference. Further optimization of the ISP Throughput settings can be achieved in the next section.
+sean@doodle: sudo apt install speedtest-cli
+sean@doodle: speedtest --secure
+Fig. 12 Speed Testing Internet (ISP) Throughput from the EUD
+High-Throughput Optimizations:
+Since the default optimization of Mesh Rider Radios is for low latency, we can generally expect ~5 Mbps Download and ~5 Mbps Upload with default Mesh Rider settings in a basic mesh configuration or
+‘simpleconfig’.
+If you do not require an ISP or internet access for your application this throughput may be appropriate.
+However, most common web browsers i.e. Google Chrome require a minimum of 2-5 Mbps for consistent use, such that these High-Throughput Optimizations may be required to achieve 20+ Mbps.
+GUI Based High-Throughput Settings:
+To be configured in the Graphic User Interface (GUI) on both the Local Node (Radio 1) and Remote Node (Radio 2) for best results. In this example, Local Node IP Address:
+192.168.1.23
+and Remote Node IP Address:
+192.168.1.24
+, where these would be used in two different web browser windows.
+Go to Advanced ==> Network Configuration ==> Traffic Prioritization and uncheck the following:
+Optimize for Robustness, Optimize for Latency, Enable Automatic C&C
+Fig. 13 Uncheck Robustness, Latency and Automatic C&C Que
+Then uncheck
+Enable Differentiated Services:
+Fig. 14 Uncheck Enable Differentiated Services:
+CLI Based High-Throughput Settings:
+If you prefer the Command Line Interface (CLI), you can utilize the below commands to achieve the same result. Note you will have to SSH root@LocalNode and SSH root@RemoteNode, which in our example would be Local Node:
+192.168.1.23
+and Remote Node:
+192.168.1.24
+.
+CLI for Local Node:
+sean@doodle: ssh root@192.168.1.23
+root@smartradio-301a505d95:~#
+uci set diffserv.@general[0].diversity_rates='0'
+uci set diffserv.@general[0].low_latency='0'
+uci set diffserv.@qdetection[0].qdetection_enabled='0'
+uci set diffserv.@general[0].enabled='0'
+uci commit
+/etc/init.d/diffserv restart
+wifi
+CLI for Remote Node:
+sean@doodle: ssh root@192.168.1.24
+root@smartradio-301a505d95:~#
+uci set diffserv.@general[0].diversity_rates='0'
+uci set diffserv.@general[0].low_latency='0'
+uci set diffserv.@qdetection[0].qdetection_enabled='0'
+uci set diffserv.@general[0].enabled='0'
+uci commit
+/etc/init.d/diffserv restart
+wifi
+High-Throughput Setting Network Testing:
+As above utilize the ‘speedtest’ on the EUD, to download this and run testing us the following commands directly below. In Fig. 15 below, we can see 17.56Mbps Download and 18.71Mbps Upload speeds for reference. The throughput can be further increased by the High-Bandwidth optimizations in the next section.
+sean@doodle: speedtest --secure
+Fig. 15 Speed Testing High-Throughput Settings from the EUD
+GUI Based High-Bandwidth Settings:
+We can further increase the throughput +20Mbps by increasing the bandwidth from the default 10MHz to a larger 20MHz - 40MHz (note larger bandwidth may be more susceptible to noise, especially at the 2.4-GHz frequency). In general, it is not always recommended to operate 2.4-GHz at >20MHz so these High-Bandwidth settings are more beneficial to M1-M6 Hex bands, 915-MHz or other bands that are not co-populated with Wi-Fi interference.
+In the Graphic User Interface (GUI) on both the Local Node (Radio 1) and Remote Node (Radio 2) , required to change to the same bandwidth on both nodes or nodes will not connect. In this example, Local Node IP Address:
+192.168.1.23
+and Remote Node IP Address:
+192.168.1.24
+, where these would be used in two different web browser windows.
+Go to Link Optimization → Wireless, set the Bandwidth to 40 MHz, and click Apply to save the changes.
+Fig. 16 Change the Radio’s (i.e. wlan0) Bandwidth to 40MHz
+CLI Based High-Bandwidth Settings:
+Note you will have to SSH root@LocalNode and SSH root@RemoteNode, which in our example would be Local Node:
+192.168.1.23
+and Remote Node:
+192.168.1.24
+.
+CLI for Local Node:
+sean@doodle: ssh root@192.168.1.23
+root@smartradio-301a505d95:~#
+uci set wireless.radio0.htmode='HT40'
+uci set wireless.radio0.chanbw='40'
+uci commit
+wifi
+CLI for Remote Node:
+sean@doodle: ssh root@192.168.1.24
+root@smartradio-301a505d95:~#
+uci set wireless.radio0.htmode='HT40'
+uci set wireless.radio0.chanbw='40'
+uci commit
+wifi
+High-Throughput + High-Bandwidth Network Testing:
+In Fig. 17 below, we can see 23.50 Mbps Download and 25.15 Mbps Upload speeds for reference.
+sean@doodle: speedtest --secure
+Fig. 17 Speed Testing High-Throughput + High-Bandwidth Settings from the EUD
+Unlicensed vs. Licensed Frequency Performance:
+The previous testing has been done on unlicensed 2.45GHz Channel 7 or 2.442GHz which is heavily impacted by background and environmental 2.4GHz Wi-Fi interference. The following test below utilizes the licensed 2.245GHz Channel 51 or 2.25GHz (M3 Hex Band, 2200-2290 MHz) to avoid Wi-Fi or noise interference with the same settings as above.
+In Fig. 18 below, we can see 31.62 Mbps Download and 31.89 Mbps Upload speeds for reference.
+sean@doodle: speedtest --secure
+Fig. 18 Speed Testing Unlicensed Frequency (i.e. 2.25GHz)
+Mesh Rider to Starlink Setup ➡️  Wearable or OEM Wi-Fi to Router
+The Wearable and OEM Mesh Rider Radios also have an onboard Wi-Fi radio (wlan1) which can be used as alternative to connect to the Starlink Router in the absence of wire access. The wlan1 instance has a range < 50m and can act as Client to connect to the Starlink Router which acts as an Access Point (AP). The name of the Starlink AP can be configured in the Starlink App, but in this example is
+“DoodleSATCOM”
+.
+Note: Wi-Fi Client access to the Starlink Router will not work with the Mini- or Nano-OEM who do not have a secondary Wi-Fi radio (wlan1) that the Wearable and OEM radio have.
+Fig. 19 Wearable Radio Wi-Fi + Starlink Hardware Integration
+Local Node Setup with the EUD Hotspot Wizard:
+The radio wirelessly connected via Wi-Fi radio (wlan1) to the Starlink Router. In this example we are using the EUD Hotspot Wizard to connect to the Starlink Router named
+“DoodleSATCOM”
+. For more information on the EUD Wizard check out the
+GCS Profile and EUD Wizard Guide
+.
+In the GUI, navigate to Utilities → EUD Wizard, then scroll to the Hotspot Configuration section. Enable the following options:
+- Enable Hotspot Wizard
+- Network Discovery Mode (this enables scanning for available Wi-Fi networks)
+Once enabled, available hotspots will automatically populate on the right side of the screen under Network Discovery. Click the Refresh icon if needed to initiate a new scan, and select Connect next to your desired network. Finally, click Save Configuration to apply the changes.
+Fig. 20 Setup EUD Hotspot Wizard
+Then, find your Starlink’s network name (in this case
+“DoodleLabsWIFI”
+) and then click
+connect.
+Fig. 21 EUD Hotspot Wizard Scan for Starlink Network Name
+Wi-Fi Networking + IP Addressing
+After the EUD Wizard is initialized for wlan1, the primary radio wlan0 will change its IP configuration from
+10.223.x.y/16
+to
+10.x.y.1/8
+. In our example the Local Nodes original address was
+10.223.93.149
+and after the EUD Wizard is now
+10.93.149.1
+. If the application required an EUD on the Local Node topology, this  would look like Fig. 24 and the EUD would have example IP Addressing found in Fig. 25 below.
+Fig. 24 Starlink Wi-Fi Connection to Radio + EUD
+Fig. 25 Example Wi-Fi EUD Network Setup (Windows 11)
+Other Advanced Wi-Fi Network Topologies:
+Starlink
+=>
+Wi-Fi
+=>
+Local Node
+=>
+Mesh Rider (RF)
+=>
+Remote Node
+=>
+Wired
+=>
+EUD
+Fig. 26 Example Wi-Fi  => Mesh Rider => Wired Network
+Starlink
+=>
+Wi-Fi
+=>
+Local Node
+=>
+Mesh Rider (RF)
+=>
+Remote Node
+=>
+Wi-Fi
+=>
+EUD
+Fig. 27 Example Wi-Fi  => Mesh Rider => Wi-Fi Network
+Wi-Fi Throughput Optimizations:
+The Wearable and OEM radio by default do not have Turbo Mode enabled and without Turbo Mode the radio will have a throughput cap at 6 Mbps (which can be modified in the GUI). Furthermore, in the CLI, changing the bandwidth up to 40MHz will also improve throughput for internet or ISP applications. To note, as in the other sections, higher throughput will be more susceptible to interfering noise.
+CLI Wi-Fi Based High-Bandwidth Settings:
+Note you will have to SSH root@LocalNode and SSH root@RemoteNode, which in our example would be Local Node:
+10.93.149.1
+and Remote Node: IP Address will vary based on network setup. However, Remote Node (if required) will have the same uci commands below as for the Local Node
+CLI for Local Node:
+root@doodle: ssh root@10.93.149.1
+root@smartradio-301a505d95:~#
+uci set wireless.radio1.htmode='HT40'
+uci set wireless.radio1.chanbw='40'
+uci commit
+wifi
+Wi-Fi Network Testing:
+In Fig. 29 below, we can see 42.43Mbps Download and 33.64Mbps Upload speeds for reference. The throughput can be further increased by the High-Bandwidth optimizations in the next section.
+sean@doodle: speedtest --secure
+Fig. 29 Speed Testing Wi-Fi High-Throughput + High-Bandwidth Settings from the EUD
+Table of Contents

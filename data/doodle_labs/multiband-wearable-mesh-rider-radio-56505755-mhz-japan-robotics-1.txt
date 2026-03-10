@@ -1,0 +1,58 @@
+Source: https://techlibrary.doodlelabs.com/multiband-wearable-mesh-rider-radio-56505755-mhz-japan-robotics-1
+
+Products
+Product Index
+Mesh Rider Radios
+Industrial Wi-Fi Transceivers
+Legacy Products
+Multiband Wearable Mesh Rider Radio – 5650~5755 MHz (Japan Robotics)
+Webpage to PDF
+RM-5700-12W3
+Wearable V2 Update:
+The Multiband Wearable  V2 Mesh Rider radio represents a significant upgrade over its predecessor, incorporating a host of new features and improvements to enhance performance and versatility. This next-generation device boasts expanded multiband capabilities, supporting a wider range of frequencies to ensure robust communication in diverse environments. Designed with ruggedness in mind, the Wearable V2 is ideal for demanding applications in challenging conditions, making it an essential tool for modern communication needs.
+Accordion Example
+Datasheet
+Multiband Wearable Mesh Rider Radio – 5650~5755 MHz (Japan Robotics)
+Hardware Information
+Hardware Integration Guidelines:
+Hardware Integration Guidelines
+Mesh Rider Hardware Interfaces:
+Mesh Rider Radio Hardware Interfaces
+Model-Specific Hardware Integration Guide:
+User Guide
+Radio Integration Information
+2D Drawings
+3D Drawings
+Heat Map
+Pinout
+Accessories
+Battery Datasheet
+Battery Drawings
+Cables
+Antenna Information
+Evaluation Kit Antenna Datasheet (2024)
+Evaluation Kit Antenna Datasheet (Legacy)
+GPS Antenna
+Software Information
+Firmware Downloads
+Latest Firmware
+June 2025 Release
+Software Guides
+Mesh Rider OS - Getting Started
+General Configuration
+Multiband Radio Configuration
+Wearable Configuration
+The Command-Line Interface
+Remote Management Guide for Mesh Rider Radio
+Sense
+Centralized Configuration, ACS, and Link Recovery (LEGACY)
+Serial Interface Guide
+GPIO Usage and LED Blinking
+Mesh Rider GPS Guide
+Mesh Rider Radio Spectrum Scanner
+Production Firmware Customization
+CBRS Configuration and Testing
+CBRS Connection to the Production Google SAS
+Regulatory Information
+Coming Soon!
+Table of Contents

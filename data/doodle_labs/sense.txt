@@ -1,0 +1,112 @@
+Source: https://techlibrary.doodlelabs.com/sense
+
+Software Guides
+Getting Started
+General Configuration
+Model Specific Configuration
+Multiband Radios
+Wearable/OEM Radios
+SENSE - Interference Avoidance Configuration
+Large Network Optimization
+Remote Management Guide
+Remote Management: CLI
+Remote Management: JSON RPC
+JSON RPC Reference
+GPS Guide
+Serial Interface Guide
+GPIO usage and LED Blinking
+Production Firmware Customization
+Mass Firmware Update
+Advanced Networking Guide
+Sense
+Webpage to PDF
+Introduction
+Sense
+is the name of our upgraded Central Configuration, automatic band/channel/bandwidth selection, and link recovery utility.
+Sense
+was introduced in the July 2023 Beta Resilience Release and underwent a major update for the September 2023
+Sense
+release.
+A license is required to use
+Sense's
+automatic band/channel/bandwidth selection protocol. Contact a Doodle Labs Sales Representative for more information.
+Without a license, it is only possible to make manual band/channel/bandwidth changes through either the GUI or the JSON-RPC/UBUS API. This is discussed in further detail below.
+Watch now: Bench Demo of Sense
+Automatic Band/Channel/Bandwidth Selection
+The automatic band/channel/bandwidth selection is only enabled with a software license. It consists of two main parts.
+1. Link monitoring. The link is constantly monitored, and when the link performance crosses a threshold, the network will switch to a different band/channel/bandwidth.
+2. Link recovery. If the link is broken for any reason, the radios will use
+Sense's
+link recovery protocol to re-establish a connection.
+For more information on
+Sense
+licensing, configuration, and usage, please contact a Doodle Labs Sales Representative.
+Manual Band/Channel/Bandwidth Selection
+Without a
+Sense
+license, it is still possible to make manual band/channel/bandwidth changes through either the GUI or the JSON-RPC/UBUS API. If you have a
+Sense
+license, you can also make manual band/channel/bandwidth changes with
+Sense
+running.
+Setup the messaging system
+As of the June 2024 firmware release, it is no longer necessary to manually configure the messaging system. Older firmware utilized our Central Config system to facilitate Sense functionality. Sense will now automatically pair with another licensed peer.
+Changing channels through the GUI
+To switch to a different band, channel, or bandwidth in GUI, navigate to the
+License Features > Sense
+section. Under the
+ACS Channels
+area on the right side of the page, you can select the desired Band, Bandwidth, and Channel. This replaces the older “Manual Band Switching” tab. Once configured, click
+Save Configuration
+to apply the changes.
+Fig. 1
+Sense
+Manual Band Switching
+Changing channels through the UBUS API
+You can also execute a manual band/channel/bandwidth switch using the ubus command below. Ubus commands can be executed remotely over the
+JSON-RPC API
+.
+freq=2450
+chanbw=10
+count=3
+mode_change=0
+ubus call message-system chswitch '{"count": '$count', "model": "RM-2455-2LX", "frequency": '$freq', "bandwidth": "'$chanbw'", "mode_change":
+'$mode_change' }'
+Here we are switching to frequency 2450 with a bandwidth of 10-MHz, using the
+submodel RM-2455-2L-X .
+The field count specifies the number of times to broadcast the message.
+The field mode_change is used to indicate a change between HT40 (40-MHz bandwidth)
+and HT20 (anything less than 40-MHz bandwidth). Generally it is not recommended to
+do this mode change on the fly as it takes a longer time for the driver to update, and it
+is not supported by Sense.
+You can get a list of valid submodels by running the following command (output shown)
+$ cat /usr/share/.doodlelabs/fes/$(fes_model.sh get parent)
+sub_model0="RM-1675-2L-X"
+sub_model1="RM-1815-2L-X"
+sub_model2="RM-2065-2L-X"
+sub_model3="RM-2245-2L-X"
+sub_model4="RM-2350-2L-X"
+sub_model5="RM-2455-2L-X"
+sub_model6="RM-2450-2L-X"
+You can check the current band settings using
+$ iw wlan0 info
+Interface wlan0
+ifindex 9
+wdev 0x2
+addr 00:30:1a:4e:bb:02
+type mesh point
+wiphy 0
+channel 51 (1675 MHz), width: 10 MHz, center1: 1675 MHz
+txpower 36.00 dBm
+multicast TXQ:
+qsz-byt qsz-pkt flows   drops   marks   overlmt hashcol tx-bytes        tx-packets
+0       0       39719   0       0       0       0       3825875         39846
+In the example above, you can see that the radio is on channel 51 (1675 MHz), with a bandwidth of 10 MHz. You can check the connectivity to other nodes using
+$ batctl o
+[B.A.T.M.A.N. adv 2021.0-openwrt-1, MainIF/MAC: wlan0/00:30:1a:4e:bb:02 (bat0/4a:50:6e:97:51:a7 BATMAN_IV)]
+Originator        last-seen (#/255) Nexthop           [outgoingIF]
+* 00:30:1a:4e:bb:01    0.060s   (246) 00:30:1a:4e:bb:01 [     wlan0]
+In this case, there is one other radio in the network (00301a4ebb01), and the last packet received from it was 60ms ago. The transmit quality is 246/255 which is very good, and as it is the only other radio in the network, the Nexthop is directly to the other radio over the wlan0 interface.
+Watch now: Bench demo of
+Sense
+Table of Contents

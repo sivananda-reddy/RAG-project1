@@ -1,0 +1,84 @@
+Source: https://techlibrary.doodlelabs.com/mesh-rider-gps-guide
+
+Software Guides
+Getting Started
+General Configuration
+Model Specific Configuration
+Multiband Radios
+Wearable/OEM Radios
+SENSE - Interference Avoidance Configuration
+Large Network Optimization
+Remote Management Guide
+Remote Management: CLI
+Remote Management: JSON RPC
+JSON RPC Reference
+GPS Guide
+Serial Interface Guide
+GPIO usage and LED Blinking
+Production Firmware Customization
+Mass Firmware Update
+Advanced Networking Guide
+Mesh Rider GPS Guide
+Webpage to PDF
+Introduction
+The purpose of this guide is to instruct the user on how to configure and view the status of the GPS receiver. GPS is available in Wearable Mesh Rider Radios. Further information on the default GPS receiver can be found
+here
+. The module used is the U-Blox MAX M8Q. Here are the feature highlights:
+The GPS receiver supports the concurrent reception of the following satellite constellations:
+1. GPS L1C/A
+2. SBAS L1C/A
+3. QZSS L1C/A
+4. GLONASS L1OF
+5. BeiDou B1
+6. Galileo E1B/C
+General Specifications:
+2.5-m accuracy
+- 167 dBm tracking sensitivity
+0.05 m/s velocity accuracy
+10 Hz max fix rate
+SBAS, QZSS, RTCM 2.3 Differential GPS
+Hardware Configuration
+The Wearable Smart Radio includes an female SMA connector where the supplied active GPS antenna should be connected. No configuration is required, but the antenna requires a view of the sky in order to work.
+GPS Configuration
+To access the GPS receiver configuration, go to the
+GPS Receiver
+section under
+Utilities
+in the sidebar. From this page, you can enable GPSD, select the GPS device, configure the listening port, and adjust network/time synchronization settings. If required, the u-blox AssistNow service can also be configured. After making any changes, click
+Save Configuration
+at the bottom right.
+Fig. 1 GPS receiver configuration page
+These settings can also be configured through the radio's command prompt.
+SSH
+into the radio, and check the UCI configuration using
+root@smartradio:/etc/config# uci show gpsd
+gpsd.core=gpsd
+gpsd.core.enabled='1'
+gpsd.core.device='/dev/GPS'
+gpsd.core.port='2947'
+gpsd.core.listen_globally='0'
+If you want to access gpsd directly from another host machine, you need to enable bind to all interfaces (listen_globally in UCI).
+GPS Status
+In the GUI, the GPS receiver status can be viewed directly from the
+Dashboard
+screen. Under the
+GPS Information
+section, it displays key details like latitude, longitude, altitude, and update time. If GPS data is unavailable, a yellow warning will indicate that GPS location data is not available. This section provides a quick overview of GPS connectivity right after logging in.
+Fig. 2 GPS Coordinates
+It is also possible to remotely poll the GPS status using any of the methods described in the
+Remote Management Guide
+. Simple GPS data is retrievable from the folder /var/run/gps/
+root@smartradio:~# ls /var/run/gps
+altitude   driver     latitude   longitude  time
+You can also get more information using the
+gpspipe
+or
+cgps
+utilities.
+root@smartradio-301a4f60a4:~# gpspipe -w -n 5
+{"class":"VERSION","release":"3.17","rev":"3.17","proto_major":3,"proto_minor":12}
+{"class":"DEVICES","devices":[{"class":"DEVICE","path":"/dev/GPS","driver":"u-blox","subtype":"SW ROM CORE 3.01 (107888),HW 00080000,FWVER=SPG 3.01,PROTVER=18","activated":"2021-12-10T00:47:49.985Z","flags":1,"native":1,"bps":9600,"parity":"N","stopbits":1,"cycle":1.00,"mincycle":0.25}]}
+{"class":"WATCH","enable":true,"json":true,"nmea":false,"raw":0,"scaled":false,"timing":false,"split24":false,"pps":false}
+{"class":"TPV","device":"/dev/GPS","mode":3,"time":"2022-08-09T22:53:39.000Z","ept":0.005,"lat":-43.639926938,"lon":172.522991254,"alt":10.314,"epx":9.100,"epy":12.052,"epv":38.410,"track":135.1323,"speed":0.010,"climb":-0.022,"eps":0.44,"epc":76.82}
+{"class":"SKY","device":"/dev/GPS","xdop":0.72,"ydop":0.96,"vdop":1.67,"tdop":1.31
+Table of Contents

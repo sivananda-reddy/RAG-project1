@@ -1,0 +1,117 @@
+Source: https://techlibrary.doodlelabs.com/quick-start-guide-ch6
+
+Quick-Start
+Mesh Rider Quick Start Guide
+Chapter 1:  What's in the Box?
+Chapter 2: Getting Started on the Bench
+Chapter 3: Basic Radio Configuration
+Chapter 4: Bench Testing
+Chapter 5: Advanced Radio Configuration
+Chapter 6: Basic Field Testing
+Chapter 7: Troubleshooting
+GUI Quick Walkthrough Guide (Video)
+Throughput Estimation Tool
+Optimizing the RF Link
+Supported Networking Modes
+Recommended Antenna Matrix
+Chapter 6: Basic Field Testing
+Webpage to PDF
+Field Testing Guide for Doodle Labs Mesh Rider Radios
+Purpose
+: To assess radio performance in real-world conditions, measuring range, throughput, latency, and link stability.
+Setup Requirements
+Hardware
+:
+Mesh Rider radios in a protective, field-friendly housing (preferably metal for heat dissipation)
+Tablets (Android or Windows) for mobility or laptops for data handling
+Antennas appropriate for operational frequency (
+Doodle Labs Recommended Antenna Matrix
+​)
+Battery Packs or reliably power source for radios & computers
+Software
+:
+SSH client for radio management
+iperf3
+for throughput testing
+ping
+for latency measurement
+Network Configuration
+Set up a simple point-to-point or mesh network depending on your needs:
+Point-to-Point
+: Use a Wearable radio and a mini-OEM radio connected via Wi-Fi or USB.
+Mesh
+: Configure multiple nodes using
+batctl o
+to view routing information and node connectivity.
+Testing
+Throughput Testing
+:
+Run
+iperf3 -c <server IP> -t 30 -i 1
+to test TCP throughput.
+Use UDP mode with
+-u -b 5M
+to simulate stable data flow and measure packet loss.
+Latency Testing
+:
+Perform latency checks with
+ping <IP address> -i 0.2 -s 250 -Q 0xC0
+for high-priority packets.
+Record round-trip times, noting any high-latency intervals that may indicate interference or distance limits.
+Range Testing
+:
+Initial Setup:
+Place the two radios (e.g., Wearable and Mini-OEM) at a starting position approximately 5 meters apart in an open, line-of-sight area.
+Establish Baseline Connectivity:
+Start with a basic connectivity check using
+ping
+to ensure both radios are communicating.
+Run a quick throughput test using
+iperf3
+to establish baseline performance metrics at close range.
+Incremental Distance Testing:
+Gradually increase the distance between the two radios in increments of 10 meters.
+At each distance, run a
+5-minute
+iperf3
+test
+and record metrics such as throughput, packet loss, and latency.
+Monitor Signal and Connection Quality:
+After each distance increment, check signal quality using
+iw dev wlan${PHY} station dump
+Record RSSI (signal strength), link quality, and any packet loss observed.
+Identify Maximum Range:
+Continue increasing the distance until you notice significant packet loss, increased latency, or a drop in throughput below acceptable levels for your application.
+Recommended End Point:
+The maximum effective range is reached when throughput drops below 1 Mbps or packet loss consistently exceeds 10%.
+Record Environmental Factors:
+Place the two radios (e.g., Wearable and Mini-OEM) at a starting position approximately 5 meters apart in an open, line-of-sight area.
+Note any environmental elements that may impact the results, such as terrain, weather conditions, or obstructions.
+Environmental Considerations
+Antenna Positioning
+: Ensure antennas are mounted with adequate spacing to avoid mutual interference.
+Interference
+: Avoid high-density areas with significant Wi-Fi or RF noise, as this may affect link stability and throughput.
+Fresnel Zone
+: Ensure partial line-of-sight clearance to avoid link degradation due to reflections or blockages.
+Performance Monitoring
+Signal Quality
+: Run
+iw wlan${PHY} station dump
+to measure RSSI and other signal metrics.
+Route Stability
+: Use
+batctl o
+to monitor mesh routes and detect changes due to movement or signal fluctuations.
+Airtime Utilization
+: Monitor
+sysutils activity
+to understand how much of the available spectrum is being used.
+Optimization Tips
+Channel Bandwidth
+: Use the widest bandwidth that doesn’t exceed the environment’s noise floor for maximum throughput.
+Modulation
+: The radio may auto-adjust modulation rates; maintain stable antennas and orientation for consistent rates.
+Environmental Tests
+: Check performance over reflective surfaces (e.g., water) to understand potential multipath effects.
+Table of Contents

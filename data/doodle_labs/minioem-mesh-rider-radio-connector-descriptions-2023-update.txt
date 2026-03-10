@@ -1,0 +1,161 @@
+Source: https://techlibrary.doodlelabs.com/minioem-mesh-rider-radio-connector-descriptions-2023-update
+
+mini-OEM: Hardware Integration Guides
+Hardware Integration Guidelines
+Hardware Interfaces
+mini-OEM (2023 update)
+mini-OEM (Japan Robotics)
+mini-OEM: Pin Diagrams
+mini-OEM Radio (2023 update)
+mini-OEM Eval Kit (2023 update)
+mini-OEM Radio (Japan Robotics)
+mini-OEM Eval Kit (Japan Robotics)
+mini-OEM Mesh Rider Radio – Connector Descriptions (2023 Update)
+Webpage to PDF
+Connectors
+Port No.
+Description
+Manufacturer
+MPN
+Ports 1/2/3/5/6
+Data Connectors
+JST
+SM4B-GHS-TB
+Port 4
+Power Connector
+JST
+SM6B-GHS-TB
+ANT 0/1
+MMCX Female Antenna Connectors
+Molex
+73414-0100
+Connector Pin Numbering
+4-pin JST Connector
+6-pin JST Connector
+Wire Descriptions
+Port 1
+Pin Number
+Direction
+Voltage
+Pin Description
+PIN 1
+Not Connected
+PIN 2
+I/O
+Diff Signal
+USB-Dev-D- (Ethernet only)
+PIN 3
+I/O
+Diff Signal
+USB-Dev-D+ (Ethernet only)
+PIN 4
+GND
+GND
+Port 2
+Pin Number
+Direction
+Voltage
+Pin Description
+PIN 1
+I
+Diff Signal
+ETH1_RX_N
+PIN 2
+I
+Diff Signal
+ETH1_RX_P
+PIN 3
+O
+Diff Signal
+ETH1_TX_N
+PIN 4
+O
+Diff Signal
+ETH1_TX_P
+Port 3
+Pin Number
+Direction
+Voltage
+Pin Description
+PIN 1
+GND
+GND
+PIN 2
+I/O
++2.8-V
+RESET – default high, pull low to reset
+PIN 3
+I
++3.3-V
+UART_RX
+PIN 4
+O
++3.3-V
+UART_TX
+Port 4
+Pin Number
+Direction
+Voltage
+Pin Description
+PIN 1
+I
++5-V
+5-V Input Supply
+PIN 2
+I
++5-V
+5-V Input Supply
+PIN 3
+I
++5-V
+5-V Input Supply
+PIN 4
+GND
+GND
+PIN 5
+GND
+GND
+PIN 6
+GND
+GND
+Port 5
+Pin Number
+Direction
+Voltage
+Pin Description
+PIN 1
+O
++5-V
+5-V Output Supply
+PIN 2
+I/O
+Diff Signal
+USB-Host-D+
+PIN 3
+I/O
+Diff Signal
+USB-Host-D-
+PIN 4
+GND
+GND
+Port 6
+Pin Number
+Direction
+Voltage
+Pin Description
+PIN 1
+I/O
++2.8-V
+GPIO2
+PIN 2
+I/O
++2.8-V
+GPIO1
+PIN 3
+I/O
++2.8-V
+GPIO0
+PIN 4
+GND
+GND
+Table of Contents

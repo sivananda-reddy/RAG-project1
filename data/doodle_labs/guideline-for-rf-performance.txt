@@ -1,0 +1,233 @@
+Source: https://techlibrary.doodlelabs.com/guideline-for-rf-performance
+
+Application Notes
+UXV Use-Cases
+Mesh Rider Radio Integration
+Low Latency C&C and Video Streaming
+Platform Integration Guide(VOXL and Skynode)
+Guidelines for RF Performance(UAV/UGV)
+Drone Performances & Use Cases
+Wearable Use-Cases
+Wearable Mesh Rider Radio Testing Results
+Starlink SATCOM Integration Guide
+GCS Profile and EUD Wizard Guide
+GCS Profile and EUD Wizard Livestreaming to YouTube Guide
+Guidelines for RF Performance (UAV/UGV)
+Webpage to PDF
+Introduction
+Antennas play an important role to get the maximum performance from the Doodle Labs radios. This document provides general antenna recommendations for UAV and UGV use cases.
+Antenna Considerations
+Some of the important things to consider when selecting an antenna are
+1. Center Frequency, Bandwidth, VSWR, Impedance
+2. Antenna Gain, Radiation Pattern and Beam Width
+3. Polarization (single or double)
+4. Type of antenna, material, choice of ground plane
+Center Frequency, Bandwidth and VSWR
+1. Choose an antenna with the correct operating frequency and bandwidth and with a good VSWR. Do not choose a multiband antenna if you don't need one. Multiband antennas often perform significantly worse than single-band antennas for any one particular band.
+2. Choose an antenna whose bandwidth is wider than the requirement. This makes the antenna less susceptible to de-tuning.
+3. Doodle Labs Radios are designed to work with 50 Ohm impedance for best matching. There can be a big impedance variation even in the antennas that are specified for 50 Ohms. So choose a good quality antenna with a VSWR less than 2. Avoid using the 75-ohm impedance (TV antennas for example).
+Antenna Gain, Radiation Pattern and Beam Width
+In the same way that sound can be focused using a megaphone, RF waves can be focused by antennas. The antenna gain is the amount of amplification of the signal relative to an isotropic antenna (equal radiation in all directions). The radiation pattern describes the direction in which the RF waves are focused. The beam width describes the angle over which the radio waves are focused within 3 dB of the peak gain.
+Choosing an appropriate antenna gain requires a link-budget calculation. Based on the network capacity and link distance required, you can calculate the required antenna gain. Also note that there are many factors which can affect RF propagation loss such as reflections off large objects, and Fresnel Zone clearance. Have a look the Application Note,
+Optimizing the RF Link
+in our Technical Library.
+Some antennas like the patch antenna, and the parabolic dish antenna focus RF waves in a cone shape and can provide very high antenna gain. Such antennas need to be pointed towards the intended target. High gain omni-directional antennas focus RF waves in a horizontal plane like a pancake, and offer much less gain in the vertical direction. Note that sometimes the nulls in the radiation pattern are more useful than the peaks.
+The figure below illustrates several of the concepts discussed above. As the UAV is flying over a source of noise, the null in it's antenna's radiation pattern is pointed towards the ground. A high-gain patch antenna is used on the GCS and pointed towards the UAV.
+Pointing the antenna null towards the ground
+Polarization
+Antennas are either linearly polarized (horizontal, or vertical), or circularly polarized (CP). The polarization refers to the physical orientation of the RF waves, and antennas which are polarized vertically cannot receive horizontally polarized RF waves. The polarization of an RF wave can change as it reflects off of the ground or objects. In a UAS, the antennas tilt when the UAS banks, and this can cause some polarization mismatch. In order to guarantee reception, mount the antennas with both polarizations covered. However, note that this will make it difficult to point the antenna nulls towards the ground.
+CP antennas can be right-hand or left-hand circularly polarized. RHCP antennas cannot receive LHCP RF waves. CP antennas receive linearly polarized RF waves with a 3-dB penalty.
+Near and Far field
+The near field of an antenna is close to the antenna and can alter its VSWR and radiation pattern. In the far field, waves are detached and can be redirected or absorbed but not altered. To maintain performance, keep objects, especially conductive ones, out of the near field. For low-gain omni-directional antennas, this distance is about half a wavelength, roughly 16.4 cm at 915 MHz.
+Near field and far field
+Some antennas use a radome with a high dielectric constant which reduces the wavelength and therefore the near-field distance inside the radome. Such antennas are less affected by objects in close proximity.
+Antenna Selection and Mounting
+Selecting Antennas
+The choice of the correct antennas for UAV is a critical factor in determining the overall link performance. Typically the UAV is moving and regularly changing it's orientation. RF propagation over ground can be significantly more chaotic than a LOS connection to a UAV. At ground-level, it is very difficult to keep the Fresnel Zone of the RF propagation path clear of obstacles (including the ground). Furthermore, buildings and other large objects reflect and scatter EM waves causing multipath fading.
+As a result, omni-directional antennas are usually used on the UAV/UGV. Size and weight are other important criteria for UAV. Hence small 2-3 dBi Dipole or Monopole antennas are used. Monopole antennas can be very small but keep in mind that they must be mounted on a ground plane.
+Typically the GCS is in a fixed location, and it is possible to use larger and higher gain antennas to increase the range. 6 dBi Omni antennas are good for short to medium range operation. For long range links, directional antennas can provide a good solution and for very long range links, tracking dish antennas can be considered.
+Mounting Considerations
+Because of the high mobility of the UAV/UGV, mounting the antennas is a very important consideration.
+1. Use 2x2 MIMO antennas to get better diversity from the moving vehicle.
+2. Ideally the antennas should be mounted more than ½-wavelength apart so that they do not modify each other's radiation pattern. For example, at 915 MHz, the wavelength is 32.8 cm (12.9 inches). So the antennas should be at least 16.4 cm (6.4 inches) apart.
+3. Often the body of a UAV is made of carbon fiber which is weakly conductive. The body of the UAV can block/reflect RF waves, and may even modify the radiation pattern of the antenna.
+4. Choosing an antenna with a high dielectric constant radome may help to avoid near-field incursion, but more separation is better for antenna diversity.
+5. Depending on the application, the antennas should either be mounted in a V-shape for diversity or both mounted vertically in order to point the null towards any potential noise source.
+6. Care should be taken to ensure that the UAV is always within the GCS antenna's beam width. This is especially important when using high-gain antennas.
+7. We recommend testing the antenna mounting by moving the UAV/UGV 10-20 meters away and then rotating it while observing the RSSI value from the radio.
+Antenna Gain Estimation (UAV)
+Understanding Antenna Gain Requirements for Unmanned Aerial Vehicles (UAV) or Other Aerial Based Systems
+Example Setup for Antenna Gain Estimation (UAV)
+Utilizing the
+Throughput Estimation Tool
+we can create a simple profile for a Unmanned Aerial Vehicle (UAV) utilizing mini-OEM Mesh Rider Radio at 2.45-GHz, 10MHz bandwidth and we can start with the stock +3 dB gain antennas ( Doodle Labs, ANT-2450-3-O,
+Multipolarized Antennas
+) . This setup is shown in Fig. 4.
+We can further make the assumption that this UAV is to be flown in good flight conditions such that the Fresnel Zone Clearance is 100% (whereas default is 60%). The complete settings within the Throughput Estimation Tool are shown in Fig. 3 below.
+Fig. 3 Example Link Budget Setup for UAV and 2.45-GHz mini-OEM
+After we select Throughput Estimation
+Analyze
+button the tool renders our advanced Throughput (Mbps) vs Distance (m) vs Fresnel Zone Clearance (m) graphing chart. This graph can be used in several significant ways to answer questions on antenna gain requirements and predict antenna performance w/ radios such as:
+●
+How far do stock Doodle Labs antennas carry my telemetry requirement of 3 Mbps?
+●
+How much will the throughput (Mbps) and range (m) increase with +6dB antennas?
+●
+What kind of antenna gain (dB) do I need for 5Mbps at 20km?
+●
+Would switching the Dual-Band radio to 900-MHz  increase my expected range?
+Example 4-5km Range @ 5-Mbps (UAV)
+Antenna Gain Estimation
+Fig. 4  Example 4-5km Range @ 5Mbps (UAV)
+UAV and GCS Antenna Selection
+●
+UAV Antenna: Doodle Labs, ANT-2450-3-O,
+Multipolarized Antennas
+●
+UAV Antenna: Gain = +3 dB
+●
+GCS Antenna: Doodle Labs, ANT-2450-3-O,
+Multipolarized Antennas
+●
+GCS Antenna: Gain = +3 dB
+●
+TX + RX Antenna Gain: +6 dB
+Expected Range & Throughput Performance
+Range:
+4.358 km (4357.7 m)
+Throughput at Range:
+5.3 Mbps
+Example 8-9km Range @ 5-Mbps (UAV)
+Antenna Gain Estimation
+Fig. 5  Example 8-9km Range @ 5Mbps (UAV)
+UAV and GCS Antenna Selection
+●
+UAV Antenna: KP Performance, KP-24VOMNI-6 ,
+Antenna Link
+●
+UAV Antenna: Gain = +6 dB
+●
+GCS Antenna: KP Performance, KP-24VOMNI-6 ,
+Antenna Link
+●
+GCS Antenna: Gain = +6 dB
+●
+TX + RX Antenna: Gain = +12 dB
+Expected Range & Throughput Performance
+Range:
+8.695 km (8694.8 m)
+Throughput at Range:
+5.3 Mbps
+Example 15-16km Range @ 5Mbps (UAV)
+Antenna Gain Estimation
+Fig. 6  Example 15-16km Range @ 5Mbps (UAV)
+UAV and GCS Antenna Selection
+●
+UAV Antenna: Doodle Labs, ANT-2450-3-O,
+Multipolarized Antennas
+●
+UAV Antenna: Gain = +3 dB
+●
+GCS Antenna: Mars Antennas, MA-WA22-DP14,
+Antenna Link
+●
+GCS Antenna: Gain = +14 dB
+●
+TX + RX Antenna: Gain = +17 dB
+Expected Range & Throughput Performance
+Range:
+15.462 km (15461.8 m)
+Throughput at Range:
+5.3 Mbps
+Example 21-22km Range @ 5Mbps (UAV)
+Antenna Gain Estimation
+Fig. 7  Example 21-22km Range @ 5Mbps (UAV)
+UAV and GCS Antenna Selection
+●
+UAV Antenna: KP Performance, KP-24VOMNI-6 ,
+Antenna Link
+●
+UAV Antenna: Gain = +6 dB
+●
+GCS Antenna: Mars Antennas, MA-WA22-DP14,
+Antenna Link
+●
+GCS Antenna: Gain = +14 dB
+●
+TX + RX Antenna: Gain = +20 dB
+Expected Range & Throughput Performance
+Range:
+21.84 km (21840.4 m)
+Throughput at Range:
+5.2 Mbps
+Antenna Gain Estimation (UGV)
+Example Setup for Antenna Gain Estimation (UGV)
+Likewise, utilizing the
+Throughput Estimation Tool
+we can create a simple profile for a Unmanned Ground Vehicles (UGV) utilizing mini-OEM Mesh Rider Radio at 915-MHz, 20MHz bandwidth and we can start with the stock +3 dB gain antennas (Doodle Labs, ANT-915-3-O,
+Multipolarized Antennas
+). This setup is shown in Fig. 8.
+We can further make the assumption that this UGV is to be driven in good flight conditions such that the Fresnel Zone Clearance is the default is 60%). Furthermore, the option 'Ground level', is enabled as 'True'. The complete settings within the Throughput Estimation Tool are shown in Fig. 8 below.
+Fig. 8 Example Link Budget Setup for UGV and 915-MHz mini-OEM
+Example 1km Range @ 9-Mbps (UGV)
+Antenna Gain Estimation
+Fig. 9  Example 1km Range @ 9Mbps (UGV)
+UGV and GCS Antenna Selection
+●
+UGV Antenna: Doodle Labs, ANT-915-3-O,
+Multipolarized Antennas
+●
+UGV Antenna: Gain = +3 dB
+●
+GCS Antenna: Doodle Labs, AANT-915-3-O,
+Multipolarized Antennas
+●
+GCS Antenna: Gain = +3 dB
+●
+TX + RX Antenna Gain: +6 dB
+Expected Range & Throughput Performance
+Range:
+1.0 km (999.6 m)
+Throughput at Range:
+9.3 Mbps
+Example 1.5km Range @ 9-Mbps (UGV)
+Antenna Gain Estimation
+Fig. 10  Example 1.5km Range @ 9Mbps (UGV)
+UGV and GCS Antenna Selection
+●
+UGV Antenna: Mars Antennas, MA-WA-27TB-DP8B,
+Antenna Link
+●
+UGV Antenna: Gain = +7.5 dB (Note: +7.5 dB @ 698-960 MHz, + 10 dB @ 2300-2700 MHz)
+●
+GCS Antenna: Doodle Labs, AANT-915-3-O,
+Multipolarized Antennas
+●
+GCS Antenna: Gain = +3 dB
+●
+TX + RX Antenna Gain: +10.5 dB
+Expected Range & Throughput Performance
+Range:
+1.539 km (1539.3 m)
+Throughput at Range:
+9.2 Mbps
+Recommended Antennas
+When choosing antennas, choose a reputable manufacturer, and avoid low cost antennas, or antennas which do not have a full list of specifications. If the antenna is very small (smaller than ½ a wavelength), then you should be skeptical of its performance.
+Ideally the antenna datasheet should include radiation patterns so that you can verify its uniformity. If the radiation pattern isn't shown the manufacturer may simply indicate the peak antenna gain, and that may not be useful in a real world deployment. The VSWR should ideally be less than 2:1.
+The saying "you get what you pay for" is particularly true for antennas.
+Doodle Labs Antennas
+Doodle Labs offers antennas which are optimized for use with Doodle Labs radios for various frequency bands. These antennas are included in the radio Evaluation kit and available for volume purchase. Please visit the
+antennas
+section of our website for full datasheets.
+Recommended Antenna Manufacturers
+Due to the large variety of the antenna types, here we list a few antenna companies that our customers have reported good performance from.
+Southwest Antennas
+L-Com
+Mars Antennas
+Hascall Denke
+Haigh-Farr
+Huber Suhner
+Mobile Mark
+Radio Waves
+Larsen
+Table of Contents

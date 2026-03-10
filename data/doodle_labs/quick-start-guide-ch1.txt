@@ -1,0 +1,91 @@
+Source: https://techlibrary.doodlelabs.com/quick-start-guide-ch1
+
+Quick-Start
+Mesh Rider Quick Start Guide
+Chapter 1:  What's in the Box?
+Chapter 2: Getting Started on the Bench
+Chapter 3: Basic Radio Configuration
+Chapter 4: Bench Testing
+Chapter 5: Advanced Radio Configuration
+Chapter 6: Basic Field Testing
+Chapter 7: Troubleshooting
+GUI Quick Walkthrough Guide (Video)
+Throughput Estimation Tool
+Optimizing the RF Link
+Supported Networking Modes
+Recommended Antenna Matrix
+Chapter 1: What's in the box?
+Webpage to PDF
+Introduction
+The Doodle Labs Mesh Rider Evaluation Kits are designed to facilitate the setup and testing of various Doodle Labs Mesh Rider Radios in a controlled environment. Each evaluation kit comes equipped with essential components to simplify integration, performance testing, and software configuration on the bench. Whether you are working with the Wearable, Mini-OEM, Nano-OEM, or OEM Mesh Rider radios, the evaluation kit provides the core components and interfaces needed for a seamless initial setup experience.
+Note:
+The evaluation kits do not include the radios themselves; they must be ordered separately to suit specific application needs. Mesh Rider Radios are available in different frequencies and form factors, optimized for diverse use cases, such as robotics, UAVs, or ground control stations.
+Overview of Mesh Rider Radios and Evaluation Kits
+Each type of Mesh Rider radio—Wearable, Mini-OEM, Nano-OEM, and OEM—offers unique features and connectors that cater to various configurations:
+Wearable
+Mesh Rider Radio:
+Compact with TNC-F connectors, suitable for mobile or personnel-worn applications. The kit includes a dedicated battery, antennas, and locking cables.
+Mini-OEM
+Mesh Rider Radio:
+Designed for embedded setups with two MMCX connectors, this kit includes a heatsink, thermal pad, MMCX-SMA cables, and Ethernet connectivity.
+Nano-OEM
+Mesh Rider Radio:
+Ideal for minimalistic integrations where space is limited. It includes a single MMCX connector and basic cable setups.
+OEM
+Mesh Rider Radio:
+A multiband radio designed for industrial setups, featuring multiple MMCX and Molex/JST connectors for versatile applications. The kit includes additional breakout boards and three antennas.
+Each kit also includes the necessary breakout boards and connectors for power, USB, and Ethernet connectivity, enabling fast initial connections without requiring custom interfaces.
+Wearable
+New in Box: Wearable Mesh Rider Radio + Eval Kit
+Itemized Component List: Multiband Wearable Mesh Rider Radio4
+1. Wearable Mesh Rider Radio
+2. Top/Bottom View
+A)  2x TNC-F Connectors, 1x SMA-F Connector
+B) 1x USB-Device + PWR Connector, 1x ETH + USB-Host Connector
+3. Wearable Mesh Rider Battery
+4. 3x Antennas (2x RF + 1x GPS)
+5. Cables
+A) 1x USB-C Locking Cable
+B) 1x USB-C / CAT5 (RJ45) Locking Cable
+Mini
+New in Box: mini Mesh Rider Radio + Eval Kit
+Itemized Component List: mini Mesh Rider Radio
+1. Mini Mesh Rider Radio
+2. Side View -- 2x MMCX Connectors
+3. Cables
+A) MMCX-SMA cables
+B) LAN Ethernet cable
+C) USB-A to USB-C cable
+D) JST to USB-C female cable
+4. 2x Antennas + 2x Attenuators
+5. Evaluation Kit
+A) Evaluation test board
+B) Heatsink & thermal pad
+Nano
+New in Box: nano Mesh Rider Radio + Eval Kit
+Itemized Component List: nano Mesh Rider Radio
+1. nano Mesh Rider Radio
+2. Side View -- 1x MMCX Connectors
+3. Cables
+A) MMCX-SMA cables
+B) LAN Ethernet cable
+C) USB-A to USB-C cable
+D) JST to USB-C female cable
+4. 1x Antennas + 1x Attenuators
+5. Eval Kit
+A) Evaluation test board
+B) Heatsink & thermal pad
+OEM
+New in Box: OEM Mesh Rider Radio + Eval Kit
+Itemized Component List: Multiband OEM Mesh Rider Radio
+1. OEM Mesh Rider Radio
+2. Top / Bottom View
+A) 4x MMCX Connectors
+B) 5x Molex/JST Snap connectors (USB Device, USB Host, PWR, UART + ETH)
+3. Breakout Boards
+A) Evaluation test board
+B) HID test board
+4. 3x Antennas (2x RF + 1x GPS) + 3x Attenuators (2x RF + 1x GPS)
+5. Cables
+A) MMCX-SMA cables
+Table of Contents

@@ -1,0 +1,130 @@
+Source: https://techlibrary.doodlelabs.com/platform-integration-guide
+
+Application Notes
+UXV Use-Cases
+Mesh Rider Radio Integration
+Low Latency C&C and Video Streaming
+Platform Integration Guide(VOXL and Skynode)
+Guidelines for RF Performance(UAV/UGV)
+Drone Performances & Use Cases
+Wearable Use-Cases
+Wearable Mesh Rider Radio Testing Results
+Starlink SATCOM Integration Guide
+GCS Profile and EUD Wizard Guide
+GCS Profile and EUD Wizard Livestreaming to YouTube Guide
+Platform Integration Guide (VOXL and Skynode)
+Webpage to PDF
+Introduction
+This guide explains how to use the Doodle Labs Mesh Rider Radio as a communication link between the VOXL and the QGC GCS, as well as between the Skynode and the QGC GCS.
+VOXL Introduction
+VOXL is a self-sufficient computing platform developed by ModalAI, utilizing the Qualcomm Snapdragon 821 . When paired with a depth camera, flight controller, and the Doodle Labs Mesh Rider Radio, the VOXL platform becomes the foundation for fully autonomous, connected robots and drones. For detailed information on the various computing tasks VOXL can perform, please consult ModalAI’s technical documentation. This guide explains how to use the Doodle Labs Mesh Rider Radio as a communication link between VOXL and the QGC GCS.
+Mesh Rider Radio VOXL Integration
+Updating VOXL Firmware
+Older versions of VOXL’s firmware do not include the necessary USB-Ethernet driver required by the Mesh Rider Radio Helix. Make sure to update your VOXL firmware following the instructions on the website [3].
+Mesh Rider Radio VOXL Setup
+Fig. 1 is a system diagram showing how a Helix Mesh Rider Radio can be connected to a VOXL-based robot system. The Helix (and Wearable/OEM) variants of the Mesh Rider Radio include a USB Device port which can be connected directly to VOXL’s USB Host port. Other versions of the Mesh Rider Radio will require a USB to Ethernet adapter as described in ModalAI’s documentation.
+Fig. 1 – Mesh Rider Radio (Helix) to VOXL Integration
+As VOXL handles the connection to the px4 flight controller, it is not necessary to setup the Serial port on the Mesh Rider Radio. After connecting the hardware, Modify the IP address of the host machine running QGC so that it is on the 10.223.0.0/16 subnet, for example 10.223.0.150 with netmask 255.255.0.0. In order to configure the IP address, you will need to access VOXL’s shell. You can do that by connecting your PC to the USB 3.0 Micro B port on the VOXL. After that, follow the steps below.
+1. In order to access VOXL’s shell, run
+# On host machine
+adb shell
+2. From VOXL’s shell, run
+# On VOXL
+voxl-configure-modem
+You will be asked which modem you are using.
+What type of modem are you using?
+Choose the Doodle Labs Mesh Rider Radio. You may then select between the default IP address (10.223.0.100) or a custom one.
+Enter the IP address you would like to the VOXL to use on the Doodle network:
+Note: The chosen IP address must be of the form: 10.220.XXX.XXX, where XXX is a 3 digit number
+Default - 10.223.0.100
+1) default
+2) custom
+If you choose a custom IP address, you will need to modify the Mesh Rider Radios’ IP addresses to be on the same subnet as VOXL and the QGC host machine. Once you have made your selection, VOXL will configure it’s networking to enable the connection to the Mesh Rider Radio network on boot up.
+Making new interface file /etc/network/interfaces
+reloading systemd services
+enabling voxl-modem systemd service
+starting voxl-modem systemd service
+DONE configuring voxl-modem
+Once this is complete, running ifconfig should display a new interface, eth0, with the IP address which you selected.
+3. Connect to QGC from VOXL. VOXL uses voxl-vision-px4 to connect VOXL to the host machine running QGC. If you have not yet run voxl-configure-vision-px4, then you can do so now, and you will be asked a series of questions including the IP address of the host machine running QGC. Otherwise you can edit the voxl-vision-px4 configuration file and update qgc-ip.
+vi /etc/modalai/voxl-vision-px4.conf
+You will then need to restart the voxl-vision-px4 service.
+systemctl restart voxl-vision-px4
+4. Next you need to enable voxl-mavlink-server. You can do so by running voxl-configure-mavlink-server. If you plan on editing the configuration, you can edit the file
+/etc/modalai/voxl-mavlink-server.conf
+. After that, restart the service with
+systemctl restart voxl-mavlink-server
+At this point, VOXL should automatically connect to QGroundControl.
+References
+1. ModalAI,
+https://www.modalai.com/
+, 10-8-2021
+2. ModalAI Technical Docs – VOXL,
+https://docs.modalai.com/voxl/
+, 10-8-2021
+3. voxl-build,
+https://gitlab.com/voxl-public/system-image-build/voxl-build
+, 25-7-2022
+4. ModalAI Using USB to Ethernet with VOXL,
+https://docs.modalai.com/usb-to-ethernet-with-voxl/
+, 10-8-2021
+Mesh Rider Radio + Auterion Skynode Integration Guide
+Introduction
+Skynode is an advanced flight controller from Auterion [1][2] with integrated Flight Controller and Mission Computer and support for various connectivity and payload options. It is designed to work seamlessly with Auterion Mission Control (AMC) [3]. A schematic representation of the hardware setup is shown below.
+Fig 1. Doodle Labs (HELIX) and Auterion Skynode Integration
+Skynode first-time Setup
+It is necessary to override the Skynode's default IP settings for use with the Mesh Rider Radio [4].
+Connect your PC to the Skynode using the Skynode's USB-C port. The Skynode uses Ethernet over USB, and runs a DHCP server.
+● Your PC should be in DHCP client mode by default, and it will get an IP address from the Skynode.
+●
+The Skynode's IP address on the USB interface is 10.41.1.1, and it is accessible using SSH with username "root" and password "auterion" [5].
+SSH into the Skynode.
+●
+Open a command prompt (Windows), shell (Linux), or your favorite terminal emulator (Putty, MobaXterm etc), and run (the password is auterion).
+ssh root@10.41.1.1
+●
+You should see the following screen
+/\        | |          (_)
+/  \  _   _| |_ ___ _ __ _  ___  _ __
+/ /\ \| | | | __/ _ \ '__| |/ _ \| '_ \
+/ ____ \ |_| | ||  __/ |  | | (_) | | | |
+/_/    \_\__,_|\__\___|_|  |_|\___/|_| |_|
+Hello, Big Blue Sky!
+IP: 10.223.0.10
+UUID: 114495627
+FC UUID: uid2:000200000000203935534b565002003c002a
+Create a file
+/data/override.env
+in the Skynode system with the following information
+root@skynode:~# cat /data/override.env
+PAIRING_MNG_TYPE=DISABLE
+AP_CONFIGURE_ETHERNET_IP=10.223.0.10
+AP_CONFIGURE_ETHERNET_IP_PREFIX=16
+RESINCONF_LINK_GCS=10.223.0.1:14550
+PAYLOAD_MANAGER_GCS_LINK_IP=10.223
+●
+Note that we have set the GCS IP address to
+10.223.0.1
+Now reboot the Skynode, and change your GCS IP address to
+10.223.0.1
+(or your chosen IP address above).
+AMC
+Skynode and Auterion Mission Control (AMC) are designed to work with one another. If you have setup the Skynode and GCS as above, AMC should connect directly to the Skynode on launch. In the screenshot below, we hooked up a USB camera to the USB 1 port (J8 connector) on the Skynode, but we have not connected any of the other peripherals such as GPS.
+Fig 2. AMC launch screenshot with Mesh Rider Radio link to GCS
+References
+1. Skynode,
+https://auterion.com/drone-manufacturers/skynode/
+, 29-11-2021
+2. Skynode Docs,
+https://docs.auterion.com/skynode
+, 29-11-2021
+3. Auterion Mission Control,
+https://auterion.com/mission-control/
+, 29-11-2021
+4. Auterion Documentation,
+https://docs.auterion.com/skynode/peripherals/custom-data-link
+, 2-6-2022
+5.Auterion Documentation,
+https://docs.auterion.com/skynode/software-development-workflow/installation-and-initial-connection#ssh-to-the-mission-computer
+, 2-6-2022
+Table of Contents
